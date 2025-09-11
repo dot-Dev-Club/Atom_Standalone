@@ -1,0 +1,257 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ATOM Club Design System - Blue & Metallic Theme */
+
+@layer base {
+  :root {
+    /* Background System */
+    --background: 220 25% 6%;
+    --background-secondary: 220 20% 8%;
+    --background-tertiary: 220 15% 12%;
+    --foreground: 210 20% 95%;
+    --foreground-secondary: 210 15% 85%;
+
+    /* ATOM Brand Colors */
+    --atom-primary: 220 100% 52%;        /* #0B63FF */
+    --atom-primary-light: 220 100% 62%;
+    --atom-primary-dark: 220 100% 42%;
+    --atom-metallic: 200 8% 77%;         /* #C0C6C9 */
+    --atom-metallic-light: 200 12% 85%;
+    --atom-metallic-dark: 200 8% 65%;
+
+    /* Electric Accent */
+    --electric: 200 100% 75%;
+    --electric-glow: 200 100% 85%;
+
+    /* Glass System */
+    --glass: 220 25% 15%;
+    --glass-border: 220 30% 25%;
+    --glass-glow: 220 100% 52%;
+
+    /* Card System */
+    --card: 220 20% 10%;
+    --card-foreground: 210 15% 90%;
+    --card-border: 220 25% 20%;
+    --card-hover: 220 25% 15%;
+
+    /* Interactive States */
+    --primary: 220 100% 52%;
+    --primary-foreground: 210 20% 95%;
+    --primary-hover: 220 100% 62%;
+
+    --secondary: 200 8% 77%;
+    --secondary-foreground: 220 25% 15%;
+    --secondary-hover: 200 12% 85%;
+
+    /* Semantic Colors */
+    --success: 140 65% 45%;
+    --success-foreground: 140 100% 95%;
+    --warning: 45 100% 55%;
+    --warning-foreground: 45 100% 10%;
+    --destructive: 0 75% 55%;
+    --destructive-foreground: 0 100% 95%;
+
+    /* UI Elements */
+    --muted: 220 15% 20%;
+    --muted-foreground: 210 10% 60%;
+    --accent: 220 25% 15%;
+    --accent-foreground: 210 15% 85%;
+    --border: 220 20% 25%;
+    --input: 220 20% 15%;
+    --ring: 220 100% 52%;
+
+    --radius: 0.75rem;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--atom-primary)), hsl(var(--electric)));
+    --gradient-metallic: linear-gradient(135deg, hsl(var(--atom-metallic)), hsl(var(--atom-metallic-light)));
+    --gradient-glass: linear-gradient(135deg, 
+      hsla(var(--glass), 0.4), 
+      hsla(var(--glass), 0.1)
+    );
+    --gradient-hero: radial-gradient(ellipse at center, 
+      hsla(var(--atom-primary), 0.15) 0%, 
+      hsla(var(--background), 1) 70%
+    );
+
+    /* Shadows */
+    --shadow-electric: 0 0 30px hsla(var(--electric), 0.4);
+    --shadow-glow: 0 10px 40px hsla(var(--atom-primary), 0.3);
+    --shadow-card: 0 8px 32px hsla(220, 50%, 5%, 0.6);
+
+    /* Animation Timings */
+    --transition-smooth: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --transition-spring: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    /* Sidebar colors (keeping for compatibility) */
+
+    --sidebar-background: 220 20% 10%;
+    --sidebar-foreground: 210 15% 85%;
+    --sidebar-primary: 220 100% 52%;
+    --sidebar-primary-foreground: 210 20% 95%;
+    --sidebar-accent: 220 25% 15%;
+    --sidebar-accent-foreground: 210 15% 85%;
+    --sidebar-border: 220 20% 25%;
+    --sidebar-ring: 220 100% 52%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-inter antialiased;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Scrollbar Styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-background-secondary;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-atom-metallic rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-atom-metallic-light;
+  }
+}
+
+@layer components {
+  /* Glass Effect Classes */
+  .glass-card {
+    background: var(--gradient-glass);
+    backdrop-filter: blur(12px);
+    border: 1px solid hsl(var(--glass-border));
+    @apply rounded-xl shadow-card;
+  }
+
+  .glass-card:hover {
+    background: linear-gradient(135deg, 
+      hsla(var(--glass), 0.6), 
+      hsla(var(--glass), 0.2)
+    );
+    box-shadow: var(--shadow-glow);
+  }
+
+  /* Metallic Button */
+  .btn-metallic {
+    background: var(--gradient-metallic);
+    @apply text-background font-semibold px-6 py-3 rounded-lg transition-all duration-300;
+    box-shadow: 0 4px 20px hsla(var(--atom-metallic), 0.4);
+  }
+
+  .btn-metallic:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px hsla(var(--atom-metallic), 0.6);
+  }
+
+  /* Electric Glow Effect */
+  .electric-glow {
+    box-shadow: var(--shadow-electric);
+    animation: pulse-glow 2s ease-in-out infinite alternate;
+  }
+
+  /* Scroll Reveal Animation */
+  .scroll-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: var(--transition-smooth);
+  }
+
+  .scroll-reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Hover Scale Animation */
+  .hover-scale {
+    transition: var(--transition-spring);
+  }
+
+  .hover-scale:hover {
+    transform: scale(1.05);
+  }
+
+  /* Tilted Card */
+  .tilted-card {
+    transform: rotate(-2deg);
+    transition: var(--transition-spring);
+  }
+
+  .tilted-card:hover {
+    transform: rotate(0deg) scale(1.05);
+  }
+}
+
+@layer utilities {
+  /* Gradient Text */
+  .gradient-text {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Metallic Text */
+  .metallic-text {
+    background: var(--gradient-metallic);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Animation Keyframes */
+  @keyframes pulse-glow {
+    0% {
+      box-shadow: 0 0 20px hsla(var(--electric), 0.4);
+    }
+    100% {
+      box-shadow: 0 0 40px hsla(var(--electric), 0.8);
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      hsla(var(--atom-metallic), 0.1) 0%,
+      hsla(var(--atom-metallic), 0.8) 50%,
+      hsla(var(--atom-metallic), 0.1) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
+
+  /* Reduced Motion */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
