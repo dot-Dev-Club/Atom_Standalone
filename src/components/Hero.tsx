@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-// Live logo URL
-const atomLogo = 'https://liquid.paper.design/share/01K4WHTFF2ETZ325RQNA52YNBJ?refraction=0.027&edge=0&patternBlur=0&liquid=0.4&speed=0.43&patternScale=2&background=black';
-import heroBackground from '@/assets/hero-background.jpg';
+import TextPressure from './TextPressure';
+import Waves from './Waves';
+import atomLogo from '@/assets/atom-logo.png';
 
 export const Hero = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -13,15 +13,20 @@ export const Hero = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-start overflow-hidden">
-      {/* Background Image with Overlay */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: `url(${heroBackground})`,
-        }}
-      >
-        <div className="absolute inset-0 bg-gradient-hero" />
-      </div>
+      {/* Animated Waves Background */}
+      <Waves
+        lineColor="#2196f3"
+        backgroundColor="rgba(33, 150, 243, 0.2)"
+        waveSpeedX={0.02}
+        waveSpeedY={0.01}
+        waveAmpX={40}
+        waveAmpY={20}
+        friction={0.9}
+        tension={0.01}
+        maxCursorMove={120}
+        xGap={12}
+        yGap={36}
+      />
 
       {/* Animated Particles */}
       <div className="absolute inset-0">
@@ -75,24 +80,62 @@ export const Hero = () => {
         {/* Text content - right */}
         <div className="flex-1 text-left">
           {/* Main Heading */}
-          <motion.h1
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 gradient-text"
+            className="mb-6 flex items-center"
           >
-            ATOM Club
-          </motion.h1>
+            <div style={{ width: 'auto', height: '120px', minWidth: '320px', marginRight: '24px' }}>
+              <TextPressure
+                text="ATOM"
+                flex={true}
+                alpha={false}
+                stroke={false}
+                width={true}
+                weight={true}
+                italic={true}
+                textColor="#ffffff"
+                strokeColor="#ff0000"
+                minFontSize={60}
+              />
+            </div>
+            <div style={{ width: 'auto', height: '120px', minWidth: '320px' }}>
+              <TextPressure
+                text="CLUB"
+                flex={true}
+                alpha={false}
+                stroke={false}
+                width={true}
+                weight={true}
+                italic={true}
+                textColor="#ffffff"
+                strokeColor="#ff0000"
+                minFontSize={60}
+              />
+            </div>
+          </motion.div>
 
           {/* Subheading */}
-          <motion.p
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.7 }}
-            className="text-xl md:text-2xl lg:text-3xl metallic-text font-light mb-8 max-w-3xl leading-relaxed"
+            className="mb-8"
           >
-            Association of Technology Oreinted Minds
-          </motion.p>
+            <TextPressure
+              text="Association of Technology Oreinted Minds"
+              flex={true}
+              alpha={false}
+              stroke={false}
+              width={true}
+              weight={true}
+              italic={true}
+              textColor="#ffffff"
+              strokeColor="#ff0000"
+              minFontSize={32}
+            />
+          </motion.div>
 
           {/* Animated Tagline */}
           <motion.div
