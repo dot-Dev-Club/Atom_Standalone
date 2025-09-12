@@ -28,28 +28,7 @@ export const Hero = () => {
         yGap={36}
       />
 
-      {/* Animated Particles */}
-      <div className="absolute inset-0">
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-2 h-2 bg-electric rounded-full opacity-30"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -20, 0],
-              opacity: [0.3, 0.8, 0.3],
-            }}
-            transition={{
-              duration: 3 + Math.random() * 2,
-              repeat: Infinity,
-              delay: Math.random() * 2,
-            }}
-          />
-        ))}
-      </div>
+
 
       {/* Content Layout: Logo left, text right */}
       <div className="relative z-10 flex flex-row items-center w-full px-4 max-w-7xl mx-auto">
@@ -100,20 +79,6 @@ export const Hero = () => {
                 minFontSize={60}
               />
             </div>
-            <div style={{ width: 'auto', height: '120px', minWidth: '320px' }}>
-              <TextPressure
-                text="CLUB"
-                flex={true}
-                alpha={false}
-                stroke={false}
-                width={true}
-                weight={true}
-                italic={true}
-                textColor="#ffffff"
-                strokeColor="#ff0000"
-                minFontSize={60}
-              />
-            </div>
           </motion.div>
 
           {/* Subheading */}
@@ -147,25 +112,7 @@ export const Hero = () => {
           </motion.div>
         </div>
 
-        {/* Scroll Indicator - bottom center */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isVisible ? { opacity: 1 } : {}}
-          transition={{ duration: 0.8, delay: 1.2 }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-        >
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="w-6 h-10 border-2 border-atom-metallic rounded-full flex justify-center"
-          >
-            <motion.div
-              animate={{ y: [0, 12, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="w-1 h-3 bg-atom-primary rounded-full mt-2"
-            />
-          </motion.div>
-        </motion.div>
+
       </div>
     </section>
   );
