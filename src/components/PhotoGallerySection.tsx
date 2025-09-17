@@ -33,10 +33,8 @@ const PhotoGallerySection = () => {
     return () => { isMounted = false; };
   }, []);
 
-// ...existing code...
-
   return (
-    <section className="min-h-screen bg-background">
+    <section className="min-h-screen bg-background flex flex-col justify-center items-center">
       <motion.h2
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
@@ -56,10 +54,10 @@ const PhotoGallerySection = () => {
           />
         ))}
       </div>
-      <div className="flex justify-center mt-8">
+      <div className="flex justify-center items-center mt-8">
         <button
           className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 rounded-full text-white font-semibold transition-transform transform hover:scale-105 shadow-lg text-lg"
-          onClick={() => navigate("/gallery")}
+          onClick={() => navigate("/full-gallery")}
         >
           View More
         </button>
