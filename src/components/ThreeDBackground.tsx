@@ -175,7 +175,7 @@ export const ThreeDBackground = () => {
   };
 
   return (
-    <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+    <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
       {shapes.map(renderShape)}
 
       {/* Enhanced floating particles */}
