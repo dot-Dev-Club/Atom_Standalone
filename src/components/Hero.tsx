@@ -45,7 +45,7 @@ export const Hero = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center lg:justify-start overflow-hidden py-8 sm:py-12 lg:py-0">
+    <section className="relative min-h-screen flex items-center justify-start overflow-hidden">
       {/* Animated Waves Background */}
       <Waves
         lineColor="#2196f3"
@@ -63,9 +63,9 @@ export const Hero = () => {
 
 
 
-      {/* Content Layout: Responsive - Stack on mobile, side-by-side on desktop */}
-      <div className="relative z-10 flex flex-col lg:flex-row items-center w-full px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto gap-8 lg:gap-12">
-        {/* ATOM Logo - responsive sizing */}
+      {/* Content Layout: Logo left, text right */}
+      <div className="relative z-10 flex flex-row items-center w-full px-4 max-w-7xl mx-auto">
+        {/* ATOM Logo - left, big */}
         <motion.div
           initial={{ scale: 0, rotate: -180 }}
           animate={isVisible ? { scale: 1, rotate: 0 } : {}}
@@ -75,7 +75,8 @@ export const Hero = () => {
             stiffness: 100,
             delay: 0.2 
           }}
-          className="flex-shrink-0 flex items-center justify-center order-1 lg:order-none"
+          className="mr-12 flex-shrink-0 flex items-center justify-center"
+          style={{ minWidth: '350px' }}
         >
           <motion.div 
             ref={logoRef}
@@ -159,7 +160,7 @@ export const Hero = () => {
             <motion.img 
               src={atomLogo} 
               alt="ATOM Club Logo" 
-              className="w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-[350px] lg:h-[350px] xl:w-[450px] xl:h-[450px] animate-float relative z-10"
+              className="w-[350px] h-[350px] md:w-[450px] md:h-[450px] animate-float relative z-10"
               style={{ objectFit: 'contain' }}
               animate={{
                 filter: isHovering 
@@ -190,16 +191,16 @@ export const Hero = () => {
           </motion.div>
         </motion.div>
 
-        {/* Text content - responsive text alignment */}
-        <div className="flex-1 text-center lg:text-left order-2 lg:order-none">
+        {/* Text content - right */}
+        <div className="flex-1 text-left">
           {/* Main Heading */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="mb-4 sm:mb-6 flex justify-center lg:justify-start items-center"
+            className="mb-6 flex items-center"
           >
-            <div className="w-full max-w-sm sm:max-w-md lg:max-w-none" style={{ height: '80px', minHeight: '80px' }}>
+            <div style={{ width: 'auto', height: '120px', minWidth: '320px', marginRight: '24px' }}>
               <TextPressure
                 text="ATOM"
                 flex={true}
@@ -210,7 +211,7 @@ export const Hero = () => {
                 italic={true}
                 textColor="#ffffff"
                 strokeColor="#ff0000"
-                minFontSize={40}
+                minFontSize={60}
               />
             </div>
           </motion.div>
@@ -220,22 +221,20 @@ export const Hero = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.7 }}
-            className="mb-6 sm:mb-8"
+            className="mb-8"
           >
-            <div className="w-full" style={{ minHeight: '60px' }}>
-              <TextPressure
-                text="Association of Technology Oriented Minds"
-                flex={true}
-                alpha={false}
-                stroke={false}
-                width={true}
-                weight={true}
-                italic={true}
-                textColor="#ffffff"
-                strokeColor="#ff0000"
-                minFontSize={18}
-              />
-            </div>
+            <TextPressure
+              text="Association of Technology Oreinted Minds"
+              flex={true}
+              alpha={false}
+              stroke={false}
+              width={true}
+              weight={true}
+              italic={true}
+              textColor="#ffffff"
+              strokeColor="#ff0000"
+              minFontSize={32}
+            />
           </motion.div>
 
           {/* Animated Tagline */}
@@ -243,11 +242,8 @@ export const Hero = () => {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={isVisible ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.8, delay: 0.9 }}
-            className="text-sm sm:text-base md:text-lg text-foreground-secondary font-medium max-w-2xl mx-auto lg:mx-0"
+            className="text-base md:text-lg text-foreground-secondary font-medium"
           >
-            <p className="leading-relaxed">
-              Fostering innovation, learning, and collaboration in technology
-            </p>
           </motion.div>
         </div>
 
