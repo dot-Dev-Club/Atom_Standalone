@@ -1,6 +1,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { X, Linkedin, Grid, ArrowLeft } from "lucide-react";
+import ElectricBorder from "./ui/ElectricBorder";
 
 import { coordinators } from "@/constants/coordinators";
 
