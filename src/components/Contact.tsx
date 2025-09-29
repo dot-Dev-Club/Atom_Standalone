@@ -2,6 +2,8 @@ import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { Send, AlertCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import emailjs from '@emailjs/browser';
+import { EMAILJS_CONFIG } from '@/config/emailjs';
 
 export const Contact = () => {
   const ref = useRef(null);
@@ -62,20 +64,46 @@ export const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      // Email template parameters
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        from_mobile: formData.mobile,
+        to_email: 'atom@karunya.edu',
+        message: `
+Contact Form Submission from ATOM Club Website
+
+Name: ${formData.name}
+Email: ${formData.email}
+Mobile: ${formData.mobile}
+
+This person is interested in joining the ATOM Club community.
+        `.trim(),
+        reply_to: formData.email,
+      };
+
+      // Send email using EmailJS
+      await emailjs.send(
+        EMAILJS_CONFIG.SERVICE_ID,
+        EMAILJS_CONFIG.TEMPLATE_ID,
+        templateParams,
+        EMAILJS_CONFIG.PUBLIC_KEY
+      );
+
       toast({
         title: "Message Sent Successfully!",
         description:
-          "Thank you for your interest. We'll get back to you soon.",
+          "Thank you for your interest. We'll get back to you at atom@karunya.edu soon.",
         variant: "default",
       });
 
       setFormData({ name: "", mobile: "", email: "" });
       setErrors({ name: "", mobile: "", email: "" });
     } catch (error) {
+      console.error('EmailJS Error:', error);
       toast({
-        title: "Error",
-        description: "Something went wrong. Please try again.",
+        title: "Error Sending Message",
+        description: "Something went wrong. Please try emailing us directly at atom@karunya.edu",
         variant: "destructive",
       });
     } finally {
@@ -251,6 +279,9 @@ export const Contact = () => {
             By submitting this form, you agree to receive communications from
             ATOM Club. We respect your privacy and will never share your
             information.
+          </p>
+          <p className="mt-2 text-atom-primary">
+            Messages are sent directly to: <strong>atom@karunya.edu</strong>
           </p>
         </motion.div>
       </motion.div>

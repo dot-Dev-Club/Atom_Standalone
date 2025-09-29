@@ -63,9 +63,9 @@ export const Hero = () => {
 
 
 
-      {/* Content Layout: Logo left, text right */}
-      <div className="relative z-10 flex flex-row items-center w-full px-4 max-w-7xl mx-auto">
-        {/* ATOM Logo - left, big */}
+      {/* Content Layout: Logo left, text right on desktop; stacked on mobile */}
+      <div className="relative z-10 flex flex-col lg:flex-row items-center w-full px-4 max-w-7xl mx-auto">
+        {/* ATOM Logo - left on desktop, top on mobile */}
         <motion.div
           initial={{ scale: 0, rotate: -180 }}
           animate={isVisible ? { scale: 1, rotate: 0 } : {}}
@@ -75,8 +75,8 @@ export const Hero = () => {
             stiffness: 100,
             delay: 0.2 
           }}
-          className="mr-12 flex-shrink-0 flex items-center justify-center"
-          style={{ minWidth: '350px' }}
+          className="mb-8 lg:mb-0 lg:mr-12 flex-shrink-0 flex items-center justify-center"
+          style={{ minWidth: '300px' }}
         >
           <motion.div 
             ref={logoRef}
