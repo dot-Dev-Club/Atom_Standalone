@@ -35,7 +35,7 @@ export const dotdevClub = {
       image: Darshan,
       isMain: true,
       bio: "As Coordinator of Dot Dev, Dharshan Kumar J is a Finalist of the NEXUS hackathon and a Software Developer skilled in developing Web and Mobile Applications. He is also a co-founder of VelsyMedia and TurpleSpace and has led a Midkraft24 website team.",
-      linkedin: "https://www.linkedin.com/in/j-dharshan-kumar/",
+      linkedin: "linkedin.com/in/j-dharshan-kumar",
     },
     {
       name: "Danish Prabhu K V",
@@ -43,7 +43,7 @@ export const dotdevClub = {
       image: Danish,
       isMain: false,
       bio: " As Junior Coordinator of Dot Dev, Danish Prabhu K V is a Finalist of the NEXUS Hackathon and is passionate about AI, and software engineering. He works as a freelancer and is currently an intern at GMS (US Based company) earning a stipend of 10k/month.",
-      linkedin: "https://www.linkedin.com/in/danish-prabhu-0a1691293",
+      linkedin: "linkedin.com/in/danish-prabhu-0a1691293",
     },
     {
       name: "Jola Kaseena C",
@@ -51,7 +51,7 @@ export const dotdevClub = {
       image: Jola,
       isMain: false,
       bio: "",
-      linkedin: "https://www.linkedin.com/in/jola-keseena-b0895a2a9",
+      linkedin: "linkedin.com/in/jola-keseena-b0895a2a9",
     },
     {
       name: "Manisha S",
@@ -67,7 +67,7 @@ export const dotdevClub = {
       image: Varsha,
       isMain: false,
       bio: "",
-      linkedin: "https://www.linkedin.com/in/varsha-nadarajan",
+      linkedin: "linkedin.com/in/varsha-nadarajan",
     },
     {
       name: "Monish",
@@ -75,7 +75,7 @@ export const dotdevClub = {
       image: Monish,
       isMain: false,
       bio: "",
-      linkedin: "https://www.linkedin.com/in/varsha-nadarajan",
+      linkedin: "linkedin.com/in/varsha-nadarajan",
     },
   ],
   projects: [

@@ -21,15 +21,15 @@ export const rndClub = {
       image: Rumitha,
       isMain: true,
       bio: " As Coordinator of R & D, Rumitha S is a Runner up in Nexus for the project Library Management System. She has published a research paper and earned a Google certified Data Analytics certificate.",
-      linkedin: "https://www.linkedin.com/in/rumitha-s",
+      linkedin: "linkedin.com/in/rumitha-s",
     },
     {
       name: "Dhruv Swamy R",
-      role: "Joint Coordinator",
+      role: "Coordinator",
       image: Dhruv,
-      isMain: false,
+      isMain: true,
       bio: "As Coordinator of R & D, Dhruv Swamy R is passionate about AI in marketing and entrepreneurship and is the Founder & Ceo of RUVODRUVTO.",
-      linkedin: "https://www.linkedin.com/in/dhuruvr",
+      linkedin: "linkedin.com/in/dhuruvr",
     },
     {
       name: "Immanuel Sibu Chandy",
@@ -37,7 +37,7 @@ export const rndClub = {
       image: Immanuel,
       isMain: false,
       bio: "As Junior Coordinator of R & D, Immanuel Shibu Chandy participated in the SIH and other hackathons, and even for an ISRO hackathon.",
-      linkedin: "https://linkedin.com/in/immanuel-shibu-chandy-8a902732",
+      linkedin: "linkedin.com/in/immanuel-shibu-chandy-8a902732",
     },
   ],
   projects: [

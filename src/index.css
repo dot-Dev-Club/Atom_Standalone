@@ -246,12 +246,71 @@
     animation: shimmer 2s infinite;
   }
 
+  /* Mobile-specific animations */
+  @keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* Mobile Touch Improvements */
+  @media (max-width: 768px) {
+    .hover-scale:hover {
+      transform: none; /* Disable hover effects on mobile */
+    }
+    
+    .hover-scale:active {
+      transform: scale(0.95);
+    }
+    
+    /* Better touch target sizes */
+    button, a, [role="button"] {
+      min-height: 44px;
+      min-width: 44px;
+    }
+    
+    /* Prevent horizontal scroll */
+    body {
+      overflow-x: hidden;
+    }
+    
+    /* Better text sizing for mobile */
+    .gradient-text {
+      line-height: 1.2;
+    }
+  }
+
+  /* Tablet Optimizations */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .glass-card {
+      padding: 1.5rem;
+    }
+  }
+
+  /* Large Screen Optimizations */
+  @media (min-width: 1920px) {
+    .container {
+      max-width: 1400px;
+    }
+  }
+
+  /* High DPI / Retina Displays */
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .glass-card {
+      backdrop-filter: blur(16px);
+    }
+  }
+
   /* Reduced Motion */
   @media (prefers-reduced-motion: reduce) {
     * {
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
+    }
+    
+    .scroll-reveal {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
     }
   }
 }

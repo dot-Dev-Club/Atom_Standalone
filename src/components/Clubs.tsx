@@ -31,11 +31,11 @@ export const Clubs = () => {
     if (filtered.length === 0) return null;
 
     return (
-      <div className="flex flex-wrap justify-center items-center gap-8 max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 max-w-6xl mx-auto">
         {filtered.map((coordinator, index) => (
           <div
             key={index}
-            className={`glass-card p-6 text-center cursor-pointer w-full max-w-xs mx-auto ${
+            className={`glass-card p-4 sm:p-6 text-center cursor-pointer w-full ${
               coordinator.isMain ? "ring-2 ring-atom-primary" : ""
             }`}
             onClick={() => setSelectedCoordinator(coordinator)}
@@ -43,13 +43,13 @@ export const Clubs = () => {
             <img
               src={coordinator.image}
               alt={coordinator.name}
-              className="w-20 h-20 rounded-full mx-auto object-cover border-2 border-atom-metallic mb-4"
+              className="w-16 h-16 sm:w-20 sm:h-20 rounded-full mx-auto object-cover border-2 border-atom-metallic mb-3 sm:mb-4"
             />
-            <h5 className="font-semibold text-foreground mb-2">
+            <h5 className="font-semibold text-sm sm:text-base text-foreground mb-1 sm:mb-2">
               {coordinator.name}
             </h5>
             <p
-              className={`text-sm ${
+              className={`text-xs sm:text-sm ${
                 coordinator.isMain
                   ? "text-atom-primary font-semibold"
                   : "text-foreground-secondary"
@@ -82,14 +82,14 @@ export const Clubs = () => {
           </button>
         </div>
 
-        <div className="pt-8 px-4 max-w-6xl mx-auto pb-20">
+        <div className="pt-4 sm:pt-6 lg:pt-8 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto pb-12 sm:pb-16 lg:pb-20">
           {/* Club Header */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-center mb-12"
+            className="text-center mb-8 sm:mb-10 lg:mb-12"
           >
-            <div className="w-24 h-24 mx-auto bg-gradient-primary rounded-xl flex items-center justify-center mb-6">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 mx-auto bg-gradient-primary rounded-xl flex items-center justify-center mb-4 sm:mb-6">
               {clubPage.name === "Dot Dev Club" ? (
                 <img src={DotIcon} alt="Dot Dev Logo" className="w-14 h-14 object-contain mx-auto" style={{ display: 'block' }} />
               ) : clubPage.name === "Un Bias Club" ? (
@@ -105,10 +105,10 @@ export const Clubs = () => {
                 })()
               )}
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 gradient-text">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-3 sm:mb-4 gradient-text px-4 sm:px-0">
               {clubPage.name}
             </h1>
-            <p className="text-lg text-foreground-secondary mb-6 max-w-3xl mx-auto">
+            <p className="text-sm sm:text-base lg:text-lg text-foreground-secondary mb-4 sm:mb-6 max-w-3xl mx-auto px-4 sm:px-0">
               {clubPage.description}
             </p>
           </motion.div>
@@ -118,11 +118,11 @@ export const Clubs = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="mb-12"
+            className="mb-8 sm:mb-10 lg:mb-12"
           >
-            <h2 className="text-2xl font-bold mb-4 metallic-text">Objectives</h2>
-            <div className="glass-card p-6">
-              <p className="text-foreground-secondary leading-relaxed">{clubPage.objectives}</p>
+            <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 metallic-text">Objectives</h2>
+            <div className="glass-card p-4 sm:p-6">
+              <p className="text-sm sm:text-base text-foreground-secondary leading-relaxed">{clubPage.objectives}</p>
             </div>
           </motion.section>
 
@@ -131,11 +131,11 @@ export const Clubs = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="mb-12"
+            className="mb-8 sm:mb-10 lg:mb-12"
           >
-            <h2 className="text-2xl font-bold mb-4 metallic-text">About the Club</h2>
-            <div className="glass-card p-6">
-              <p className="text-foreground-secondary leading-relaxed">{clubPage.extraInfo}</p>
+            <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 metallic-text">About the Club</h2>
+            <div className="glass-card p-4 sm:p-6">
+              <p className="text-sm sm:text-base text-foreground-secondary leading-relaxed">{clubPage.extraInfo}</p>
             </div>
           </motion.section>
 
@@ -144,9 +144,9 @@ export const Clubs = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="mb-12"
+            className="mb-8 sm:mb-10 lg:mb-12"
           >
-            <h2 className="text-2xl font-bold mb-6 metallic-text">Coordinators</h2>
+            <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 metallic-text">Coordinators</h2>
             {renderCoordinatorsByRole(clubPage.coordinators, ["Coordinator", "Senior Coordinator", "Joint Coordinator", "Junior Coordinator"])}
           </motion.section>
 
@@ -156,9 +156,9 @@ export const Clubs = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
-              className="mb-12"
+              className="mb-8 sm:mb-10 lg:mb-12"
             >
-              <h2 className="text-2xl font-bold mb-6 metallic-text">Educators</h2>
+              <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 metallic-text">Educators</h2>
               {renderCoordinatorsByRole(clubPage.coordinators, ["Educator"])}
             </motion.section>
           )}
@@ -203,20 +203,20 @@ export const Clubs = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7 }}
           >
-            <h2 className="text-2xl font-bold mb-6 metallic-text">Gallery</h2>
-            <div className="flex flex-wrap justify-center gap-4">
+            <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 metallic-text">Gallery</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {clubPage.gallery.map((image, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.1 * index }}
-                  className="glass-card overflow-hidden hover-scale w-full max-w-xs"
+                  className="glass-card overflow-hidden hover-scale w-full aspect-video"
                 >
                   <img
                     src={image}
                     alt={`${clubPage.name} gallery ${index + 1}`}
-                    className="w-full h-48 object-cover"
+                    className="w-full h-full object-cover"
                   />
                 </motion.div>
               ))}
@@ -227,57 +227,57 @@ export const Clubs = () => {
         {/* Coordinator Modal in Club Page */}
         {selectedCoordinator && (
           <div
-            className="fixed inset-0 bg-background/80 backdrop-blur-sm z-60 flex items-center justify-center p-4 min-h-screen"
+            className="fixed inset-0 bg-background/80 backdrop-blur-sm z-60 flex items-center justify-center p-2 sm:p-4 min-h-screen overflow-y-auto"
             onClick={() => setSelectedCoordinator(null)}
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className="glass-card max-w-md w-full p-6 relative text-center mx-auto my-auto"
+              className="glass-card max-w-xs sm:max-w-md w-full p-4 sm:p-6 relative text-center mx-auto my-4 sm:my-8"
               onClick={(e) => e.stopPropagation()}
             >
               <button
                 onClick={() => setSelectedCoordinator(null)}
-                className="absolute top-4 right-4 p-2 hover:bg-card-hover rounded-full transition-colors z-10"
+                className="absolute top-3 right-3 sm:top-4 sm:right-4 p-2 hover:bg-card-hover rounded-full transition-colors z-10"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>
               
-              <div className="mb-6">
+              <div className="mb-4 sm:mb-6">
                 <img
                   src={selectedCoordinator.image}
                   alt={selectedCoordinator.name}
-                  className="w-24 h-24 rounded-full mx-auto object-cover border-2 border-atom-metallic mb-4"
+                  className="w-20 h-20 sm:w-24 sm:h-24 rounded-full mx-auto object-cover border-2 border-atom-metallic mb-3 sm:mb-4"
                 />
-                <h5 className="font-bold text-foreground text-2xl mb-2">
+                <h5 className="font-bold text-foreground text-lg sm:text-xl lg:text-2xl mb-1 sm:mb-2 px-8 sm:px-0">
                   {selectedCoordinator.name}
                 </h5>
-                <p className="text-foreground-secondary text-lg mb-4">
+                <p className="text-foreground-secondary text-sm sm:text-base lg:text-lg mb-3 sm:mb-4">
                   {selectedCoordinator.role}
                 </p>
                 {selectedCoordinator.isMain && (
-                  <div className="mb-4 text-xs text-atom-primary font-medium">
+                  <div className="mb-3 sm:mb-4 text-xs text-atom-primary font-medium">
                     ★ Lead Coordinator
                   </div>
                 )}
               </div>
 
               {selectedCoordinator.bio && (
-                <div className="mb-6">
-                  <p className="text-foreground-secondary text-sm leading-relaxed">
+                <div className="mb-4 sm:mb-6">
+                  <p className="text-foreground-secondary text-xs sm:text-sm leading-relaxed">
                     {selectedCoordinator.bio}
                   </p>
                 </div>
               )}
 
               {selectedCoordinator.linkedin && (
-                <div className="flex justify-center items-center gap-2">
-                  <Linkedin className="w-4 h-4 text-blue-600" />
+                <div className="flex justify-center items-center gap-2 flex-wrap">
+                  <Linkedin className="w-4 h-4 text-blue-600 flex-shrink-0" />
                   <a
-                    href={selectedCoordinator.linkedin}
+                    href={`https://${selectedCoordinator.linkedin}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-blue-600 hover:text-blue-700 text-sm break-all transition-colors duration-200"
+                    className="text-blue-600 hover:text-blue-700 text-xs sm:text-sm break-all transition-colors duration-200"
                   >
                     {selectedCoordinator.linkedin}
                   </a>
@@ -293,28 +293,31 @@ export const Clubs = () => {
   return (
     <>
       {/* Clubs Section */}
-      <section ref={ref} className="py-20 px-4 max-w-7xl mx-auto">
-        <h2
+      <section ref={ref} className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <motion.h2
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-4xl md:text-5xl font-bold text-center mb-16 gradient-text"
+          className="text-3xl sm:text-4xl lg:text-5xl font-bold text-center mb-8 sm:mb-12 lg:mb-16 gradient-text"
         >
           Our Clubs
-        </h2>
+        </motion.h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 justify-center space-evenly">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 justify-center">
           {clubs.map((club, index) => {
             const Icon = club.icon;
             return (
-              <div
+              <motion.div
                 key={club.id}
-                className="glass-card p-8 hover-scale cursor-pointer group h-full flex flex-col justify-between max-w-sm mx-auto"
+                initial={{ opacity: 0, y: 30 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className="glass-card p-4 sm:p-6 lg:p-8 hover-scale cursor-pointer group h-full flex flex-col justify-between max-w-sm mx-auto w-full"
                 onClick={() => setSelectedClub(club)}
               >
                 <div>
-                  <div className="relative mb-6">
-                    <div className="w-16 h-16 mx-auto bg-gradient-primary rounded-xl flex items-center justify-center mb-4 group-hover:shadow-electric transition-all duration-300">
+                  <div className="relative mb-4 sm:mb-6">
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 mx-auto bg-gradient-primary rounded-xl flex items-center justify-center mb-3 sm:mb-4 group-hover:shadow-electric transition-all duration-300">
                       {club.name === "Dot Dev Club" ? (
                         <img src={DotIcon} alt="Dot Dev Logo" className="w-14 h-14 object-contain mx-auto" />
                       ) : club.name === "Un Bias Club" ? (
@@ -331,29 +334,29 @@ export const Clubs = () => {
                       )}
                     </div>
                   </div>
-                  <h3 className="text-xl font-bold text-center mb-4 text-foreground">
+                  <h3 className="text-lg sm:text-xl font-bold text-center mb-3 sm:mb-4 text-foreground">
                     {club.name}
                   </h3>
-                  <p className="text-foreground-secondary text-center leading-relaxed mb-4 line-clamp-3">
+                  <p className="text-sm sm:text-base text-foreground-secondary text-center leading-relaxed mb-3 sm:mb-4 line-clamp-3">
                     {club.description}
                   </p>
                 </div>
-                <div className="flex justify-center space-x-2 mt-4">
+                <div className="flex justify-center space-x-2 mt-3 sm:mt-4">
                   {club.coordinators.slice(0, 3).map((coordinator, i) => (
                     <img
                       key={i}
                       src={coordinator.image}
                       alt={coordinator.name}
-                      className="w-8 h-8 rounded-full border-2 border-atom-metallic"
+                      className="w-6 h-6 sm:w-8 sm:h-8 rounded-full border-2 border-atom-metallic"
                     />
                   ))}
                   {club.coordinators.length > 3 && (
-                    <div className="w-8 h-8 rounded-full bg-card-hover border-2 border-atom-metallic flex items-center justify-center text-xs font-semibold">
+                    <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-card-hover border-2 border-atom-metallic flex items-center justify-center text-xs font-semibold">
                       +{club.coordinators.length - 3}
                     </div>
                   )}
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>
@@ -367,13 +370,13 @@ export const Clubs = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 min-h-screen"
+          className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-2 sm:p-4 min-h-screen overflow-y-auto"
           onClick={() => setSelectedClub(null)}
         >
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="glass-card max-w-4xl w-full max-h-[90vh] overflow-y-auto p-8 relative mx-auto my-auto"
+            className="glass-card max-w-xs sm:max-w-2xl lg:max-w-4xl w-full max-h-[95vh] sm:max-h-[90vh] overflow-y-auto p-4 sm:p-6 lg:p-8 relative mx-auto my-2 sm:my-4"
             onClick={(e) => e.stopPropagation()}
           >
             <button

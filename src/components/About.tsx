@@ -10,20 +10,20 @@ export const About = () => {
   return (
     <section 
       ref={ref} 
-      className="py-20 px-4 w-full min-h-screen relative overflow-hidden"
+      className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 w-full min-h-screen relative overflow-hidden"
       style={{
         backgroundImage: `url(${atomTeamImage})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
-        backgroundAttachment: 'fixed'
+        backgroundAttachment: window.innerWidth > 768 ? 'fixed' : 'scroll'
       }}
     >
       {/* Light overlay to let faces show through while maintaining readability */}
-      <div className="absolute inset-0 bg-black/25"></div>
+      <div className="absolute inset-0 bg-black/30 sm:bg-black/25"></div>
       
-      <div className="relative z-10 text-center">
-        <div className="-mt-8 text-3xl md:text-4xl text-white/60">
+      <div className="relative z-10 text-center max-w-6xl mx-auto">
+        <div className="text-2xl sm:text-3xl lg:text-4xl text-white/70 mb-8 sm:mb-12 lg:mb-16">
           <ScrollFloat
             scrollContainerRef={null}
             animationDuration={6}
@@ -36,7 +36,7 @@ export const About = () => {
           </ScrollFloat>
         </div>
         
-        <div className="max-w-4xl mx-auto space-y-6 text-lg md:text-xl leading-relaxed text-white/50 mt-20 text-center">
+        <div className="max-w-4xl mx-auto space-y-4 sm:space-y-6 text-base sm:text-lg lg:text-xl leading-relaxed text-white/60 px-4 sm:px-0">
           <ScrollFloat
             scrollContainerRef={null}
             animationDuration={7}
@@ -45,7 +45,7 @@ export const About = () => {
             scrollEnd='bottom bottom-=40%'
             stagger={0.22}
             containerClassName=""
-            textClassName="text-lg md:text-xl leading-relaxed text-white/50"
+            textClassName="text-base sm:text-lg lg:text-xl leading-relaxed text-white/60"
           >
            Association of Technology Oriented Minds (ATOM) is a student-driven community that fosters innovation, learning, and collaboration. We aim to empower students with technical skills, hands-on experience, and a platform to turn ideas into impactful solutions.
           </ScrollFloat>

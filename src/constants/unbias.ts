@@ -33,7 +33,7 @@ export const unbiasClub = {
       image: Aravind,
       isMain: true,
       bio: "As Coordinator of Unbias, Aravindan M is a Silver Medalist in the International Taekwondo Championship and a finalist at IIT Bombay's Eureka 2024. He is specialized in Generative AI and is the Head of AI at Rapha MedTech.",
-      linkedin: "https://www.linkedin.com/in/aravindan-arru/",
+      linkedin: "linkedin.com/in/aravindan-arru",
     },
     {
       name: "Ronnie A Jeffrey",
@@ -41,7 +41,7 @@ export const unbiasClub = {
       image: Ronnie,
       isMain: false,
       bio: "As Junior Coordinator of Unbias, Ronnie A Jeffrey is a winner in NEXUS 2024 and was awarded a special mention at Cyberthon '25. He is passionate about AI and Full Stack development.",
-      linkedin: "https://www.linkedin.com/in/ronnie-a-jeffrey",
+      linkedin: "linkedin.com/in/ronnie-a-jeffrey",
     },
     {
       name: "Pooja",
@@ -49,7 +49,7 @@ export const unbiasClub = {
       image: Pooja,
       isMain: false,
       bio: "",
-      linkedin: "https://www.linkedin.com/in/pooja-s-1190862b8/",
+      linkedin: "linkedin.com/in/pooja-s-1190862b8",
     },
     {
       name: "Aparna",
@@ -57,7 +57,7 @@ export const unbiasClub = {
       image: Aparna,
       isMain: false,
       bio: "",
-      linkedin: "http://linkedin.com/in/aparna-j-a13647297",
+      linkedin: "linkedin.com/in/aparna-j-a13647297",
     },
     {
       name: "Thirupathi",
@@ -65,7 +65,7 @@ export const unbiasClub = {
       image: Thirupathy,
       isMain: false,
       bio: "",
-      linkedin: "https://www.linkedin.com/in/thirupathis",
+      linkedin: "linkedin.com/in/thirupathis",
     },
     {
       name: "Vasuki",
@@ -73,7 +73,7 @@ export const unbiasClub = {
       image: Vasuki,
       isMain: false,
       bio: "",
-      linkedin: "https://www.linkedin.com/in/vasuki-g-0b31a9288",
+      linkedin: "linkedin.com/in/vasuki-g-0b31a9288",
     },
     {
       name: "Lebiraja",
@@ -81,7 +81,7 @@ export const unbiasClub = {
       image: Lebi,
       isMain: false,
       bio: "",
-      linkedin: "https://www.linkedin.com/in/lebiraja",
+      linkedin: "linkedin.com/in/lebiraja",
     }
   ],
   projects: [

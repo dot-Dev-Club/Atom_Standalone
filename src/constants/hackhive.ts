@@ -32,7 +32,7 @@ export const hackhiveClub = {
       image: Sanjay,
       isMain: true,
       bio: "As Coordinator of Hack Hive, Sanjay S is a finalist in the Cyberthon and was awarded the Best Idea Award at the TN-Police Hackathon.",
-      linkedin: "https://www.linkedin.com/in/sanjay-s-699585345",
+      linkedin: "linkedin.com/in/sanjay-s-699585345",
     },
     {
       name: "Jayesh",
@@ -40,7 +40,7 @@ export const hackhiveClub = {
       image: Jayesh,
       isMain: false,
       bio: "As Junior Coordinator of Hack Hive, Jayesh V Prakash Naidu is passionate about DIGITAL FORENSICS and created a Wi-Fi penetration-testing device to learn networking. He is also the founder of BlackSpotAI, a cybersecurity project.",
-      linkedin: "https://www.linkedin.com/in/jayesh-v-prakash-naidu",
+      linkedin: "linkedin.com/in/jayesh-v-prakash-naidu",
     },
     {
       name: "Gregory Joe Jeni C",
@@ -48,7 +48,7 @@ export const hackhiveClub = {
       image: Gre,
       isMain: false,
       bio: "",
-      linkedin: "https://www.linkedin.com/in/gregory-joe-jeni-0850142bb/",
+      linkedin: "linkedin.com/in/gregory-joe-jeni-0850142bb",
     },
     {
       name: "Nithishkumar K",
@@ -56,7 +56,7 @@ export const hackhiveClub = {
       image: Nithish,
       isMain: false,
       bio: "",
-      linkedin: "https://www.linkedin.com/in/nithishkumar-k-691473351",
+      linkedin: "linkedin.com/in/nithishkumar-k-691473351",
     },
     {
       name: "Leo Francis A",
@@ -64,7 +64,7 @@ export const hackhiveClub = {
       image: Leo,
       isMain: false,
       bio: "",
-      linkedin: "https://www.linkedin.com/in/leo-francis-a-a9092531b",
+      linkedin: "linkedin.com/in/leo-francis-a-a9092531b",
     }
   ],
   projects: [

@@ -16,11 +16,11 @@ export const careerGuidanceClub = {
   coordinators: [
     {
       name: "Renimol S",
-      role: "Senior Coordinator",
+      role: "Coordinator",
       image: Renimol,
       isMain: true,
       bio: "As Coordinator of Career Guidance, Renimol S was awarded as the best female solo dancer and trained under infosys pragati cohort 2024. She was recognized by the department for completing numerous certifications and online courses.",
-      linkedin: "http://www.linkedin.com/in/renimol-suresh-a04095267",
+      linkedin: "linkedin.com/in/renimol-suresh-a04095267",
     },
     {
       name: "Jola Kaseena C",
@@ -28,7 +28,7 @@ export const careerGuidanceClub = {
       image: Jola,
       isMain: false,
       bio: "As Junior Coordinator of Career Guidance, Jola Keseena C is passionate about Machine learning, Java, and Data science. She won several dance competitions and has created projects such as an IoT and AI-based field guardian prototype and a food delivery management system. She is also a Data Science intern at Unified mentor.",
-      linkedin: "https://www.linkedin.com/in/jola-keseena-b0895a2a9",
+      linkedin: "linkedin.com/in/jola-keseena-b0895a2a9",
     },
   ],
   projects: [
