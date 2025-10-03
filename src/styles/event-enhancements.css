@@ -1,0 +1,184 @@
+/* Enhanced Event Page Styling - Blue Theme Consistent */
+
+/* Custom gradient backgrounds for event theme */
+.event-gradient-bg {
+  background: linear-gradient(135deg, hsl(220, 25%, 6%) 0%, hsl(220, 20%, 8%) 25%, hsl(220, 15%, 12%) 50%, hsl(220, 20%, 8%) 75%, hsl(220, 25%, 6%) 100%);
+}
+
+/* Registration form gradients */
+.internal-form-bg {
+  background: linear-gradient(135deg, #0a0a12 0%, #0f1a3c 25%, #1a1a2e 50%, #0f2a5c 75%, #0a0a12 100%);
+}
+
+.external-form-bg {
+  background: linear-gradient(135deg, #0a120a 0%, #0f3c1a 25%, #1a2e1a 50%, #0f5c2a 75%, #0a120a 100%);
+}
+
+/* Modal animations */
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.modal-enter {
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+/* Countdown timer effects */
+.countdown-glow {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.countdown-number {
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Form field focus effects */
+.form-field:focus {
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+  border-color: #3b82f6;
+}
+
+.form-field-external:focus {
+  box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.3);
+  border-color: #14b8a6;
+}
+
+/* Button hover effects */
+.register-btn-hover:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3);
+}
+
+.external-btn-hover:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 25px rgba(20, 184, 166, 0.3);
+}
+
+/* Event card hover effects */
+.event-card:hover {
+  transform: translateY(-8px);
+  transition: all 0.3s ease;
+}
+
+.event-card:hover .event-image {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
+
+/* Timeline connection lines */
+.timeline-line {
+  background: linear-gradient(90deg, transparent, #8b5cf6, transparent);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .countdown-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  
+  .form-grid-mobile {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Loading animations */
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
+  }
+  50% {
+    opacity: 0.7;
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.6);
+  }
+}
+
+.loading-pulse {
+  animation: pulse-glow 2s infinite;
+}
+
+/* Event status indicators */
+.status-upcoming {
+  background: linear-gradient(90deg, #10b981, #059669);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.status-past {
+  background: linear-gradient(90deg, #6b7280, #4b5563);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* Registration success animation */
+@keyframes success-bounce {
+  0%, 20%, 53%, 80%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  40%, 43% {
+    transform: translate3d(0, -30px, 0);
+  }
+  70% {
+    transform: translate3d(0, -15px, 0);
+  }
+  90% {
+    transform: translate3d(0, -4px, 0);
+  }
+}
+
+.success-animation {
+  animation: success-bounce 1s ease-in-out;
+}
+
+/* Accessibility improvements */
+.focus-visible:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  .event-page {
+    background: white !important;
+    color: black !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .event-card {
+    border: 2px solid white;
+  }
+  
+  .modal-content {
+    border: 2px solid white;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

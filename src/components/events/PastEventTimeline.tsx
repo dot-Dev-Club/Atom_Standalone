@@ -23,9 +23,10 @@ interface Event {
 
 interface PastEventTimelineProps {
   events: Event[];
+  onEventClick?: (event: Event) => void;
 }
 
-const PastEventTimeline: React.FC<PastEventTimelineProps> = ({ events }) => {
+const PastEventTimeline: React.FC<PastEventTimelineProps> = ({ events, onEventClick }) => {
   const [expandedEvents, setExpandedEvents] = useState<Set<number>>(new Set());
   const [groupBy, setGroupBy] = useState<'year' | 'month'>('year');
 
@@ -202,7 +203,10 @@ const PastEventTimeline: React.FC<PastEventTimelineProps> = ({ events }) => {
                     <div className="absolute -left-24 top-6 w-16 h-px bg-gradient-to-r from-purple-500 to-transparent" />
                     <div className="absolute -left-8 top-5 w-2 h-2 bg-purple-500 rounded-full" />
 
-                    <Card className="bg-gradient-to-br from-white/5 to-white/2 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden hover:border-purple-500/30 transition-all duration-300 group">
+                    <Card 
+                      className="bg-gradient-to-br from-white/5 to-white/2 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden hover:border-purple-500/30 transition-all duration-300 group cursor-pointer"
+                      onClick={() => onEventClick && onEventClick(event)}
+                    >
                       <div className="flex flex-col md:flex-row">
                         {/* Event Image */}
                         <div className="relative md:w-48 h-48 md:h-auto overflow-hidden">

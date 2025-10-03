@@ -5,8 +5,8 @@ import { Coordinators } from '@/components/Coordinators';
 import { Clubs } from '@/components/Clubs';
 import { Contact } from '@/components/Contact'
 import PhotoGallerySection from '@/components/PhotoGallerySection';
+import EventsSection from '@/components/EventsSection';
 import { ThreeDBackground } from '@/components/ThreeDBackground';
-import Navigation from '@/components/Navigation';
 import { useImageProtection } from '@/hooks/useImageProtection';
 
 const Index = () => {
@@ -22,7 +22,6 @@ const Index = () => {
 
   return (
     <main className="min-h-screen bg-background overflow-x-hidden">
-      <Navigation />
       <Hero />
       <About />
       
@@ -36,8 +35,15 @@ const Index = () => {
         {/* Content sections with relative positioning */}
         <div className="relative z-10">
           <Achievements />
-          <PhotoGallerySection />
+          {/* EventsSection with higher z-index to ensure clicks work properly */}
+          <div className="relative z-30">
+            <EventsSection />
+          </div>
           <Coordinators />
+          {/* PhotoGallerySection with standard z-index */}
+          <div className="relative z-20">
+            <PhotoGallerySection />
+          </div>
           <Clubs />
           <Contact />
         </div>
