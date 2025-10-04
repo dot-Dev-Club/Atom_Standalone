@@ -14,6 +14,11 @@ const PhotoGallerySection = () => {
   const navigate = useNavigate();
   const [previewPhotos, setPreviewPhotos] = React.useState([]);
 
+  const handleNavigateToGallery = () => {
+    console.log('PhotoGallerySection: Navigating to /full-gallery');
+    navigate("/full-gallery");
+  };
+
   React.useEffect(() => {
     let isMounted = true;
     Promise.all(
@@ -62,7 +67,7 @@ const PhotoGallerySection = () => {
               transition={{ duration: 0.4, delay: index * 0.1 }}
               className="aspect-[4/3] rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer group"
               whileHover={{ scale: 1.03, y: -5 }}
-              onClick={() => navigate("/full-gallery")}
+              onClick={handleNavigateToGallery}
             >
               <img
                 src={photo.src}
@@ -83,7 +88,7 @@ const PhotoGallerySection = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className="px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 rounded-full text-white font-semibold transition-all duration-300 shadow-lg text-sm sm:text-base lg:text-lg hover:shadow-xl"
-          onClick={() => navigate("/full-gallery")}
+          onClick={handleNavigateToGallery}
         >
           View Complete Gallery
         </motion.button>
