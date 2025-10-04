@@ -14,8 +14,7 @@ const sampleEvents = [
     image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=450&fit=crop",
     status: "upcoming" as const,
     category: "Competition",
-    price: 0, // Free event
-    tags: ["Coding Contest", "CompTIA", "Programming", "Hackathon", "Binary Battle"],
+    eventType: "paid" as const,
     rulesAndRegulations: `
 1. All participants must register before the event deadline of October 15, 2025.
 2. Participants must bring valid college ID proof for verification.
@@ -48,10 +47,9 @@ By registering for Battle of Binaries 1.0, you agree to:
     image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&h=450&fit=crop",
     status: "past" as const,
     category: "Workshop",
-    price: 500, // Paid event
     participants: 150,
     rating: 4.8,
-    tags: ["AI", "Machine Learning", "Workshop", "Python"]
+    eventType: "paid" as const,
   }
 ];
 

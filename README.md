@@ -38,7 +38,11 @@ A comprehensive, modern web platform for ATOM Club featuring a stunning public w
 - **Hero Section** - Full-screen introduction with animated ATOM branding
 - **About Section** - Club description with scroll-triggered animations
 - **Achievements Gallery** - Interactive showcase of accomplishments
-- **Events Management** - Dynamic event listings with registration links
+- **Events Management** - Dynamic banner-style event cards with glassmorphic design
+  - Horizontal banner layout with image and content sections
+  - Dynamic event type badges (Free/Paid events)
+  - Professional card hover effects and animations
+  - Responsive design for all screen sizes
 - **Team Coordinators** - Auto-scrolling team gallery with detailed profiles
 - **Clubs Showcase** - Interactive sub-club cards with detailed information
 - **Contact Forms** - Validated contact forms with success notifications
@@ -48,6 +52,13 @@ A comprehensive, modern web platform for ATOM Club featuring a stunning public w
 
 - **Secure Authentication** - Protected admin access with session management
 - **Dashboard Overview** - Real-time statistics and content metrics
+- **Event Management** - Complete CRUD operations for events
+  - Banner-style event cards with proper image handling
+  - Event type classification (Free/Paid)
+  - Drag-and-drop image uploads
+  - Form validation and error handling
+- **Gallery Management** - Upload and organize event photos
+- **Real-time Updates** - Changes reflect immediately on the public site
 - **Events Management** - CRUD operations for event data with image upload
 - **Coordinators Management** - Team member profiles with social links
 - **Clubs Management** - Complex club data with coordinators and projects
@@ -90,6 +101,8 @@ A comprehensive, modern web platform for ATOM Club featuring a stunning public w
 - **React Context** - Authentication state management
 - **Local Storage** - Client-side data persistence
 - **Custom Hooks** - Reusable state logic
+- **Event Management System** - Dynamic event data with banner cards
+- **Image Handling** - Optimized event images from EVENTS folder
 
 ### Development Tools
 - **ESLint** - Code linting and quality
@@ -174,8 +187,17 @@ Atom_Standalone/
 │   ├── favicon.ico
 │   ├── robots.txt
 │   └── 404.html
+├── public/                    # Static assets served directly
+│   ├── EVENTS/              # Event-specific images
+│   │   ├── AI_ML Bootcamp.jpg
+│   │   ├── Battle of Binaries 1.0.jpg
+│   │   ├── CYBERSECURITY Bootcamp.jpg
+│   │   └── ... (other event images)
+│   ├── favicon.ico
+│   ├── robots.txt
+│   └── 404.html
 ├── src/
-│   ├── assets/               # Images and media files
+│   ├── assets/               # Build-time assets
 │   │   ├── PHOTOS/          # Gallery images
 │   │   ├── HACKHIVE/        # Club-specific images
 │   │   ├── UNBIAS/          # Club-specific images
@@ -231,8 +253,19 @@ Atom_Standalone/
 
 **Assets & Images:**
 - Replace images in `src/assets/` with your own
+- Event images should be placed in `public/EVENTS/` folder
+- **Recommended image dimensions for events**: 640×360px (16:9 aspect ratio)
+- **Supported formats**: JPG, PNG, WebP
+- **File size**: Keep under 200KB for optimal performance
 - Update image references in constants files
 - Use the CMS for dynamic content updates
+
+**Event Image Guidelines:**
+- Use descriptive filenames matching event titles
+- Maintain consistent aspect ratio (16:9) for banner cards
+- Optimize images for web (80-90% quality)
+- Banner layout works best with landscape images
+- Place event images in `public/EVENTS/` for direct serving
 
 **Colors & Branding:**
 ```css

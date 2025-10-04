@@ -18,7 +18,7 @@ interface Event {
   participants?: number;
   rating?: number;
   registrationLink?: string;
-  tags?: string[];
+  eventType: 'free' | 'paid';
 }
 
 interface PastEventTimelineProps {
@@ -292,21 +292,6 @@ const PastEventTimeline: React.FC<PastEventTimelineProps> = ({ events, onEventCl
                                 <p className="text-gray-300 leading-relaxed">
                                   {event.description}
                                 </p>
-
-                                {/* Tags */}
-                                {event.tags && event.tags.length > 0 && (
-                                  <div className="flex flex-wrap gap-2">
-                                    {event.tags.map((tag, index) => (
-                                      <Badge 
-                                        key={index}
-                                        variant="outline" 
-                                        className="text-xs bg-white/5 text-gray-300 border-white/20"
-                                      >
-                                        {tag}
-                                      </Badge>
-                                    ))}
-                                  </div>
-                                )}
                               </motion.div>
                             )}
                           </AnimatePresence>

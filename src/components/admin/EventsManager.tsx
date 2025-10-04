@@ -53,7 +53,7 @@ const EventsManager: React.FC<EventsManagerProps> = ({ onBackToDashboard }) => {
       status: 'upcoming',
       category: '',
       registrationLink: '',
-      tags: []
+      eventType: 'free'
     });
     setIsDialogOpen(true);
   };
@@ -89,7 +89,7 @@ const EventsManager: React.FC<EventsManagerProps> = ({ onBackToDashboard }) => {
     setIsDialogOpen(false);
   };
 
-  const handleInputChange = (field: keyof EventType, value: string | number | boolean | string[]) => {
+  const handleInputChange = (field: keyof EventType, value: string | number | boolean) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
@@ -386,25 +386,27 @@ const EventsManager: React.FC<EventsManagerProps> = ({ onBackToDashboard }) => {
                   </Select>
                 </div>
                 <div>
-                  <Label htmlFor="registrationLink" className="text-foreground font-semibold">Registration Link</Label>
-                  <Input
-                    id="registrationLink"
-                    value={formData.registrationLink || ''}
-                    onChange={(e) => handleInputChange('registrationLink', e.target.value)}
-                    className="bg-input border-border text-foreground"
-                    placeholder="https://forms.google.com/..."
-                  />
+                  <Label htmlFor="eventType" className="text-foreground font-semibold">Event Type</Label>
+                  <Select value={formData.eventType || 'free'} onValueChange={(value) => handleInputChange('eventType', value)}>
+                    <SelectTrigger className="bg-input border-border text-foreground">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-background border-border">
+                      <SelectItem value="free">Free</SelectItem>
+                      <SelectItem value="paid">Paid</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
               
               <div>
-                <Label htmlFor="tags" className="text-foreground font-semibold">Tags (comma separated)</Label>
+                <Label htmlFor="registrationLink" className="text-foreground font-semibold">Registration Link</Label>
                 <Input
-                  id="tags"
-                  value={formData.tags?.join(', ') || ''}
-                  onChange={(e) => handleInputChange('tags', e.target.value.split(',').map(t => t.trim()))}
+                  id="registrationLink"
+                  value={formData.registrationLink || ''}
+                  onChange={(e) => handleInputChange('registrationLink', e.target.value)}
                   className="bg-input border-border text-foreground"
-                  placeholder="e.g., Programming, Workshop, Competition"
+                  placeholder="https://forms.google.com/..."
                 />
               </div>
             </div>

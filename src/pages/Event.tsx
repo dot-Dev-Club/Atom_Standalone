@@ -9,7 +9,7 @@ import EventCard from '@/components/events/EventCard';
 import ModernEventModal from '@/components/events/ModernEventModal';
 import PastEventTimeline from '@/components/events/PastEventTimeline';
 import { type Event } from '@/constants/events';
-import { getEvents, getUpcomingEvents, getPastEvents } from '@/utils/dataService';
+import { getEvents, getUpcomingEvents, getPastEvents, refreshEventsData } from '@/utils/dataService';
 import '@/styles/events.css';
 import '@/styles/event-enhancements.css';
 import '@/styles/event-card-enhancements.css';
@@ -21,6 +21,15 @@ const Event: React.FC = () => {
 
   const upcomingEvents = getUpcomingEvents();
   const pastEvents = getPastEvents();
+
+  // Debug logging
+  useEffect(() => {
+    console.log('Upcoming Events:', upcomingEvents);
+    console.log('Past Events:', pastEvents);
+    upcomingEvents.forEach(event => {
+      console.log(`Event: ${event.title}, Image: ${event.image}`);
+    });
+  }, []);
 
   // Handle URL query parameters for direct event access
   useEffect(() => {

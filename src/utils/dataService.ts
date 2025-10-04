@@ -37,8 +37,40 @@ const defaultGalleryImages = [
 
 export const getEvents = (): Event[] => {
   if (typeof window === 'undefined') return defaultEvents;
+  
   const stored = localStorage.getItem('cms_events');
-  return stored ? JSON.parse(stored) : defaultEvents;
+  if (stored) {
+    try {
+      const parsedEvents = JSON.parse(stored);
+      // Check if stored events have the new image path format
+      const hasNewFormat = parsedEvents.some((event: Event) => 
+        event.image && event.image.startsWith('/EVENTS/')
+      );
+      
+      // If stored events don't have the new format, use default events
+      if (!hasNewFormat) {
+        console.log('Updating localStorage with new event image paths...');
+        localStorage.setItem('cms_events', JSON.stringify(defaultEvents));
+        return defaultEvents;
+      }
+      
+      return parsedEvents;
+    } catch (error) {
+      // If parsing fails, use default events
+      console.log('localStorage parsing failed, using default events...');
+      localStorage.setItem('cms_events', JSON.stringify(defaultEvents));
+      return defaultEvents;
+    }
+  }
+  
+  return defaultEvents;
+};
+
+// Utility function to force refresh events data
+export const refreshEventsData = () => {
+  localStorage.removeItem('cms_events');
+  localStorage.setItem('cms_events', JSON.stringify(defaultEvents));
+  console.log('Events data refreshed with updated image paths');
 };
 
 export const getUpcomingEvents = () => getEvents().filter(event => event.status === 'upcoming');
