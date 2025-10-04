@@ -81,7 +81,7 @@ const EventsManager: React.FC = () => {
     setIsDialogOpen(false);
   };
 
-  const handleInputChange = (field: keyof EventType, value: any) => {
+  const handleInputChange = (field: keyof EventType, value: string | number | boolean | string[]) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 

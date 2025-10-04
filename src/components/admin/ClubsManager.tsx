@@ -29,7 +29,7 @@ interface ClubProject {
 interface Club {
   id: number;
   name: string;
-  icon: any;
+  icon: string | React.ComponentType<any>;
   description: string;
   objectives: string;
   extraInfo: string;
@@ -77,7 +77,7 @@ const ClubsManager: React.FC = () => {
     setIsDialogOpen(false);
   };
 
-  const handleInputChange = (field: keyof Club, value: any) => {
+  const handleInputChange = (field: keyof Club, value: string | number | boolean) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 

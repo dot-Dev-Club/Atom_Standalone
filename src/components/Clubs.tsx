@@ -28,7 +28,7 @@ export const Clubs = () => {
     };
   }, [selectedClub, selectedCoordinator]);
 
-  const renderCoordinatorsByRole = (coordinators: any[], roles: string[]) => {
+  const renderCoordinatorsByRole = (coordinators: typeof clubs[0]["coordinators"], roles: string[]) => {
     const filtered = coordinators.filter(coord => roles.includes(coord.role));
     if (filtered.length === 0) return null;
 

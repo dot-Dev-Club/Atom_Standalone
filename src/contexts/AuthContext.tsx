@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { ADMIN_CREDENTIALS } from '../config/admin-credentials';
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -32,9 +33,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, []);
 
   const login = (username: string, password: string): boolean => {
-    // Import credentials dynamically to avoid bundling sensitive data
-    const { ADMIN_CREDENTIALS } = require('../config/admin-credentials');
-
     if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
       setIsAuthenticated(true);
       localStorage.setItem('cms_authenticated', 'true');
