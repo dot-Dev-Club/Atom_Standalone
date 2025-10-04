@@ -2,12 +2,14 @@ import { motion, useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { Code, Smartphone, Brain, Shield, Globe, X, Linkedin, ArrowLeft, ExternalLink, Github } from "lucide-react";
 
-import { clubs, DotIcon, BiasIcon, HackIcon } from "@/constants/clubs";
+import { getClubs } from "@/utils/dataService";
+import { DotIcon, BiasIcon, HackIcon } from "@/constants/clubs";
 
 export const Clubs = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
-  
+  const clubs = getClubs();
+
   const [selectedClub, setSelectedClub] = useState<null | typeof clubs[0]>(null);
   const [clubPage, setClubPage] = useState<null | typeof clubs[0]>(null);
   const [selectedCoordinator, setSelectedCoordinator] = useState<

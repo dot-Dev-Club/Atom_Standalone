@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ThreeDIconPresets } from './ThreeDIcons';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { events, getUpcomingEvents } from '@/constants/events';
+import { getEvents, getUpcomingEvents } from '@/utils/dataService';
 
 const EventsSection = () => {
   const ref = useRef(null);
@@ -16,7 +16,7 @@ const EventsSection = () => {
   
   // Get the first 3 upcoming events for preview, or first 3 events if no upcoming ones
   const upcomingEvents = getUpcomingEvents().slice(0, 3);
-  const previewEvents = upcomingEvents.length > 0 ? upcomingEvents : events.slice(0, 3);
+  const previewEvents = upcomingEvents.length > 0 ? upcomingEvents : getEvents().slice(0, 3);
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
