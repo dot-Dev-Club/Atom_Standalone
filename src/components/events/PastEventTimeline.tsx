@@ -106,7 +106,7 @@ const PastEventTimeline: React.FC<PastEventTimelineProps> = ({ events, onEventCl
   return (
     <div className="space-y-8">
       {/* Stats Overview */}
-      <motion.div
+      {/* <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
@@ -135,10 +135,10 @@ const PastEventTimeline: React.FC<PastEventTimelineProps> = ({ events, onEventCl
             <div className="text-green-300 text-sm">Event Categories</div>
           </CardContent>
         </Card>
-      </motion.div>
+      </motion.div> */}
 
       {/* Group By Toggle */}
-      <motion.div
+      {/* <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
@@ -159,7 +159,7 @@ const PastEventTimeline: React.FC<PastEventTimelineProps> = ({ events, onEventCl
             </button>
           ))}
         </div>
-      </motion.div>
+      </motion.div> */}
 
       {/* Timeline */}
       <div className="relative">

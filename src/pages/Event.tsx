@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useSearchParams } from 'react-router-dom';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -16,7 +16,6 @@ import '@/styles/event-card-enhancements.css';
 
 const Event: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [activeTab, setActiveTab] = useState<'upcoming' | 'past'>('upcoming');
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -92,117 +91,87 @@ const Event: React.FC = () => {
           </p>
         </motion.div>
 
-        {/* Simple Tab Switcher */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
+        {/* Upcoming Events Section */}
+        <motion.section
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="flex justify-center mb-12"
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="mb-20"
         >
-          <div 
-            className="flex bg-white/10 backdrop-blur-md rounded-2xl p-1 border border-white/20"
-            role="tablist"
-            aria-label="Event time periods"
-          >
-            <button
-              onClick={() => setActiveTab('upcoming')}
-              className={`px-6 py-2 rounded-xl font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-transparent ${
-                activeTab === 'upcoming'
-                  ? 'bg-blue-600 text-white shadow-lg'
-                  : 'text-gray-300 hover:text-white'
-              }`}
-              role="tab"
-              aria-selected={activeTab === 'upcoming'}
-              aria-controls="events-content"
-            >
-              🚀 Upcoming
-            </button>
-            <button
-              onClick={() => setActiveTab('past')}
-              className={`px-6 py-2 rounded-xl font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-transparent ${
-                activeTab === 'past'
-                  ? 'bg-blue-600 text-white shadow-lg'
-                  : 'text-gray-300 hover:text-white'
-              }`}
-              role="tab"
-              aria-selected={activeTab === 'past'}
-              aria-controls="events-content"
-            >
-              📜 Past
-            </button>
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 via-cyan-500 to-blue-400 bg-clip-text text-transparent mb-4">
+              🚀 Upcoming Events
+            </h2>
+            <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+              Join us in our upcoming events and be part of the innovation journey
+            </p>
           </div>
-        </motion.div>
 
-        {/* Events Content */}
-        <AnimatePresence mode="wait">
-          {activeTab === 'upcoming' ? (
-            <motion.section
-              key="upcoming"
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -50 }}
-              transition={{ duration: 0.4 }}
-              className="space-y-8"
-            >
-              {upcomingEvents.length > 0 ? (
-                <div className="event-grid">
-                  {upcomingEvents.map((event, index) => (
-                    <motion.article
-                      key={event.id}
-                      initial={{ opacity: 0, y: 50 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.6, delay: index * 0.1 }}
-                      aria-label={`Event: ${event.title}`}
-                    >
-                      <EventCard event={event} onClick={() => handleEventClick(event)} />
-                    </motion.article>
-                  ))}
-                </div>
-              ) : (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="text-center py-20"
-                  role="status"
-                  aria-live="polite"
+          {upcomingEvents.length > 0 ? (
+            <div className="event-grid">
+              {upcomingEvents.map((event, index) => (
+                <motion.article
+                  key={event.id}
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  aria-label={`Event: ${event.title}`}
                 >
-                  <div className="text-6xl mb-6">🚀</div>
-                  <h3 className="text-2xl font-bold text-white mb-4">No Upcoming Events</h3>
-                  <p className="text-gray-400 max-w-md mx-auto">
-                    Stay tuned! We're planning exciting events. Follow our social media for updates.
-                  </p>
-                </motion.div>
-              )}
-            </motion.section>
+                  <EventCard event={event} onClick={() => handleEventClick(event)} />
+                </motion.article>
+              ))}
+            </div>
           ) : (
-            <motion.section
-              key="past"
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 50 }}
-              transition={{ duration: 0.4 }}
-              className="space-y-8"
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-center py-20"
+              role="status"
+              aria-live="polite"
             >
-              {pastEvents.length > 0 ? (
-                <PastEventTimeline events={pastEvents} onEventClick={handleEventClick} />
-              ) : (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="text-center py-20"
-                  role="status"
-                  aria-live="polite"
-                >
-                  <div className="text-6xl mb-6">📜</div>
-                  <h3 className="text-2xl font-bold text-white mb-4">No Past Events</h3>
-                  <p className="text-gray-400 max-w-md mx-auto">
-                    Our event history will appear here after we host our first events.
-                  </p>
-                </motion.div>
-              )}
-            </motion.section>
+              <div className="text-6xl mb-6">🚀</div>
+              <h3 className="text-2xl font-bold text-white mb-4">No Upcoming Events</h3>
+              <p className="text-gray-400 max-w-md mx-auto">
+                Stay tuned! We're planning exciting events. Follow our social media for updates.
+              </p>
+            </motion.div>
           )}
-        </AnimatePresence>
+        </motion.section>
+
+        {/* Past Events Section */}
+        <motion.section
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="mb-20"
+        >
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-400 via-pink-500 to-purple-400 bg-clip-text text-transparent mb-4">
+              📜 Past Events
+            </h2>
+            <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+              Explore our successful events and achievements from the past
+            </p>
+          </div>
+
+          {pastEvents.length > 0 ? (
+            <PastEventTimeline events={pastEvents} onEventClick={handleEventClick} />
+          ) : (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-center py-20"
+              role="status"
+              aria-live="polite"
+            >
+              <div className="text-6xl mb-6">📜</div>
+              <h3 className="text-2xl font-bold text-white mb-4">No Past Events</h3>
+              <p className="text-gray-400 max-w-md mx-auto">
+                Our event history will appear here after we host our first events.
+              </p>
+            </motion.div>
+          )}
+        </motion.section>
       </div>
 
       {/* Modern Event Modal */}

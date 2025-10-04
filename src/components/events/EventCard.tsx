@@ -79,7 +79,7 @@ const EventCard: React.FC<EventCardProps> = ({ event, onClick }) => {
                 : 'bg-gray-500/20 text-gray-400 border-gray-500/30'
             }`}
           >
-            {isUpcoming ? '🚀 Upcoming' : '✅ Completed'}
+            {isUpcoming ? ' Upcoming' : ' Completed'}
           </Badge>
 
           {/* Gradient Overlay */}
