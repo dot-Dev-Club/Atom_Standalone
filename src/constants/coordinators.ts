@@ -1,6 +1,6 @@
 // Coordinator data and image imports
 import Aravind from "@/assets/Aravind.jpg";
-import Immanuel from "@/assets/Immanuel.jpg";
+// import Immanuel from "@/assets/Immanuel.jpg";
 import Bruno from "@/assets/Bruno.jpg";
 import Deepa from "@/assets/Deepakumar.jpg";
 import franz from "@/assets/FranzKingsteinN.jpg";

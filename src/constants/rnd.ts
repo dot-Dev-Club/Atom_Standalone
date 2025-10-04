@@ -1,7 +1,7 @@
 // RND Club data and imports
 import Rumitha from '@/assets/Rumitha.png';
 import Dhruv from '@/assets/Dhruv.jpg';
-import Immanuel from '@/assets/immanuel.jpg';
+import Immanuel from '@/assets/Immanuel.jpg';
 import { Shield } from "lucide-react";
 
 export const rndClub = {

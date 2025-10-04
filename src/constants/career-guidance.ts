@@ -1,6 +1,6 @@
 // Career Guidance Club data and imports
 import Renimol from '@/assets/Renimol.jpg';
-import Jola from '@/assets/jola.jpg';
+import Jola from '@/assets/Jola.jpg';
 import { Globe } from "lucide-react";
 
 export const careerGuidanceClub = {

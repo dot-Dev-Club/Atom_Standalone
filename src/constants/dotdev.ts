@@ -1,6 +1,6 @@
 // DotDev Club data and imports
-import Danish from '@/assets/danish.jpg';
-import Jola from '@/assets/jola.jpg';
+import Danish from '@/assets/Danish.jpg';
+import Jola from '@/assets/Jola.jpg';
 import Darshan from '@/assets/Dharshan_KumarJ.jpg';
 import Manisha from '@/assets/Manisha.jpg';
 import Monish from "@/assets/Monish.jpeg";

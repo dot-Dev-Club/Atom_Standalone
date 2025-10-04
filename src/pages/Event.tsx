@@ -8,12 +8,8 @@ import { Calendar, MapPin, Clock, Users, Star } from 'lucide-react';
 import EventCard from '@/components/events/EventCard';
 import EventModal from '@/components/events/EventModal';
 import PastEventTimeline from '@/components/events/PastEventTimeline';
-import { 
-  type Event, 
-  events, 
-  getUpcomingEvents, 
-  getPastEvents
-} from '@/constants/events';
+import { type Event } from '@/constants/events';
+import { getEvents, getUpcomingEvents, getPastEvents } from '@/utils/dataService';
 import '@/styles/events.css';
 import '@/styles/event-enhancements.css';
 import '@/styles/event-card-enhancements.css';
@@ -31,7 +27,7 @@ const Event: React.FC = () => {
   useEffect(() => {
     const eventId = searchParams.get('event');
     if (eventId) {
-      const event = events.find(e => e.id === parseInt(eventId));
+      const event = getEvents().find(e => e.id === parseInt(eventId));
       if (event) {
         setSelectedEvent(event);
         setIsModalOpen(true);

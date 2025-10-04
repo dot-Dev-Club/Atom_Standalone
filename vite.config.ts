@@ -8,7 +8,7 @@ import { compression } from 'vite-plugin-compression2';
 export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
-    port: 8080,
+    port: 8000,
   },
   plugins: [
     react(), 
