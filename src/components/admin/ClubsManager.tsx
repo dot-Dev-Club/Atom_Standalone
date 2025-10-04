@@ -7,9 +7,12 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription as CardDesc, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import { Plus, Edit, Trash2, X, ArrowLeft, Building } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { toast } from 'sonner';
 import { clubs as defaultClubs } from '@/constants/clubs';
+import { ThreeDIconPresets } from '../ThreeDIcons';
 
 interface ClubsManagerProps {
   onBackToDashboard: () => void;
@@ -156,120 +159,185 @@ const ClubsManager: React.FC<ClubsManagerProps> = ({ onBackToDashboard }) => {
   };
 
   return (
-    <div className="space-y-4">
-      {/* Back Button */}
-      <div className="flex items-center justify-between">
-        <Button variant="outline" onClick={onBackToDashboard}>
-          <ArrowLeft className="w-4 h-4 mr-2" />
+    <div className="space-y-8">
+      {/* Header Section */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+      >
+        <Button 
+          variant="outline" 
+          onClick={onBackToDashboard}
+          className="bg-glass/50 backdrop-blur-xl border-glass-border hover:bg-glass/70 text-foreground transition-all duration-300 flex items-center gap-2"
+        >
+          <ArrowLeft className="w-4 h-4" />
           Back to Dashboard
         </Button>
-        <Button onClick={() => handleEdit(clubs[0])}>
-          <Edit className="h-4 w-4 mr-2" />
-          Edit Clubs
-        </Button>
-      </div>
+        <Badge className="bg-atom-primary/20 text-atom-primary border-atom-primary/30 px-4 py-2 flex items-center gap-2">
+          <Building className="w-4 h-4" />
+          Total Clubs: {clubs.length}
+        </Badge>
+      </motion.div>
 
-      {/* Header */}
-      <div className="bg-white border border-gray-200 rounded-lg p-4">
-        <h2 className="text-xl font-bold text-gray-900 mb-1">Clubs Management</h2>
-        <p className="text-gray-600 text-sm">Total Clubs: {clubs.length}</p>
-      </div>
+      {/* Header Card */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.1 }}
+        className="glass-card p-8"
+      >
+        <div className="text-center space-y-4">
+          <h1 className="text-4xl sm:text-5xl font-bold gradient-text">
+            Clubs Management
+          </h1>
+          <p className="text-foreground-secondary text-lg max-w-2xl mx-auto">
+            Manage your club information, coordinators, and projects
+          </p>
+        </div>
+      </motion.div>
 
-      {/* Content */}
-      <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
-        <div className="p-4">
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-semibold text-gray-900">All Clubs</h3>
+      {/* Content Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+        className="glass-card overflow-hidden"
+      >
+        <div className="p-8">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+            <h3 className="text-2xl font-bold text-foreground flex items-center gap-3">
+              <ThreeDIconPresets.Globe size={24} />
+              All Clubs
+            </h3>
+            <Button 
+              onClick={() => handleEdit(clubs[0])}
+              className="bg-gradient-to-r from-atom-primary to-electric hover:from-atom-primary/90 hover:to-electric/90 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:scale-105 shadow-lg flex items-center gap-2"
+            >
+              <Edit className="h-4 w-4" />
+              Edit Clubs
+            </Button>
           </div>
 
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead>Description</TableHead>
-                <TableHead>Coordinators</TableHead>
-                <TableHead>Projects</TableHead>
-                <TableHead>Gallery</TableHead>
-                <TableHead>Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {clubs.map((club) => (
-                <TableRow key={club.id}>
-                  <TableCell className="font-medium">{club.name}</TableCell>
-                  <TableCell className="max-w-xs truncate">{club.description}</TableCell>
-                  <TableCell>{club.coordinators.length}</TableCell>
-                  <TableCell>{club.projects.length}</TableCell>
-                  <TableCell>{club.gallery.length}</TableCell>
-                  <TableCell>
-                    <Button variant="outline" size="sm" onClick={() => handleEdit(club)}>
-                      <Edit className="h-4 w-4" />
-                    </Button>
-                  </TableCell>
+          <div className="overflow-x-auto rounded-xl border border-glass-border">
+            <Table>
+              <TableHeader>
+                <TableRow className="border-glass-border bg-glass/20">
+                  <TableHead className="text-foreground font-semibold py-4 px-6">Name</TableHead>
+                  <TableHead className="text-foreground font-semibold py-4 px-6">Description</TableHead>
+                  <TableHead className="text-foreground font-semibold py-4 px-6">Coordinators</TableHead>
+                  <TableHead className="text-foreground font-semibold py-4 px-6">Projects</TableHead>
+                  <TableHead className="text-foreground font-semibold py-4 px-6">Gallery</TableHead>
+                  <TableHead className="text-foreground font-semibold py-4 px-6">Actions</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {clubs.map((club, index) => (
+                  <motion.tr
+                    key={club.id}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.3, delay: index * 0.1 }}
+                    className="border-glass-border hover:bg-glass/20 transition-colors"
+                  >
+                    <TableCell className="font-medium text-foreground py-4 px-6">{club.name}</TableCell>
+                    <TableCell className="text-foreground-secondary max-w-xs truncate py-4 px-6">{club.description}</TableCell>
+                    <TableCell className="py-4 px-6">
+                      <Badge className="bg-atom-primary/20 text-atom-primary border-atom-primary/30">
+                        {club.coordinators.length} Members
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="py-4 px-6">
+                      <Badge className="bg-electric/20 text-electric border-electric/30">
+                        {club.projects.length} Projects
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="py-4 px-6">
+                      <Badge className="bg-atom-metallic/20 text-atom-metallic border-atom-metallic/30">
+                        {club.gallery.length} Images
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="py-4 px-6">
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        onClick={() => handleEdit(club)}
+                        className="bg-glass/30 backdrop-blur-xl border-glass-border hover:bg-glass/50 text-foreground"
+                      >
+                        <Edit className="h-4 w-4" />
+                      </Button>
+                    </TableCell>
+                  </motion.tr>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
         </div>
-      </div>
+      </motion.div>
 
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto glass-card border-glass-border">
           <DialogHeader>
-            <DialogTitle>Edit Club</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className="text-2xl font-bold gradient-text">Edit Club</DialogTitle>
+            <DialogDescription className="text-foreground-secondary">
               Modify club details, coordinators, projects, and gallery.
             </DialogDescription>
           </DialogHeader>
 
           <Tabs defaultValue="basic" className="w-full">
-            <TabsList className="grid w-full grid-cols-4">
-              <TabsTrigger value="basic">Basic Info</TabsTrigger>
-              <TabsTrigger value="coordinators">Coordinators</TabsTrigger>
-              <TabsTrigger value="projects">Projects</TabsTrigger>
-              <TabsTrigger value="gallery">Gallery</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-4 bg-glass/30 border-glass-border">
+              <TabsTrigger value="basic" className="text-foreground data-[state=active]:bg-atom-primary data-[state=active]:text-white">Basic Info</TabsTrigger>
+              <TabsTrigger value="coordinators" className="text-foreground data-[state=active]:bg-atom-primary data-[state=active]:text-white">Coordinators</TabsTrigger>
+              <TabsTrigger value="projects" className="text-foreground data-[state=active]:bg-atom-primary data-[state=active]:text-white">Projects</TabsTrigger>
+              <TabsTrigger value="gallery" className="text-foreground data-[state=active]:bg-atom-primary data-[state=active]:text-white">Gallery</TabsTrigger>
             </TabsList>
 
             <TabsContent value="basic" className="space-y-4">
               <div className="grid gap-4">
                 <div>
-                  <Label htmlFor="name">Name *</Label>
+                  <Label htmlFor="name" className="text-foreground">Name *</Label>
                   <Input
                     id="name"
+                    className="glass-card border-glass-border bg-glass/30 text-foreground"
                     value={formData.name || ''}
                     onChange={(e) => handleInputChange('name', e.target.value)}
                   />
                 </div>
                 <div>
-                  <Label htmlFor="icon">Icon URL</Label>
+                  <Label htmlFor="icon" className="text-foreground">Icon URL</Label>
                   <Input
                     id="icon"
+                    className="glass-card border-glass-border bg-glass/30 text-foreground"
                     value={typeof formData.icon === 'string' ? formData.icon : ''}
                     onChange={(e) => handleInputChange('icon', e.target.value)}
                   />
                 </div>
                 <div>
-                  <Label htmlFor="description">Description *</Label>
+                  <Label htmlFor="description" className="text-foreground">Description *</Label>
                   <Textarea
                     id="description"
+                    className="glass-card border-glass-border bg-glass/30 text-foreground"
                     value={formData.description || ''}
                     onChange={(e) => handleInputChange('description', e.target.value)}
                     rows={3}
                   />
                 </div>
                 <div>
-                  <Label htmlFor="objectives">Objectives</Label>
+                  <Label htmlFor="objectives" className="text-foreground">Objectives</Label>
                   <Textarea
                     id="objectives"
+                    className="glass-card border-glass-border bg-glass/30 text-foreground"
                     value={formData.objectives || ''}
                     onChange={(e) => handleInputChange('objectives', e.target.value)}
                     rows={3}
                   />
                 </div>
                 <div>
-                  <Label htmlFor="extraInfo">Extra Info</Label>
+                  <Label htmlFor="extraInfo" className="text-foreground">Extra Info</Label>
                   <Textarea
                     id="extraInfo"
+                    className="glass-card border-glass-border bg-glass/30 text-foreground"
                     value={formData.extraInfo || ''}
                     onChange={(e) => handleInputChange('extraInfo', e.target.value)}
                     rows={3}
@@ -280,18 +348,27 @@ const ClubsManager: React.FC<ClubsManagerProps> = ({ onBackToDashboard }) => {
 
             <TabsContent value="coordinators" className="space-y-4">
               <div className="flex justify-between items-center">
-                <h4 className="text-md font-semibold">Coordinators</h4>
-                <Button onClick={addCoordinator} size="sm">
+                <h4 className="text-md font-semibold text-foreground">Coordinators</h4>
+                <Button 
+                  onClick={addCoordinator} 
+                  size="sm"
+                  className="bg-gradient-to-r from-atom-primary to-electric hover:from-atom-primary/90 hover:to-electric/90 text-white"
+                >
                   <Plus className="h-4 w-4 mr-2" />
                   Add Coordinator
                 </Button>
               </div>
               <div className="space-y-4">
                 {(formData.coordinators || []).map((coordinator, index) => (
-                  <Card key={index}>
+                  <Card key={index} className="glass-card border-glass-border">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                      <CardTitle className="text-sm">Coordinator {index + 1}</CardTitle>
-                      <Button variant="outline" size="sm" onClick={() => removeCoordinator(index)}>
+                      <CardTitle className="text-sm text-foreground">Coordinator {index + 1}</CardTitle>
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        onClick={() => removeCoordinator(index)}
+                        className="bg-glass/30 border-glass-border text-red-400 hover:bg-red-500/10"
+                      >
                         <X className="h-4 w-4" />
                       </Button>
                     </CardHeader>
@@ -299,28 +376,33 @@ const ClubsManager: React.FC<ClubsManagerProps> = ({ onBackToDashboard }) => {
                       <div className="grid grid-cols-2 gap-2">
                         <Input
                           placeholder="Name"
+                          className="glass-card border-glass-border bg-glass/30 text-foreground"
                           value={coordinator.name}
                           onChange={(e) => updateCoordinator(index, 'name', e.target.value)}
                         />
                         <Input
                           placeholder="Role"
+                          className="glass-card border-glass-border bg-glass/30 text-foreground"
                           value={coordinator.role}
                           onChange={(e) => updateCoordinator(index, 'role', e.target.value)}
                         />
                       </div>
                       <Input
                         placeholder="Image URL"
+                        className="glass-card border-glass-border bg-glass/30 text-foreground"
                         value={coordinator.image}
                         onChange={(e) => updateCoordinator(index, 'image', e.target.value)}
                       />
                       <Textarea
                         placeholder="Bio"
+                        className="glass-card border-glass-border bg-glass/30 text-foreground"
                         value={coordinator.bio || ''}
                         onChange={(e) => updateCoordinator(index, 'bio', e.target.value)}
                         rows={2}
                       />
                       <Input
                         placeholder="LinkedIn URL"
+                        className="glass-card border-glass-border bg-glass/30 text-foreground"
                         value={coordinator.linkedin || ''}
                         onChange={(e) => updateCoordinator(index, 'linkedin', e.target.value)}
                       />
@@ -332,35 +414,47 @@ const ClubsManager: React.FC<ClubsManagerProps> = ({ onBackToDashboard }) => {
 
             <TabsContent value="projects" className="space-y-4">
               <div className="flex justify-between items-center">
-                <h4 className="text-md font-semibold">Projects</h4>
-                <Button onClick={addProject} size="sm">
+                <h4 className="text-md font-semibold text-foreground">Projects</h4>
+                <Button 
+                  onClick={addProject} 
+                  size="sm"
+                  className="bg-gradient-to-r from-atom-primary to-electric hover:from-atom-primary/90 hover:to-electric/90 text-white"
+                >
                   <Plus className="h-4 w-4 mr-2" />
                   Add Project
                 </Button>
               </div>
               <div className="space-y-4">
                 {(formData.projects || []).map((project, index) => (
-                  <Card key={index}>
+                  <Card key={index} className="glass-card border-glass-border">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                      <CardTitle className="text-sm">Project {index + 1}</CardTitle>
-                      <Button variant="outline" size="sm" onClick={() => removeProject(index)}>
+                      <CardTitle className="text-sm text-foreground">Project {index + 1}</CardTitle>
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        onClick={() => removeProject(index)}
+                        className="bg-glass/30 border-glass-border text-red-400 hover:bg-red-500/10"
+                      >
                         <X className="h-4 w-4" />
                       </Button>
                     </CardHeader>
                     <CardContent className="space-y-2">
                       <Input
                         placeholder="Project Name"
+                        className="glass-card border-glass-border bg-glass/30 text-foreground"
                         value={project.name}
                         onChange={(e) => updateProject(index, 'name', e.target.value)}
                       />
                       <Textarea
                         placeholder="Description"
+                        className="glass-card border-glass-border bg-glass/30 text-foreground"
                         value={project.description}
                         onChange={(e) => updateProject(index, 'description', e.target.value)}
                         rows={2}
                       />
                       <Input
                         placeholder="GitHub URL"
+                        className="glass-card border-glass-border bg-glass/30 text-foreground"
                         value={project.github || ''}
                         onChange={(e) => updateProject(index, 'github', e.target.value)}
                       />
@@ -372,8 +466,12 @@ const ClubsManager: React.FC<ClubsManagerProps> = ({ onBackToDashboard }) => {
 
             <TabsContent value="gallery" className="space-y-4">
               <div className="flex justify-between items-center">
-                <h4 className="text-md font-semibold">Gallery Images</h4>
-                <Button onClick={addGalleryImage} size="sm">
+                <h4 className="text-md font-semibold text-foreground">Gallery Images</h4>
+                <Button 
+                  onClick={addGalleryImage} 
+                  size="sm"
+                  className="bg-gradient-to-r from-atom-primary to-electric hover:from-atom-primary/90 hover:to-electric/90 text-white"
+                >
                   <Plus className="h-4 w-4 mr-2" />
                   Add Image
                 </Button>
@@ -383,10 +481,16 @@ const ClubsManager: React.FC<ClubsManagerProps> = ({ onBackToDashboard }) => {
                   <div key={index} className="flex gap-2">
                     <Input
                       placeholder="Image URL"
+                      className="glass-card border-glass-border bg-glass/30 text-foreground flex-1"
                       value={image}
                       onChange={(e) => updateGalleryImage(index, e.target.value)}
                     />
-                    <Button variant="outline" size="sm" onClick={() => removeGalleryImage(index)}>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={() => removeGalleryImage(index)}
+                      className="bg-glass/30 border-glass-border text-red-400 hover:bg-red-500/10"
+                    >
                       <X className="h-4 w-4" />
                     </Button>
                   </div>
@@ -395,11 +499,19 @@ const ClubsManager: React.FC<ClubsManagerProps> = ({ onBackToDashboard }) => {
             </TabsContent>
           </Tabs>
 
-          <div className="flex justify-end gap-2 mt-6">
-            <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
+          <div className="flex justify-end gap-3 mt-6">
+            <Button 
+              variant="outline" 
+              onClick={() => setIsDialogOpen(false)}
+              className="bg-glass/30 backdrop-blur-xl border-glass-border hover:bg-glass/50 text-foreground"
+            >
               Cancel
             </Button>
-            <Button onClick={handleSave}>
+            <Button 
+              onClick={handleSave}
+              className="bg-gradient-to-r from-atom-primary to-electric hover:from-atom-primary/90 hover:to-electric/90 text-white px-6 py-2 rounded-xl font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
+            >
+              <ThreeDIconPresets.Globe size={16} className="mr-2" />
               Update Club
             </Button>
           </div>

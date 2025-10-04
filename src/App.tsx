@@ -9,6 +9,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import FullPhotoGallery from "./pages/FullPhotoGallery";
 import Event from "./pages/Event";
+import EventModalDemo from "./components/events/EventModalDemo";
 import InternalRegistrationForm from "./pages/InternalRegistrationForm";
 import ExternalRegistrationForm from "./pages/ExternalRegistrationForm";
 import Login from "./pages/Login";
@@ -26,6 +27,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/events" element={<Event />} />
+            <Route path="/modal-demo" element={<EventModalDemo />} />
             <Route path="/full-gallery" element={<FullPhotoGallery />} />
             <Route path="/registration/internal" element={<InternalRegistrationForm />} />
             <Route path="/registration/external" element={<ExternalRegistrationForm />} />

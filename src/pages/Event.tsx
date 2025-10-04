@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, MapPin, Clock, Users, Star } from 'lucide-react';
 import EventCard from '@/components/events/EventCard';
-import EventModal from '@/components/events/EventModal';
+import ModernEventModal from '@/components/events/ModernEventModal';
 import PastEventTimeline from '@/components/events/PastEventTimeline';
 import { type Event } from '@/constants/events';
 import { getEvents, getUpcomingEvents, getPastEvents } from '@/utils/dataService';
@@ -47,16 +47,14 @@ const Event: React.FC = () => {
     setSelectedEvent(null);
   };
 
-  const handleRegistration = (registrationType: 'internal' | 'external') => {
+  const handleRegistration = () => {
+    // For now, we'll default to external registration
+    // This can be enhanced later with registration type selection
     setIsModalOpen(false);
     setSelectedEvent(null);
     
-    // Navigate to respective registration form
-    if (registrationType === 'internal') {
-      window.location.href = '/registration/internal';
-    } else {
-      window.location.href = '/registration/external';
-    }
+    // Navigate to external registration form
+    window.location.href = '/registration/external';
   };
 
   return (
@@ -207,12 +205,12 @@ const Event: React.FC = () => {
         </AnimatePresence>
       </div>
 
-      {/* Event Modal */}
-      <EventModal
+      {/* Modern Event Modal */}
+      <ModernEventModal
         event={selectedEvent}
         isOpen={isModalOpen}
         onClose={handleModalClose}
-        onRegister={handleRegistration}
+        onRegister={selectedEvent?.status === 'upcoming' ? handleRegistration : undefined}
       />
     </div>
   );

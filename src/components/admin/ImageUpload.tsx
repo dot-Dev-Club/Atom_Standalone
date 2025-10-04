@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
+import { ThreeDIconPresets } from '@/components/ThreeDIcons';
 
 interface ImageUploadProps {
   onImagesUploaded: (images: string[]) => void;
@@ -186,10 +187,10 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     <div className="space-y-6">
       {/* Upload Zone */}
       <Card
-        className={`border-2 border-dashed transition-all duration-300 ${
+        className={`border-2 border-dashed transition-all duration-300 glass-card ${
           isDragOver
-            ? 'border-cyan-400 bg-cyan-50/50'
-            : 'border-gray-300 hover:border-cyan-300'
+            ? 'border-electric bg-electric/10'
+            : 'border-glass-border hover:border-electric/50'
         }`}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
@@ -203,33 +204,33 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                 rotate: isDragOver ? 5 : 0
               }}
               transition={{ type: "spring", stiffness: 300 }}
-              className="mx-auto w-16 h-16 bg-gradient-to-br from-cyan-100 to-blue-100 rounded-full flex items-center justify-center mb-4"
+              className="mx-auto w-16 h-16 bg-gradient-to-br from-atom-primary/20 to-electric/20 rounded-full flex items-center justify-center mb-4 backdrop-blur-sm"
             >
-              <Upload className={`w-8 h-8 ${isDragOver ? 'text-cyan-600' : 'text-gray-400'}`} />
+              <ThreeDIconPresets.Rocket className={`w-8 h-8 ${isDragOver ? 'text-electric' : 'text-foreground-secondary'}`} />
             </motion.div>
 
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            <h3 className="text-lg font-semibold text-foreground mb-2">
               {isDragOver ? 'Drop images here' : 'Upload Images'}
             </h3>
 
-            <p className="text-gray-600 mb-4">
+            <p className="text-foreground-secondary mb-4">
               Drag and drop images here, or click to browse
             </p>
 
             <div className="flex flex-wrap justify-center gap-2 mb-4">
-              <Badge variant="secondary">JPEG</Badge>
-              <Badge variant="secondary">PNG</Badge>
-              <Badge variant="secondary">WebP</Badge>
-              <Badge variant="secondary">GIF</Badge>
-              <Badge variant="outline">Max {maxSizeMB}MB each</Badge>
+              <Badge className="bg-atom-primary/20 text-atom-primary border-atom-primary/30">JPEG</Badge>
+              <Badge className="bg-atom-primary/20 text-atom-primary border-atom-primary/30">PNG</Badge>
+              <Badge className="bg-electric/20 text-electric border-electric/30">WebP</Badge>
+              <Badge className="bg-electric/20 text-electric border-electric/30">GIF</Badge>
+              <Badge className="bg-glass/30 text-foreground border-glass-border">Max {maxSizeMB}MB each</Badge>
             </div>
 
             <Button
               onClick={() => fileInputRef.current?.click()}
               disabled={isUploading}
-              className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700"
+              className="bg-gradient-to-r from-atom-primary to-electric hover:from-atom-primary/80 hover:to-electric/80 text-white border-0 backdrop-blur-xl"
             >
-              <FileImage className="w-4 h-4 mr-2" />
+              <Upload className="w-4 h-4 mr-2" />
               Choose Files
             </Button>
 
@@ -254,16 +255,19 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
             exit={{ opacity: 0, height: 0 }}
             className="space-y-3"
           >
-            <h4 className="text-sm font-medium text-gray-700">Upload Progress</h4>
+            <h4 className="text-sm font-medium text-foreground flex items-center gap-2">
+              <ThreeDIconPresets.Target size={16} />
+              Upload Progress
+            </h4>
             {uploadedFiles.map((file, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 20 }}
-                className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg"
+                className="flex items-center space-x-3 p-3 glass-card"
               >
-                <div className="w-10 h-10 bg-white rounded border overflow-hidden">
+                <div className="w-10 h-10 glass-card rounded border-glass-border overflow-hidden">
                   <img
                     src={file.preview}
                     alt={file.file.name}
@@ -272,24 +276,24 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                 </div>
 
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-gray-900 truncate">
+                  <p className="text-sm font-medium text-foreground truncate">
                     {file.file.name}
                   </p>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-foreground-secondary">
                     {(file.file.size / 1024 / 1024).toFixed(2)} MB
                   </p>
 
                   {file.status === 'uploading' && (
                     <div className="mt-2">
                       <Progress value={file.progress} className="h-1" />
-                      <p className="text-xs text-gray-600 mt-1">{file.progress}%</p>
+                      <p className="text-xs text-electric mt-1">{file.progress}%</p>
                     </div>
                   )}
 
                   {file.status === 'error' && (
-                    <Alert className="mt-2 border-red-200 bg-red-50">
-                      <AlertCircle className="h-4 w-4 text-red-600" />
-                      <AlertDescription className="text-red-700 text-xs">
+                    <Alert className="mt-2 border-red-500/30 bg-red-500/10 backdrop-blur-sm">
+                      <AlertCircle className="h-4 w-4 text-red-400" />
+                      <AlertDescription className="text-red-300 text-xs">
                         {file.error}
                       </AlertDescription>
                     </Alert>
@@ -298,16 +302,16 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
 
                 <div className="flex items-center space-x-2">
                   {file.status === 'success' && (
-                    <CheckCircle className="w-5 h-5 text-green-600" />
+                    <CheckCircle className="w-5 h-5 text-green-400" />
                   )}
                   {file.status === 'error' && (
-                    <AlertCircle className="w-5 h-5 text-red-600" />
+                    <AlertCircle className="w-5 h-5 text-red-400" />
                   )}
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => removeFile(index)}
-                    className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                    className="text-red-400 hover:text-red-300 hover:bg-red-500/10 backdrop-blur-sm"
                   >
                     <X className="w-4 h-4" />
                   </Button>
@@ -321,7 +325,10 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
       {/* Existing Images */}
       {existingImages.length > 0 && (
         <div className="space-y-3">
-          <h4 className="text-sm font-medium text-gray-700">Existing Images</h4>
+          <h4 className="text-sm font-medium text-foreground flex items-center gap-2">
+            <ImageIcon className="w-4 h-4" />
+            Existing Images
+          </h4>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {existingImages.map((image, index) => (
               <motion.div
@@ -330,7 +337,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                 animate={{ opacity: 1, scale: 1 }}
                 className="relative group"
               >
-                <div className="aspect-square bg-gray-100 rounded-lg overflow-hidden">
+                <div className="aspect-square glass-card rounded-lg overflow-hidden border-glass-border">
                   <img
                     src={image}
                     alt={`Existing ${index + 1}`}
@@ -344,7 +351,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                   <Button
                     variant="destructive"
                     size="sm"
-                    className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-red-500/80 hover:bg-red-600/80 backdrop-blur-sm"
                     onClick={() => removeExistingImage(index)}
                   >
                     <Trash2 className="w-3 h-3" />
