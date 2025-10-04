@@ -7,9 +7,13 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription as CardDesc, CardHeader, CardTitle } from '@/components/ui/card';
-import { Plus, Edit, Trash2, X } from 'lucide-react';
+import { Plus, Edit, Trash2, X, ArrowLeft, Building } from 'lucide-react';
 import { toast } from 'sonner';
 import { clubs as defaultClubs } from '@/constants/clubs';
+
+interface ClubsManagerProps {
+  onBackToDashboard: () => void;
+}
 
 interface ClubCoordinator {
   name: string;
@@ -38,7 +42,7 @@ interface Club {
   gallery: string[];
 }
 
-const ClubsManager: React.FC = () => {
+const ClubsManager: React.FC<ClubsManagerProps> = ({ onBackToDashboard }) => {
   const [clubs, setClubs] = useState<Club[]>([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingClub, setEditingClub] = useState<Club | null>(null);
@@ -153,38 +157,61 @@ const ClubsManager: React.FC = () => {
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-between items-center">
-        <h3 className="text-lg font-semibold">Clubs ({clubs.length})</h3>
+      {/* Back Button */}
+      <div className="flex items-center justify-between">
+        <Button variant="outline" onClick={onBackToDashboard}>
+          <ArrowLeft className="w-4 h-4 mr-2" />
+          Back to Dashboard
+        </Button>
+        <Button onClick={() => handleEdit(clubs[0])}>
+          <Edit className="h-4 w-4 mr-2" />
+          Edit Clubs
+        </Button>
       </div>
 
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead>Description</TableHead>
-            <TableHead>Coordinators</TableHead>
-            <TableHead>Projects</TableHead>
-            <TableHead>Gallery</TableHead>
-            <TableHead>Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {clubs.map((club) => (
-            <TableRow key={club.id}>
-              <TableCell className="font-medium">{club.name}</TableCell>
-              <TableCell className="max-w-xs truncate">{club.description}</TableCell>
-              <TableCell>{club.coordinators.length}</TableCell>
-              <TableCell>{club.projects.length}</TableCell>
-              <TableCell>{club.gallery.length}</TableCell>
-              <TableCell>
-                <Button variant="outline" size="sm" onClick={() => handleEdit(club)}>
-                  <Edit className="h-4 w-4" />
-                </Button>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+      {/* Header */}
+      <div className="bg-white border border-gray-200 rounded-lg p-4">
+        <h2 className="text-xl font-bold text-gray-900 mb-1">Clubs Management</h2>
+        <p className="text-gray-600 text-sm">Total Clubs: {clubs.length}</p>
+      </div>
+
+      {/* Content */}
+      <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+        <div className="p-4">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-lg font-semibold text-gray-900">All Clubs</h3>
+          </div>
+
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Name</TableHead>
+                <TableHead>Description</TableHead>
+                <TableHead>Coordinators</TableHead>
+                <TableHead>Projects</TableHead>
+                <TableHead>Gallery</TableHead>
+                <TableHead>Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {clubs.map((club) => (
+                <TableRow key={club.id}>
+                  <TableCell className="font-medium">{club.name}</TableCell>
+                  <TableCell className="max-w-xs truncate">{club.description}</TableCell>
+                  <TableCell>{club.coordinators.length}</TableCell>
+                  <TableCell>{club.projects.length}</TableCell>
+                  <TableCell>{club.gallery.length}</TableCell>
+                  <TableCell>
+                    <Button variant="outline" size="sm" onClick={() => handleEdit(club)}>
+                      <Edit className="h-4 w-4" />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      </div>
 
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
@@ -217,7 +244,7 @@ const ClubsManager: React.FC = () => {
                   <Label htmlFor="icon">Icon URL</Label>
                   <Input
                     id="icon"
-                    value={formData.icon || ''}
+                    value={typeof formData.icon === 'string' ? formData.icon : ''}
                     onChange={(e) => handleInputChange('icon', e.target.value)}
                   />
                 </div>

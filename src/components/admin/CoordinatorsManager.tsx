@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Plus, Edit, Trash2 } from 'lucide-react';
+import { Plus, Edit, Trash2, ArrowLeft, Users } from 'lucide-react';
 import { toast } from 'sonner';
 import { coordinators as defaultCoordinators } from '@/constants/coordinators';
 
@@ -18,7 +18,11 @@ interface Coordinator {
   linkedin: string;
 }
 
-const CoordinatorsManager: React.FC = () => {
+interface CoordinatorsManagerProps {
+  onBackToDashboard: () => void;
+}
+
+const CoordinatorsManager: React.FC<CoordinatorsManagerProps> = ({ onBackToDashboard }) => {
   const [coordinators, setCoordinators] = useState<Coordinator[]>([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingCoordinator, setEditingCoordinator] = useState<Coordinator | null>(null);
@@ -89,43 +93,66 @@ const CoordinatorsManager: React.FC = () => {
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-between items-center">
-        <h3 className="text-lg font-semibold">Coordinators ({coordinators.length})</h3>
+      {/* Back Button */}
+      <div className="flex items-center justify-between">
+        <Button variant="outline" onClick={onBackToDashboard}>
+          <ArrowLeft className="w-4 h-4 mr-2" />
+          Back to Dashboard
+        </Button>
         <Button onClick={handleAdd}>
           <Plus className="h-4 w-4 mr-2" />
           Add Coordinator
         </Button>
       </div>
 
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead>Role</TableHead>
-            <TableHead>Bio</TableHead>
-            <TableHead>Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {coordinators.map((coordinator) => (
-            <TableRow key={coordinator.id}>
-              <TableCell className="font-medium">{coordinator.name}</TableCell>
-              <TableCell>{coordinator.role}</TableCell>
-              <TableCell className="max-w-xs truncate">{coordinator.bio}</TableCell>
-              <TableCell>
-                <div className="flex gap-2">
-                  <Button variant="outline" size="sm" onClick={() => handleEdit(coordinator)}>
-                    <Edit className="h-4 w-4" />
-                  </Button>
-                  <Button variant="outline" size="sm" onClick={() => handleDelete(coordinator.id)}>
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                </div>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+      {/* Header */}
+      <div className="bg-white border border-gray-200 rounded-lg p-4">
+        <h2 className="text-xl font-bold text-gray-900 mb-1">Coordinators Management</h2>
+        <p className="text-gray-600 text-sm">Total Coordinators: {coordinators.length}</p>
+      </div>
+
+      {/* Content */}
+      <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+        <div className="p-4">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-lg font-semibold text-gray-900">All Coordinators</h3>
+            <Button onClick={handleAdd} variant="outline" size="sm">
+              <Plus className="h-4 w-4 mr-2" />
+              Add New
+            </Button>
+          </div>
+
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Name</TableHead>
+                <TableHead>Role</TableHead>
+                <TableHead>Bio</TableHead>
+                <TableHead>Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {coordinators.map((coordinator) => (
+                <TableRow key={coordinator.id}>
+                  <TableCell className="font-medium">{coordinator.name}</TableCell>
+                  <TableCell>{coordinator.role}</TableCell>
+                  <TableCell className="max-w-xs truncate">{coordinator.bio}</TableCell>
+                  <TableCell>
+                    <div className="flex gap-2">
+                      <Button variant="outline" size="sm" onClick={() => handleEdit(coordinator)}>
+                        <Edit className="h-4 w-4" />
+                      </Button>
+                      <Button variant="outline" size="sm" onClick={() => handleDelete(coordinator.id)}>
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      </div>
 
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">

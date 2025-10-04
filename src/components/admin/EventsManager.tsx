@@ -7,15 +7,22 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
-import { Plus, Edit, Trash2 } from 'lucide-react';
+import { Plus, Edit, Trash2, Upload, ArrowLeft } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { toast } from 'sonner';
 import { events as defaultEvents, Event as EventType } from '@/constants/events';
+import ImageUpload from './ImageUpload';
 
-const EventsManager: React.FC = () => {
+interface EventsManagerProps {
+  onBackToDashboard: () => void;
+}
+
+const EventsManager: React.FC<EventsManagerProps> = ({ onBackToDashboard }) => {
   const [events, setEvents] = useState<EventType[]>([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingEvent, setEditingEvent] = useState<EventType | null>(null);
   const [formData, setFormData] = useState<Partial<EventType>>({});
+  const [showImageUpload, setShowImageUpload] = useState(false);
 
   useEffect(() => {
     // Load events from localStorage or defaults
@@ -87,49 +94,72 @@ const EventsManager: React.FC = () => {
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-between items-center">
-        <h3 className="text-lg font-semibold">Events ({events.length})</h3>
+      {/* Back Button */}
+      <div className="flex items-center justify-between">
+        <Button variant="outline" onClick={onBackToDashboard}>
+          <ArrowLeft className="w-4 h-4 mr-2" />
+          Back to Dashboard
+        </Button>
         <Button onClick={handleAdd}>
           <Plus className="h-4 w-4 mr-2" />
           Add Event
         </Button>
       </div>
 
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Title</TableHead>
-            <TableHead>Date</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Category</TableHead>
-            <TableHead>Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {events.map((event) => (
-            <TableRow key={event.id}>
-              <TableCell className="font-medium">{event.title}</TableCell>
-              <TableCell>{event.date}</TableCell>
-              <TableCell>
-                <Badge variant={event.status === 'upcoming' ? 'default' : 'secondary'}>
-                  {event.status}
-                </Badge>
-              </TableCell>
-              <TableCell>{event.category}</TableCell>
-              <TableCell>
-                <div className="flex gap-2">
-                  <Button variant="outline" size="sm" onClick={() => handleEdit(event)}>
-                    <Edit className="h-4 w-4" />
-                  </Button>
-                  <Button variant="outline" size="sm" onClick={() => handleDelete(event.id)}>
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                </div>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+      {/* Header */}
+      <div className="bg-white border border-gray-200 rounded-lg p-4">
+        <h2 className="text-xl font-bold text-gray-900 mb-1">Events Management</h2>
+        <p className="text-gray-600 text-sm">Total Events: {events.length}</p>
+      </div>
+
+      {/* Content */}
+      <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+        <div className="p-4">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-lg font-semibold text-gray-900">All Events</h3>
+            <Button onClick={handleAdd} variant="outline" size="sm">
+              <Plus className="h-4 w-4 mr-2" />
+              Add New
+            </Button>
+          </div>
+
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Title</TableHead>
+                <TableHead>Date</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Category</TableHead>
+                <TableHead>Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {events.map((event) => (
+                <TableRow key={event.id}>
+                  <TableCell className="font-medium">{event.title}</TableCell>
+                  <TableCell>{event.date}</TableCell>
+                  <TableCell>
+                    <Badge variant={event.status === 'upcoming' ? 'default' : 'secondary'}>
+                      {event.status}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>{event.category}</TableCell>
+                  <TableCell>
+                    <div className="flex gap-2">
+                      <Button variant="outline" size="sm" onClick={() => handleEdit(event)}>
+                        <Edit className="h-4 w-4" />
+                      </Button>
+                      <Button variant="outline" size="sm" onClick={() => handleDelete(event.id)}>
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      </div>
 
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
@@ -194,13 +224,67 @@ const EventsManager: React.FC = () => {
                 rows={3}
               />
             </div>
-            <div>
-              <Label htmlFor="image">Image URL</Label>
-              <Input
-                id="image"
-                value={formData.image || ''}
-                onChange={(e) => handleInputChange('image', e.target.value)}
-              />
+            <div className="space-y-3">
+              <Label htmlFor="image">Event Image</Label>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="image" className="text-sm text-gray-600">Image URL</Label>
+                  <Input
+                    id="image"
+                    placeholder="Enter image URL or upload below"
+                    value={formData.image || ''}
+                    onChange={(e) => handleInputChange('image', e.target.value)}
+                  />
+                </div>
+                <div className="flex items-end">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => setShowImageUpload(!showImageUpload)}
+                    className="w-full"
+                  >
+                    <Upload className="w-4 h-4 mr-2" />
+                    {showImageUpload ? 'Hide Upload' : 'Upload Image'}
+                  </Button>
+                </div>
+              </div>
+
+              {showImageUpload && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="border rounded-lg p-4 bg-gray-50"
+                >
+                  <ImageUpload
+                    onImagesUploaded={(images) => {
+                      if (images.length > 0) {
+                        handleInputChange('image', images[0]);
+                        setShowImageUpload(false);
+                      }
+                    }}
+                    maxFiles={1}
+                    maxSizeMB={5}
+                    existingImages={[]}
+                  />
+                </motion.div>
+              )}
+
+              {formData.image && (
+                <div className="mt-3">
+                  <Label className="text-sm text-gray-600">Preview</Label>
+                  <div className="mt-2 w-32 h-20 bg-gray-100 rounded border overflow-hidden">
+                    <img
+                      src={formData.image}
+                      alt="Event preview"
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.currentTarget.src = '/src/assets/placeholder.svg';
+                      }}
+                    />
+                  </div>
+                </div>
+              )}
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>

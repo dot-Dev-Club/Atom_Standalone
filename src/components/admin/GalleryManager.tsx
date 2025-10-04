@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Plus, Trash2 } from 'lucide-react';
-import { toast } from 'sonner';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Image as ImageIcon, Upload, Grid, ArrowLeft } from 'lucide-react';
+import ImageUpload from './ImageUpload';
+import { getGalleryImages } from '@/utils/dataService';
 
 // Default gallery images from assets
 const defaultGalleryImages = [
@@ -39,99 +40,101 @@ const defaultGalleryImages = [
   '/src/assets/PHOTOS/SAVE_20250903_211046.jpg'
 ];
 
-const GalleryManager: React.FC = () => {
+interface GalleryManagerProps {
+  onBackToDashboard: () => void;
+}
+
+const GalleryManager: React.FC<GalleryManagerProps> = ({ onBackToDashboard }) => {
   const [galleryImages, setGalleryImages] = useState<string[]>([]);
-  const [newImageUrl, setNewImageUrl] = useState('');
 
   useEffect(() => {
     // Load gallery from localStorage or defaults
-    const stored = localStorage.getItem('cms_gallery');
-    if (stored) {
-      setGalleryImages(JSON.parse(stored));
-    } else {
-      setGalleryImages(defaultGalleryImages);
-    }
+    const images = getGalleryImages();
+    setGalleryImages(images);
   }, []);
 
-  const saveGallery = (newGallery: string[]) => {
-    setGalleryImages(newGallery);
-    localStorage.setItem('cms_gallery', JSON.stringify(newGallery));
-  };
-
-  const handleAddImage = () => {
-    if (!newImageUrl.trim()) {
-      toast.error('Please enter an image URL');
-      return;
-    }
-
-    if (galleryImages.includes(newImageUrl.trim())) {
-      toast.error('Image URL already exists');
-      return;
-    }
-
-    const newGallery = [...galleryImages, newImageUrl.trim()];
-    saveGallery(newGallery);
-    setNewImageUrl('');
-    toast.success('Image added successfully');
+  const handleImagesUploaded = (newImages: string[]) => {
+    const updatedGallery = [...galleryImages, ...newImages];
+    setGalleryImages(updatedGallery);
+    localStorage.setItem('cms_gallery', JSON.stringify(updatedGallery));
   };
 
   const handleRemoveImage = (index: number) => {
-    const newGallery = galleryImages.filter((_, i) => i !== index);
-    saveGallery(newGallery);
-    toast.success('Image removed successfully');
+    const updatedGallery = galleryImages.filter((_, i) => i !== index);
+    setGalleryImages(updatedGallery);
+    localStorage.setItem('cms_gallery', JSON.stringify(updatedGallery));
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex gap-4">
-        <div className="flex-1">
-          <Label htmlFor="imageUrl">Image URL</Label>
-          <Input
-            id="imageUrl"
-            placeholder="Enter image URL"
-            value={newImageUrl}
-            onChange={(e) => setNewImageUrl(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && handleAddImage()}
-          />
-        </div>
-        <div className="flex items-end">
-          <Button onClick={handleAddImage}>
-            <Plus className="h-4 w-4 mr-2" />
-            Add Image
-          </Button>
+    <div className="space-y-4">
+      {/* Back Button */}
+      <div className="flex items-center justify-between">
+        <Button variant="outline" onClick={onBackToDashboard}>
+          <ArrowLeft className="w-4 h-4 mr-2" />
+          Back to Dashboard
+        </Button>
+        <div className="text-sm text-gray-600">
+          Total Images: {galleryImages.length}
         </div>
       </div>
 
-      <div>
-        <h3 className="text-lg font-semibold mb-4">Gallery Images ({galleryImages.length})</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {galleryImages.map((imageUrl, index) => (
-            <Card key={index} className="overflow-hidden">
-              <div className="aspect-video relative">
-                <img
-                  src={imageUrl}
-                  alt={`Gallery image ${index + 1}`}
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    e.currentTarget.src = '/src/assets/placeholder.svg';
-                  }}
-                />
-                <Button
-                  variant="destructive"
-                  size="sm"
-                  className="absolute top-2 right-2"
-                  onClick={() => handleRemoveImage(index)}
-                >
-                  <Trash2 className="h-4 w-4" />
-                </Button>
-              </div>
-              <CardContent className="p-2">
-                <p className="text-xs text-gray-500 truncate">{imageUrl}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+      {/* Header */}
+      <div className="bg-white border border-gray-200 rounded-lg p-4">
+        <h2 className="text-xl font-bold text-gray-900 mb-1">Gallery Management</h2>
+        <p className="text-gray-600 text-sm">Manage your website's photo gallery</p>
       </div>
+
+      <Tabs defaultValue="upload" className="space-y-6">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="upload" className="flex items-center gap-2">
+            <Upload className="w-4 h-4" />
+            Upload Images
+          </TabsTrigger>
+          <TabsTrigger value="manage" className="flex items-center gap-2">
+            <Grid className="w-4 h-4" />
+            Manage Gallery
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="upload" className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <ImageIcon className="w-5 h-5 text-cyan-600" />
+                Upload New Images
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ImageUpload
+                onImagesUploaded={handleImagesUploaded}
+                maxFiles={20}
+                maxSizeMB={10}
+                existingImages={[]}
+              />
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="manage" className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Grid className="w-5 h-5 text-cyan-600" />
+                Gallery Overview
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ImageUpload
+                onImagesUploaded={handleImagesUploaded}
+                existingImages={galleryImages}
+                onRemoveExisting={handleRemoveImage}
+                maxFiles={50}
+                maxSizeMB={10}
+              />
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };
