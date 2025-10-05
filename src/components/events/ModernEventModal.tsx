@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Event } from '@/constants/events';
 import { useNavigate } from 'react-router-dom';
+import ClockCountdown from '@/components/ui/ClockCountdown';
+import ReactMarkdown from 'react-markdown';
 
 interface ModernEventModalProps {
   event: Event | null;
@@ -234,11 +236,45 @@ const ModernEventModal: React.FC<ModernEventModalProps> = ({
                     </div>
                     About This Event
                   </h2>
-                  <div className="text-foreground-secondary leading-relaxed text-lg">
+                  <div className="prose prose-invert max-w-none">
                     {showFullDescription ? (
-                      <p>{event.description}</p>
+                      <ReactMarkdown
+                        components={{
+                          h1: ({ children }) => <h1 className="text-xl font-bold text-white mb-3">{children}</h1>,
+                          h2: ({ children }) => <h2 className="text-lg font-bold text-white mb-2">{children}</h2>,
+                          h3: ({ children }) => <h3 className="text-base font-bold text-white mb-2">{children}</h3>,
+                          p: ({ children }) => <p className="text-gray-300 mb-3 leading-relaxed">{children}</p>,
+                          ul: ({ children }) => <ul className="text-gray-300 mb-3 ml-4 list-disc">{children}</ul>,
+                          ol: ({ children }) => <ol className="text-gray-300 mb-3 ml-4 list-decimal">{children}</ol>,
+                          li: ({ children }) => <li className="mb-1">{children}</li>,
+                          strong: ({ children }) => <strong className="text-white font-semibold">{children}</strong>,
+                          em: ({ children }) => <em className="text-gray-200 italic">{children}</em>,
+                          code: ({ children }) => <code className="bg-gray-800 text-green-400 px-1 py-0.5 rounded text-sm">{children}</code>,
+                          blockquote: ({ children }) => <blockquote className="border-l-4 border-blue-500 pl-3 text-gray-200 italic">{children}</blockquote>,
+                          a: ({ children, href }) => <a href={href} className="text-blue-400 hover:text-blue-300 underline" target="_blank" rel="noopener noreferrer">{children}</a>,
+                        }}
+                      >
+                        {event.description}
+                      </ReactMarkdown>
                     ) : (
-                      <p>{truncateDescription(event.description)}</p>
+                      <ReactMarkdown
+                        components={{
+                          h1: ({ children }) => <h1 className="text-xl font-bold text-white mb-3">{children}</h1>,
+                          h2: ({ children }) => <h2 className="text-lg font-bold text-white mb-2">{children}</h2>,
+                          h3: ({ children }) => <h3 className="text-base font-bold text-white mb-2">{children}</h3>,
+                          p: ({ children }) => <p className="text-gray-300 mb-3 leading-relaxed">{children}</p>,
+                          ul: ({ children }) => <ul className="text-gray-300 mb-3 ml-4 list-disc">{children}</ul>,
+                          ol: ({ children }) => <ol className="text-gray-300 mb-3 ml-4 list-decimal">{children}</ol>,
+                          li: ({ children }) => <li className="mb-1">{children}</li>,
+                          strong: ({ children }) => <strong className="text-white font-semibold">{children}</strong>,
+                          em: ({ children }) => <em className="text-gray-200 italic">{children}</em>,
+                          code: ({ children }) => <code className="bg-gray-800 text-green-400 px-1 py-0.5 rounded text-sm">{children}</code>,
+                          blockquote: ({ children }) => <blockquote className="border-l-4 border-blue-500 pl-3 text-gray-200 italic">{children}</blockquote>,
+                          a: ({ children, href }) => <a href={href} className="text-blue-400 hover:text-blue-300 underline" target="_blank" rel="noopener noreferrer">{children}</a>,
+                        }}
+                      >
+                        {truncateDescription(event.description)}
+                      </ReactMarkdown>
                     )}
                     {event.description.split(' ').length > 36 && (
                       <button

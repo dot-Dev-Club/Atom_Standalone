@@ -7,6 +7,8 @@ import { Event } from '@/constants/events';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getEventById, getEvents } from '@/utils/dataService';
 import { generateSlug } from '@/utils/slug';
+import ClockCountdown from '@/components/ui/ClockCountdown';
+import ReactMarkdown from 'react-markdown';
 
 interface TimeLeft {
   days: number;
@@ -21,7 +23,6 @@ const EventDetailPage: React.FC = () => {
   const [event, setEvent] = useState<Event | null>(null);
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [isExpired, setIsExpired] = useState(false);
-  const [showFullDescription, setShowFullDescription] = useState(false);
   const [showRegistrationOptions, setShowRegistrationOptions] = useState(false);
 
   useEffect(() => {
@@ -122,16 +123,6 @@ const EventDetailPage: React.FC = () => {
     });
   };
 
-  const truncateDescription = (text: string, maxLines: number = 3) => {
-    const words = text.split(' ');
-    const wordsPerLine = 12; // Approximate words per line
-    const maxWords = maxLines * wordsPerLine;
-
-    if (words.length <= maxWords) return text;
-
-    return words.slice(0, maxWords).join(' ') + '...';
-  };
-
   const goBack = () => {
     navigate('/events');
   };
@@ -148,14 +139,21 @@ const EventDetailPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-cyan-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 relative overflow-hidden">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-20 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-20 right-20 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-conic from-blue-500/5 via-cyan-500/5 to-blue-500/5 rounded-full blur-3xl animate-spin" style={{ animationDuration: '30s' }}></div>
+      </div>
+
       {/* Navigation */}
       <div className="sticky top-0 z-40 backdrop-blur-xl bg-black/20 border-b border-white/10">
         <div className="container mx-auto px-6 py-4">
           <Button
             onClick={goBack}
             variant="ghost"
-            className="text-white hover:text-blue-400"
+            className="text-white hover:text-blue-400 transition-all duration-300"
           >
             <ArrowLeft className="w-5 h-5 mr-2" />
             Back to Events
@@ -164,110 +162,160 @@ const EventDetailPage: React.FC = () => {
       </div>
 
       {/* Main Content */}
-      <div className="container mx-auto px-6 py-8 max-w-7xl">
-        {/* Event Banner Image */}
-        <div className="relative w-full h-64 lg:h-96 overflow-hidden rounded-3xl mb-8">
+      <div className="relative z-10 container mx-auto px-6 py-8 max-w-7xl">
+        {/* Hero Section with Event Image */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="relative w-full h-80 lg:h-96 overflow-hidden rounded-3xl mb-12 shadow-2xl"
+        >
           <img
             src={event.image}
             alt={event.title}
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent rounded-3xl" />
-        </div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent rounded-3xl" />
+
+          {/* Event Title Overlay */}
+          <div className="absolute bottom-0 left-0 right-0 p-8">
+            <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
+              <div className="flex-1">
+                <motion.h1
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                  className="text-4xl lg:text-6xl font-bold text-white leading-tight mb-4"
+                >
+                  {event.title}
+                </motion.h1>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.4 }}
+                  className="flex flex-wrap gap-3"
+                >
+                  <Badge
+                    className={`text-sm font-semibold px-4 py-2 ${
+                      event.eventType === 'free'
+                        ? 'bg-green-500/20 text-green-400 border-green-500/30 backdrop-blur-sm'
+                        : 'bg-orange-500/20 text-orange-400 border-orange-500/30 backdrop-blur-sm'
+                    }`}
+                  >
+                    {event.eventType === 'free' ? '🎉 Free Event' : '💰 Paid Event'}
+                  </Badge>
+                  <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 backdrop-blur-sm px-4 py-2">
+                    {event.status === 'upcoming' ? '🚀 Upcoming' : '🏁 Completed'}
+                  </Badge>
+                </motion.div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
 
         {/* Content Grid */}
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Main Content Column */}
           <div className="lg:col-span-2 space-y-8">
-            {/* Title and Badge */}
-            <div className="space-y-6">
-              <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
-                <h1 className="text-4xl lg:text-5xl font-bold text-white leading-tight flex-1">
-                  {event.title}
-                </h1>
-                <Badge
-                  className={`text-sm font-semibold px-6 py-3 w-fit ${
-                    event.eventType === 'free'
-                      ? 'bg-green-500/20 text-green-400 border-green-500/30'
-                      : 'bg-orange-500/20 text-orange-400 border-orange-500/30'
-                  }`}
-                >
-                  {event.eventType === 'free' ? 'Free Event' : 'Paid Event'}
-                </Badge>
-              </div>
-            </div>
-
-            {/* Key Logistics */}
-            <div className="grid md:grid-cols-3 gap-6">
-              <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-6 rounded-2xl flex items-center gap-4">
-                <div className="w-12 h-12 bg-atom-primary/20 rounded-xl flex items-center justify-center">
-                  <Calendar className="w-6 h-6 text-atom-primary" />
-                </div>
-                <div>
-                  <p className="text-sm text-gray-300 font-medium">Date</p>
-                  <p className="text-white font-semibold">{formatDate(event.date)}</p>
+            {/* Key Information Cards */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="grid md:grid-cols-3 gap-6"
+            >
+              <div className="glass-card p-6 rounded-2xl hover:scale-105 transition-transform duration-300">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-xl flex items-center justify-center">
+                    <Calendar className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-400 font-medium">Date</p>
+                    <p className="text-white font-semibold">{formatDate(event.date)}</p>
+                  </div>
                 </div>
               </div>
 
               {event.time && (
-                <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-6 rounded-2xl flex items-center gap-4">
-                  <div className="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center">
-                    <Clock className="w-6 h-6 text-purple-400" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-300 font-medium">Time</p>
-                    <p className="text-white font-semibold">{event.time}</p>
+                <div className="glass-card p-6 rounded-2xl hover:scale-105 transition-transform duration-300">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center">
+                      <Clock className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-400 font-medium">Time</p>
+                      <p className="text-white font-semibold">{event.time}</p>
+                    </div>
                   </div>
                 </div>
               )}
 
-              <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-6 rounded-2xl flex items-center gap-4">
-                <div className="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center">
-                  <MapPin className="w-6 h-6 text-green-400" />
-                </div>
-                <div>
-                  <p className="text-sm text-gray-300 font-medium">Location</p>
-                  <p className="text-white font-semibold">{event.location}</p>
+              <div className="glass-card p-6 rounded-2xl hover:scale-105 transition-transform duration-300">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center">
+                    <MapPin className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-400 font-medium">Location</p>
+                    <p className="text-white font-semibold">{event.location}</p>
+                  </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* About This Event */}
-            <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-8 rounded-2xl">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="glass-card p-8 rounded-2xl"
+            >
               <h2 className="text-2xl font-semibold text-white mb-6 flex items-center">
-                <div className="w-10 h-10 bg-electric/20 rounded-lg flex items-center justify-center mr-4">
-                  ℹ️
+                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-lg flex items-center justify-center mr-4">
+                  <span className="text-white text-lg">ℹ️</span>
                 </div>
                 About This Event
               </h2>
               <div className="text-gray-300 leading-relaxed text-lg">
-                {showFullDescription ? (
-                  <p>{event.description}</p>
-                ) : (
-                  <p>{truncateDescription(event.description)}</p>
-                )}
-                {event.description.split(' ').length > 36 && (
-                  <button
-                    onClick={() => setShowFullDescription(!showFullDescription)}
-                    className="text-atom-primary hover:text-electric transition-colors mt-4 font-semibold text-base"
-                  >
-                    {showFullDescription ? 'Read Less...' : 'Read More...'}
-                  </button>
-                )}
+              <div className="prose prose-invert max-w-none">
+                <ReactMarkdown
+                  components={{
+                    h1: ({ children }) => <h1 className="text-2xl font-bold text-white mb-4">{children}</h1>,
+                    h2: ({ children }) => <h2 className="text-xl font-bold text-white mb-3">{children}</h2>,
+                    h3: ({ children }) => <h3 className="text-lg font-bold text-white mb-2">{children}</h3>,
+                    p: ({ children }) => <p className="text-gray-300 mb-4 leading-relaxed">{children}</p>,
+                    ul: ({ children }) => <ul className="text-gray-300 mb-4 ml-6 list-disc">{children}</ul>,
+                    ol: ({ children }) => <ol className="text-gray-300 mb-4 ml-6 list-decimal">{children}</ol>,
+                    li: ({ children }) => <li className="mb-1">{children}</li>,
+                    strong: ({ children }) => <strong className="text-white font-semibold">{children}</strong>,
+                    em: ({ children }) => <em className="text-gray-200 italic">{children}</em>,
+                    code: ({ children }) => <code className="bg-gray-800 text-green-400 px-2 py-1 rounded text-sm">{children}</code>,
+                    blockquote: ({ children }) => <blockquote className="border-l-4 border-blue-500 pl-4 text-gray-200 italic">{children}</blockquote>,
+                    a: ({ children, href }) => <a href={href} className="text-blue-400 hover:text-blue-300 underline" target="_blank" rel="noopener noreferrer">{children}</a>,
+                  }}
+                >
+                  {event.description}
+                </ReactMarkdown>
               </div>
-            </div>
+              </div>
+            </motion.div>
           </div>
 
           {/* Sidebar Column */}
           <div className="space-y-8">
             {/* Countdown Timer */}
             {event.status === 'upcoming' && !isExpired && (
-              <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-6 rounded-2xl">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.5 }}
+                className="glass-card p-6 rounded-2xl"
+              >
                 <div className="text-center mb-6">
                   <h3 className="text-xl font-semibold text-white mb-2">
-                    Event Countdown
+                    ⏰ Event Countdown
                   </h3>
-                  <p className="text-gray-400">Time remaining</p>
+                  <p className="text-gray-400 text-sm">Time remaining until event</p>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   {[
@@ -283,7 +331,7 @@ const EventDetailPage: React.FC = () => {
                       transition={{ duration: 0.3, delay: index * 0.1 }}
                       className="text-center"
                     >
-                      <div className={`w-16 h-16 bg-gradient-to-br ${unit.color} rounded-xl flex items-center justify-center mx-auto mb-2`}>
+                      <div className={`w-16 h-16 bg-gradient-to-br ${unit.color} rounded-xl flex items-center justify-center mx-auto mb-2 shadow-lg`}>
                         <span className="text-white font-bold text-lg">
                           {unit.value.toString().padStart(2, '0')}
                         </span>
@@ -294,57 +342,68 @@ const EventDetailPage: React.FC = () => {
                     </motion.div>
                   ))}
                 </div>
-              </div>
+              </motion.div>
             )}
 
             {/* Registration Section */}
             {event.status === 'upcoming' && !isExpired && (
-              <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-6 rounded-2xl">
-                <h3 className="text-xl font-semibold text-white text-center mb-6">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+                className="glass-card p-6 rounded-2xl"
+              >
+                <h3 className="text-xl font-semibold text-white text-center mb-6 flex items-center justify-center">
+                  <span className="mr-2">🎫</span>
                   Register for Event
                 </h3>
 
                 {!showRegistrationOptions ? (
                   <Button
                     onClick={() => setShowRegistrationOptions(true)}
-                    className="w-full bg-gradient-to-r from-atom-primary to-electric hover:from-atom-primary/80 hover:to-electric/80 text-white py-4 text-lg font-bold rounded-xl transition-all duration-300"
+                    className="w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white py-4 text-lg font-bold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
                   >
-                    Register Now
+                    🚀 Register Now
                   </Button>
                 ) : (
                   <div className="space-y-4">
                     <Button
                       onClick={() => navigate('/registration/internal')}
-                      className="w-full bg-gradient-to-r from-atom-primary/80 to-atom-primary/60 hover:from-atom-primary hover:to-atom-primary text-white py-3 font-semibold rounded-xl transition-all duration-300 flex flex-col items-center gap-1"
+                      className="w-full bg-gradient-to-r from-blue-600/80 to-blue-500/60 hover:from-blue-600 hover:to-blue-500 text-white py-3 font-semibold rounded-xl transition-all duration-300 flex flex-col items-center gap-1 shadow-lg hover:shadow-xl hover:scale-105"
                     >
-                      <span>Internal Registration</span>
+                      <span>🎓 Internal Registration</span>
                       <span className="text-sm opacity-80">For Karunya Students</span>
                     </Button>
 
                     <Button
                       onClick={() => navigate('/registration/external')}
-                      className="w-full bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white py-3 font-semibold rounded-xl transition-all duration-300 flex flex-col items-center gap-1"
+                      className="w-full bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white py-3 font-semibold rounded-xl transition-all duration-300 flex flex-col items-center gap-1 shadow-lg hover:shadow-xl hover:scale-105"
                     >
-                      <span>External Registration</span>
+                      <span>🌍 External Registration</span>
                       <span className="text-sm opacity-80">For External Participants</span>
                     </Button>
 
                     <Button
                       variant="ghost"
                       onClick={() => setShowRegistrationOptions(false)}
-                      className="w-full text-gray-400 hover:text-white transition-colors"
+                      className="w-full text-gray-400 hover:text-white transition-colors mt-2"
                     >
-                      Back
+                      ← Back
                     </Button>
                   </div>
                 )}
-              </div>
+              </motion.div>
             )}
 
             {/* Past Event Status */}
             {(event.status !== 'upcoming' || isExpired) && (
-              <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-6 rounded-2xl text-center">
-                <div className="w-16 h-16 bg-gray-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.7 }}
+                className="glass-card p-6 rounded-2xl text-center"
+              >
+                <div className="w-16 h-16 bg-gradient-to-br from-gray-500 to-gray-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
                   <span className="text-2xl">🏁</span>
                 </div>
                 <h3 className="text-xl font-semibold text-white mb-2">
@@ -353,41 +412,46 @@ const EventDetailPage: React.FC = () => {
                 <p className="text-gray-400">
                   This event has ended. Thank you for your interest!
                 </p>
-              </div>
+              </motion.div>
             )}
           </div>
         </div>
 
         {/* Rules & Guidelines */}
-        <div className="grid md:grid-cols-2 gap-8 mt-12">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.8 }}
+          className="grid md:grid-cols-2 gap-8 mt-12"
+        >
           {/* Rules & Regulations */}
-          <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-6 rounded-2xl">
+          <div className="glass-card p-6 rounded-2xl">
             <h3 className="text-lg font-semibold text-white mb-4 flex items-center">
-              <div className="w-8 h-8 bg-atom-primary/20 rounded-lg flex items-center justify-center mr-3">
-                📋
+              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-lg flex items-center justify-center mr-3">
+                <span className="text-white">📋</span>
               </div>
               Rules & Regulations
             </h3>
             <div className="space-y-3">
               <ul className="space-y-2 text-sm text-gray-300">
                 <li className="flex items-start">
-                  <span className="text-atom-primary mr-2 mt-1">•</span>
+                  <span className="text-blue-400 mr-2 mt-1">•</span>
                   All participants must register before the event deadline
                 </li>
                 <li className="flex items-start">
-                  <span className="text-atom-primary mr-2 mt-1">•</span>
+                  <span className="text-blue-400 mr-2 mt-1">•</span>
                   Participants must bring valid ID proof for verification
                 </li>
                 <li className="flex items-start">
-                  <span className="text-atom-primary mr-2 mt-1">•</span>
+                  <span className="text-blue-400 mr-2 mt-1">•</span>
                   Late arrivals may not be permitted to participate
                 </li>
                 <li className="flex items-start">
-                  <span className="text-atom-primary mr-2 mt-1">•</span>
+                  <span className="text-blue-400 mr-2 mt-1">•</span>
                   Follow all venue guidelines and instructions from organizers
                 </li>
                 <li className="flex items-start">
-                  <span className="text-atom-primary mr-2 mt-1">•</span>
+                  <span className="text-blue-400 mr-2 mt-1">•</span>
                   Respectful behavior towards all participants is mandatory
                 </li>
               </ul>
@@ -395,39 +459,39 @@ const EventDetailPage: React.FC = () => {
           </div>
 
           {/* Terms & Conditions */}
-          <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-6 rounded-2xl">
+          <div className="glass-card p-6 rounded-2xl">
             <h3 className="text-lg font-semibold text-white mb-4 flex items-center">
-              <div className="w-8 h-8 bg-electric/20 rounded-lg flex items-center justify-center mr-3">
-                📄
+              <div className="w-8 h-8 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-lg flex items-center justify-center mr-3">
+                <span className="text-white">📄</span>
               </div>
               Terms & Conditions
             </h3>
             <div className="space-y-3">
               <ul className="space-y-2 text-sm text-gray-300">
                 <li className="flex items-start">
-                  <span className="text-electric mr-2 mt-1">•</span>
+                  <span className="text-cyan-400 mr-2 mt-1">•</span>
                   Allow photography and videography during the event
                 </li>
                 <li className="flex items-start">
-                  <span className="text-electric mr-2 mt-1">•</span>
+                  <span className="text-cyan-400 mr-2 mt-1">•</span>
                   Comply with all event rules and venue policies
                 </li>
                 <li className="flex items-start">
-                  <span className="text-electric mr-2 mt-1">•</span>
+                  <span className="text-cyan-400 mr-2 mt-1">•</span>
                   Organizers are not liable for personal belongings
                 </li>
                 <li className="flex items-start">
-                  <span className="text-electric mr-2 mt-1">•</span>
+                  <span className="text-cyan-400 mr-2 mt-1">•</span>
                   Event details may change with prior notice
                 </li>
                 <li className="flex items-start">
-                  <span className="text-electric mr-2 mt-1">•</span>
+                  <span className="text-cyan-400 mr-2 mt-1">•</span>
                   Provide accurate information during registration
                 </li>
               </ul>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

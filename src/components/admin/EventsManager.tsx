@@ -13,6 +13,9 @@ import { toast } from 'sonner';
 import { events as defaultEvents, Event as EventType } from '@/constants/events';
 import { ThreeDIconPresets } from '../ThreeDIcons';
 import ImageUpload from './ImageUpload';
+import MDEditor from '@uiw/react-md-editor';
+import '@uiw/react-md-editor/markdown-editor.css';
+import '@uiw/react-markdown-preview/markdown.css';
 
 interface EventsManagerProps {
   onBackToDashboard: () => void;
@@ -297,15 +300,21 @@ const EventsManager: React.FC<EventsManagerProps> = ({ onBackToDashboard }) => {
               </div>
               
               <div>
-                <Label htmlFor="description" className="text-foreground font-semibold">Description *</Label>
-                <Textarea
-                  id="description"
-                  value={formData.description || ''}
-                  onChange={(e) => handleInputChange('description', e.target.value)}
-                  rows={3}
-                  className="bg-input border-border text-foreground"
-                  placeholder="Describe the event in detail..."
-                />
+                <Label htmlFor="description" className="text-foreground font-semibold">Description (Markdown) *</Label>
+                <div data-color-mode="dark">
+                  <MDEditor
+                    value={formData.description || ''}
+                    onChange={(value) => handleInputChange('description', value || '')}
+                    preview="edit"
+                    hideToolbar={false}
+                    visibleDragbar={false}
+                    height={200}
+                    className="bg-input border border-border rounded-md"
+                  />
+                </div>
+                <p className="text-xs text-foreground-secondary mt-2">
+                  Use Markdown for rich formatting: **bold**, *italic*, `code`, lists, links, etc.
+                </p>
               </div>
               
               <div className="space-y-4">

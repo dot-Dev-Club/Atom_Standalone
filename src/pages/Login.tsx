@@ -247,12 +247,12 @@ const Login: React.FC = () => {
                   {isLoading ? (
                     <div className="flex items-center justify-center">
                       <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2"></div>
-                      Signing In...
+                      ACCESSING THE SYSTEM ...
                     </div>
                   ) : (
                     <div className="flex items-center justify-center">
                       <Lock className="w-5 h-5 mr-2" />
-                      Sign In
+                      ACCESS THE SYSTEM
                     </div>
                   )}
                 </Button>
