@@ -394,9 +394,8 @@ const ModernEventModal: React.FC<ModernEventModalProps> = ({
                             }}
                             className="bg-gradient-to-r from-atom-primary/80 to-atom-primary/60 hover:from-atom-primary hover:to-atom-primary text-white px-8 py-6 text-lg font-semibold rounded-xl transition-all duration-300 hover:scale-105 shadow-lg flex flex-col items-center gap-2"
                           >
-                            <span className="text-2xl">🏢</span>
                             <span>Internal Registration</span>
-                            <span className="text-sm opacity-80">For ATOM Members</span>
+                            <span className="text-sm opacity-80">For Karunya Students</span>
                           </Button>
 
                           <Button
@@ -407,7 +406,6 @@ const ModernEventModal: React.FC<ModernEventModalProps> = ({
                             }}
                             className="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white px-8 py-6 text-lg font-semibold rounded-xl transition-all duration-300 hover:scale-105 shadow-lg flex flex-col items-center gap-2"
                           >
-                            <span className="text-2xl">🌍</span>
                             <span>External Registration</span>
                             <span className="text-sm opacity-80">For External Participants</span>
                           </Button>

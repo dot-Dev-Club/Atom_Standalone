@@ -1,42 +1,30 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, User, Mail, Phone, BookOpen, Calendar, Send, CheckCircle } from 'lucide-react';
+import { ArrowLeft, User, Mail, BookOpen, Send, CheckCircle } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { registerParticipant } from '@/utils/api';
 import '@/styles/event-enhancements.css';
 
 interface FormData {
-  fullName: string;
+  name: string;
+  reg_no: string;
+  division: string;
+  year_of_study: string;
   email: string;
-  phone: string;
-  studentId: string;
-  department: string;
-  year: string;
-  branch: string;
-  emergencyContact: string;
-  emergencyPhone: string;
-  dietaryRequirements: string;
-  expectations: string;
-  experience: string;
+  recipt_no: string;
 }
 
 const InternalRegistrationForm: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
-    fullName: '',
+    name: '',
+    reg_no: '',
+    division: '',
+    year_of_study: '',
     email: '',
-    phone: '',
-    studentId: '',
-    department: '',
-    year: '',
-    branch: '',
-    emergencyContact: '',
-    emergencyPhone: '',
-    dietaryRequirements: '',
-    expectations: '',
-    experience: ''
+    recipt_no: ''
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -55,17 +43,12 @@ const InternalRegistrationForm: React.FC = () => {
   const validateForm = (): boolean => {
     const newErrors: Partial<FormData> = {};
 
-    if (!formData.fullName.trim()) newErrors.fullName = 'Full name is required';
+    if (!formData.name.trim()) newErrors.name = 'Name is required';
+    if (!formData.reg_no.trim()) newErrors.reg_no = 'Registration number is required';
+    if (!formData.division.trim()) newErrors.division = 'Division is required';
+    if (!formData.year_of_study.trim()) newErrors.year_of_study = 'Year of study is required';
     if (!formData.email.trim()) newErrors.email = 'Email is required';
     else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Invalid email format';
-    if (!formData.phone.trim()) newErrors.phone = 'Phone number is required';
-    else if (!/^\d{10}$/.test(formData.phone.replace(/\D/g, ''))) newErrors.phone = 'Invalid phone number';
-    if (!formData.studentId.trim()) newErrors.studentId = 'Student ID is required';
-    if (!formData.department.trim()) newErrors.department = 'Department is required';
-    if (!formData.year.trim()) newErrors.year = 'Year is required';
-    if (!formData.branch.trim()) newErrors.branch = 'Branch is required';
-    if (!formData.emergencyContact.trim()) newErrors.emergencyContact = 'Emergency contact is required';
-    if (!formData.emergencyPhone.trim()) newErrors.emergencyPhone = 'Emergency phone is required';
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -73,16 +56,22 @@ const InternalRegistrationForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) return;
 
     setIsSubmitting(true);
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
+
+    const result = await registerParticipant(formData, 'internal');
+
     setIsSubmitting(false);
-    setIsSubmitted(true);
+
+    if (result.success) {
+      setIsSubmitted(true);
+    } else {
+      // Handle error - for now just log it, you could add error state
+      console.error('Registration failed:', result.message);
+      alert(result.message || 'Registration failed. Please try again.');
+    }
   };
 
   const goBack = () => {
@@ -168,19 +157,62 @@ const InternalRegistrationForm: React.FC = () => {
             
             <CardContent className="p-8">
               <form onSubmit={handleSubmit} className="space-y-8">
-                {/* Personal Information */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <Label htmlFor="fullName" className="text-white font-medium">Full Name *</Label>
+                    <Label htmlFor="name" className="text-white font-medium">Name *</Label>
                     <Input
-                      id="fullName"
-                      name="fullName"
-                      value={formData.fullName}
+                      id="name"
+                      name="name"
+                      value={formData.name}
                       onChange={handleInputChange}
                       className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500"
                       placeholder="Enter your full name"
                     />
-                    {errors.fullName && <p className="text-red-400 text-sm">{errors.fullName}</p>}
+                    {errors.name && <p className="text-red-400 text-sm">{errors.name}</p>}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="reg_no" className="text-white font-medium">Registration Number *</Label>
+                    <Input
+                      id="reg_no"
+                      name="reg_no"
+                      value={formData.reg_no}
+                      onChange={handleInputChange}
+                      className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500"
+                      placeholder="URK21XXXX"
+                    />
+                    {errors.reg_no && <p className="text-red-400 text-sm">{errors.reg_no}</p>}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="division" className="text-white font-medium">Division *</Label>
+                    <Input
+                      id="division"
+                      name="division"
+                      value={formData.division}
+                      onChange={handleInputChange}
+                      className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500"
+                      placeholder="Enter your division"
+                    />
+                    {errors.division && <p className="text-red-400 text-sm">{errors.division}</p>}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="year_of_study" className="text-white font-medium">Year of Study *</Label>
+                    <select
+                      id="year_of_study"
+                      name="year_of_study"
+                      value={formData.year_of_study}
+                      onChange={handleInputChange}
+                      className="w-full bg-white/5 border border-white/20 text-white rounded-lg px-3 py-2 focus:border-blue-500 focus:outline-none"
+                    >
+                      <option value="" className="bg-gray-800">Select Year</option>
+                      <option value="1st Year" className="bg-gray-800">1st Year</option>
+                      <option value="2nd Year" className="bg-gray-800">2nd Year</option>
+                      <option value="3rd Year" className="bg-gray-800">3rd Year</option>
+                      <option value="4th Year" className="bg-gray-800">4th Year</option>
+                    </select>
+                    {errors.year_of_study && <p className="text-red-400 text-sm">{errors.year_of_study}</p>}
                   </div>
 
                   <div className="space-y-2">
@@ -197,175 +229,9 @@ const InternalRegistrationForm: React.FC = () => {
                     {errors.email && <p className="text-red-400 text-sm">{errors.email}</p>}
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="phone" className="text-white font-medium">Phone Number *</Label>
-                    <Input
-                      id="phone"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500"
-                      placeholder="+91 98765 43210"
-                    />
-                    {errors.phone && <p className="text-red-400 text-sm">{errors.phone}</p>}
-                  </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="studentId" className="text-white font-medium">Student ID *</Label>
-                    <Input
-                      id="studentId"
-                      name="studentId"
-                      value={formData.studentId}
-                      onChange={handleInputChange}
-                      className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500"
-                      placeholder="21XXXX"
-                    />
-                    {errors.studentId && <p className="text-red-400 text-sm">{errors.studentId}</p>}
-                  </div>
                 </div>
 
-                {/* Academic Information */}
-                <div className="border-t border-white/10 pt-8">
-                  <h3 className="text-xl font-semibold text-white mb-6 flex items-center gap-3">
-                    <BookOpen className="w-5 h-5" />
-                    Academic Details
-                  </h3>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div className="space-y-2">
-                      <Label htmlFor="department" className="text-white font-medium">Department *</Label>
-                      <select
-                        id="department"
-                        name="department"
-                        value={formData.department}
-                        onChange={handleInputChange}
-                        className="w-full bg-white/5 border border-white/20 text-white rounded-lg px-3 py-2 focus:border-blue-500 focus:outline-none"
-                      >
-                        <option value="" className="bg-gray-800">Select Department</option>
-                        <option value="Computer Science" className="bg-gray-800">Computer Science</option>
-                        <option value="Information Technology" className="bg-gray-800">Information Technology</option>
-                        <option value="Electronics" className="bg-gray-800">Electronics</option>
-                        <option value="Mechanical" className="bg-gray-800">Mechanical</option>
-                        <option value="Civil" className="bg-gray-800">Civil</option>
-                        <option value="Biotechnology" className="bg-gray-800">Biotechnology</option>
-                        <option value="Other" className="bg-gray-800">Other</option>
-                      </select>
-                      {errors.department && <p className="text-red-400 text-sm">{errors.department}</p>}
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="year" className="text-white font-medium">Year *</Label>
-                      <select
-                        id="year"
-                        name="year"
-                        value={formData.year}
-                        onChange={handleInputChange}
-                        className="w-full bg-white/5 border border-white/20 text-white rounded-lg px-3 py-2 focus:border-blue-500 focus:outline-none"
-                      >
-                        <option value="" className="bg-gray-800">Select Year</option>
-                        <option value="1st Year" className="bg-gray-800">1st Year</option>
-                        <option value="2nd Year" className="bg-gray-800">2nd Year</option>
-                        <option value="3rd Year" className="bg-gray-800">3rd Year</option>
-                        <option value="4th Year" className="bg-gray-800">4th Year</option>
-                      </select>
-                      {errors.year && <p className="text-red-400 text-sm">{errors.year}</p>}
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="branch" className="text-white font-medium">Branch/Specialization *</Label>
-                      <Input
-                        id="branch"
-                        name="branch"
-                        value={formData.branch}
-                        onChange={handleInputChange}
-                        className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500"
-                        placeholder="e.g., CSE, IT, ECE"
-                      />
-                      {errors.branch && <p className="text-red-400 text-sm">{errors.branch}</p>}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Emergency Contact */}
-                <div className="border-t border-white/10 pt-8">
-                  <h3 className="text-xl font-semibold text-white mb-6 flex items-center gap-3">
-                    <Phone className="w-5 h-5" />
-                    Emergency Contact
-                  </h3>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <Label htmlFor="emergencyContact" className="text-white font-medium">Emergency Contact Name *</Label>
-                      <Input
-                        id="emergencyContact"
-                        name="emergencyContact"
-                        value={formData.emergencyContact}
-                        onChange={handleInputChange}
-                        className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500"
-                        placeholder="Parent/Guardian name"
-                      />
-                      {errors.emergencyContact && <p className="text-red-400 text-sm">{errors.emergencyContact}</p>}
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="emergencyPhone" className="text-white font-medium">Emergency Phone *</Label>
-                      <Input
-                        id="emergencyPhone"
-                        name="emergencyPhone"
-                        value={formData.emergencyPhone}
-                        onChange={handleInputChange}
-                        className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500"
-                        placeholder="+91 98765 43210"
-                      />
-                      {errors.emergencyPhone && <p className="text-red-400 text-sm">{errors.emergencyPhone}</p>}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Additional Information */}
-                <div className="border-t border-white/10 pt-8">
-                  <h3 className="text-xl font-semibold text-white mb-6">Additional Information</h3>
-                  
-                  <div className="space-y-6">
-                    <div className="space-y-2">
-                      <Label htmlFor="dietaryRequirements" className="text-white font-medium">Dietary Requirements</Label>
-                      <Input
-                        id="dietaryRequirements"
-                        name="dietaryRequirements"
-                        value={formData.dietaryRequirements}
-                        onChange={handleInputChange}
-                        className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500"
-                        placeholder="Vegetarian, Vegan, Allergies, etc."
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="experience" className="text-white font-medium">Previous Event/Technical Experience</Label>
-                      <Textarea
-                        id="experience"
-                        name="experience"
-                        value={formData.experience}
-                        onChange={handleInputChange}
-                        className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500 min-h-[100px]"
-                        placeholder="Previous events attended, technical skills, projects, etc..."
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="expectations" className="text-white font-medium">What do you hope to learn from this event?</Label>
-                      <Textarea
-                        id="expectations"
-                        name="expectations"
-                        value={formData.expectations}
-                        onChange={handleInputChange}
-                        className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500 min-h-[100px]"
-                        placeholder="Your learning goals and expectations from this event..."
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Submit Button */}
                 <div className="pt-8 border-t border-white/10">
                   <Button
                     type="submit"
