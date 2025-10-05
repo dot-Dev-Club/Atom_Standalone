@@ -1,21 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Lock, User, Key, Atom, Sparkles, Zap } from 'lucide-react';
+import { Lock, User, Key, Sparkles, Zap } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Waves from '@/components/Waves';
+import atomLogo from '@/assets/atom-logo.png';
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
+  const [clickCount, setClickCount] = useState(0);
+  const logoRef = useRef(null);
   const { login } = useAuth();
   const navigate = useNavigate();
+
+  const handleMouseMove = (e) => {
+    if (logoRef.current) {
+      const rect = logoRef.current.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      
+      const deltaX = (e.clientX - centerX) / rect.width;
+      const deltaY = (e.clientY - centerY) / rect.height;
+      
+      setMousePosition({
+        x: deltaX * 20, // Reduced intensity for login page
+        y: deltaY * 20
+      });
+    }
+  };
+
+  const handleMouseEnter = () => {
+    setIsHovering(true);
+  };
+
+  const handleMouseLeave = () => {
+    setMousePosition({ x: 0, y: 0 });
+    setIsHovering(false);
+  };
+
+  const handleClick = () => {
+    setClickCount(prev => prev + 1);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -64,7 +98,12 @@ const Login: React.FC = () => {
           ease: "easeInOut"
         }}
       >
-        <Atom size={48} />
+        <motion.img 
+          src={atomLogo} 
+          alt="ATOM" 
+          className="w-12 h-12 opacity-20"
+          style={{ objectFit: 'contain' }}
+        />
       </motion.div>
 
       <motion.div
@@ -114,26 +153,110 @@ const Login: React.FC = () => {
             className="text-center mb-8"
           >
             <div className="relative inline-block">
-              <motion.div
-                className="w-20 h-20 mx-auto bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-2xl shadow-cyan-500/25"
-                whileHover={{ scale: 1.05, rotate: 5 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                <Atom className="w-10 h-10 text-white" />
-              </motion.div>
-              <motion.div
-                className="absolute -top-1 -right-1 w-6 h-6 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center"
+              <motion.div 
+                ref={logoRef}
+                className="relative cursor-pointer select-none"
+                onMouseMove={handleMouseMove}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                onClick={handleClick}
                 animate={{
-                  scale: [1, 1.2, 1],
-                  rotate: [0, 180, 360]
+                  x: mousePosition.x,
+                  y: mousePosition.y,
+                  scale: isHovering ? 1.1 : 1,
+                  rotateX: mousePosition.y * -0.5,
+                  rotateY: mousePosition.x * 0.5,
+                  rotateZ: isHovering ? mousePosition.x * 0.3 : 0
                 }}
                 transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "easeInOut"
+                  type: "spring",
+                  stiffness: 200,
+                  damping: 20,
+                  mass: 0.8
+                }}
+                style={{
+                  transformStyle: "preserve-3d"
+                }}
+                whileTap={{
+                  scale: 0.95,
+                  rotateZ: 360,
+                  transition: { duration: 0.6 }
                 }}
               >
-                <Sparkles className="w-3 h-3 text-white" />
+                {/* Animated Glow Ring */}
+                <motion.div
+                  className="absolute inset-0 rounded-full"
+                  animate={isHovering ? {
+                    background: [
+                      "radial-gradient(circle, rgba(33,150,243,0.2) 0%, transparent 70%)",
+                      "radial-gradient(circle, rgba(255,64,129,0.2) 0%, transparent 70%)",
+                      "radial-gradient(circle, rgba(76,175,80,0.2) 0%, transparent 70%)",
+                      "radial-gradient(circle, rgba(33,150,243,0.2) 0%, transparent 70%)"
+                    ],
+                    scale: [1, 1.1, 1],
+                    rotate: [0, 180, 360]
+                  } : {
+                    background: "transparent",
+                    scale: 1,
+                    rotate: 0
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: isHovering ? Infinity : 0,
+                    ease: "easeInOut"
+                  }}
+                />
+                
+                {/* Particle Effects */}
+                {isHovering && [0, 1, 2, 3].map((i) => (
+                  <motion.div
+                    key={i}
+                    className="absolute w-1.5 h-1.5 bg-blue-400 rounded-full"
+                    initial={{
+                      x: 120 + Math.cos(i * 90 * Math.PI / 180) * 80,
+                      y: 120 + Math.sin(i * 90 * Math.PI / 180) * 80,
+                      scale: 0
+                    }}
+                    animate={{
+                      x: 120 + Math.cos((i * 90 + Date.now() * 0.001) * Math.PI / 180) * (60 + mousePosition.x),
+                      y: 120 + Math.sin((i * 90 + Date.now() * 0.001) * Math.PI / 180) * (60 + mousePosition.y),
+                      scale: [0, 1, 0],
+                      opacity: [0, 1, 0]
+                    }}
+                    transition={{
+                      duration: 1.2,
+                      repeat: Infinity,
+                      delay: i * 0.15,
+                      ease: "easeInOut"
+                    }}
+                  />
+                ))}
+                
+                <motion.img 
+                  src={atomLogo} 
+                  alt="ATOM Club Logo" 
+                  className="w-24 h-24 md:w-28 md:h-28 relative z-10"
+                  style={{ objectFit: 'contain' }}
+                  animate={{
+                    filter: isHovering 
+                      ? `drop-shadow(0 0 20px rgba(33, 150, 243, 0.6)) brightness(1.1) contrast(1.05)` 
+                      : `drop-shadow(0 4px 8px rgba(0,0,0,0.2))`,
+                    rotateY: clickCount * 180
+                  }}
+                  transition={{
+                    filter: { duration: 0.3 },
+                    rotateY: { duration: 0.8, ease: "easeOut" }
+                  }}
+                />
+                
+                {/* Click Ripple Effect */}
+                <motion.div
+                  key={clickCount}
+                  className="absolute inset-0 border-2 border-blue-400 rounded-full"
+                  initial={{ scale: 0, opacity: 0.8 }}
+                  animate={{ scale: 1.5, opacity: 0 }}
+                  transition={{ duration: 0.8, ease: "easeOut" }}
+                />
               </motion.div>
             </div>
 
@@ -145,15 +268,6 @@ const Login: React.FC = () => {
             >
               ATOM CMS
             </motion.h1>
-
-            <motion.p
-              className="text-slate-400 text-sm"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-            >
-              Content Management System
-            </motion.p>
           </motion.div>
 
           {/* Login Card with Glass Morphism */}

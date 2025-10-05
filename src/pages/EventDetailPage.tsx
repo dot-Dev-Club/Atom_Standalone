@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Calendar, Clock, MapPin } from 'lucide-react';
+import { ArrowLeft, Calendar, Clock, MapPin, PartyPopper, DollarSign, Rocket, Flag, BookOpen, Timer, Ticket, Zap, ClipboardList, FileText, GraduationCap, Globe } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Event } from '@/constants/events';
@@ -385,7 +385,17 @@ const EventDetailPage: React.FC = () => {
                           : 'bg-gradient-to-r from-orange-500/25 to-red-500/25 text-orange-200 border border-orange-400/40 backdrop-blur-xl hover:from-orange-500/35 hover:to-red-500/35 shadow-lg hover:shadow-orange-500/25'
                       }`}
                     >
-                      {event.eventType === 'free' ? '🎉 Free Event' : '💰 Paid Event'}
+                      {event.eventType === 'free' ? (
+                        <>
+                          <PartyPopper className="w-4 h-4 mr-1" />
+                          Free Event
+                        </>
+                      ) : (
+                        <>
+                          <DollarSign className="w-4 h-4 mr-1" />
+                          Paid Event
+                        </>
+                      )}
                     </Badge>
                   </motion.div>
                   <motion.div
@@ -393,7 +403,17 @@ const EventDetailPage: React.FC = () => {
                     transition={{ duration: 0.2 }}
                   >
                     <Badge className="bg-gradient-to-r from-blue-500/25 to-cyan-500/25 text-blue-200 border border-blue-400/40 backdrop-blur-xl px-4 py-2 hover:from-blue-500/35 hover:to-cyan-500/35 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-blue-500/25">
-                      {event.status === 'upcoming' ? '🚀 Upcoming' : '🏁 Completed'}
+                      {event.status === 'upcoming' ? (
+                        <>
+                          <Rocket className="w-4 h-4 mr-1" />
+                          Upcoming
+                        </>
+                      ) : (
+                        <>
+                          <Flag className="w-4 h-4 mr-1" />
+                          Completed
+                        </>
+                      )}
                     </Badge>
                   </motion.div>
                 </motion.div>
@@ -417,22 +437,29 @@ const EventDetailPage: React.FC = () => {
               <motion.div
                 whileHover={{
                   scale: 1.05,
-                  y: -8,
+                  y: -12,
                   rotateY: 5,
-                  rotateX: 5
+                  rotateX: 3
                 }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
-                className="glass-card p-6 rounded-2xl group cursor-pointer h-full relative overflow-hidden"
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className="glass-card p-8 rounded-2xl relative overflow-hidden group"
                 style={{
-                  background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(6, 182, 212, 0.05) 100%)',
-                  backdropFilter: 'blur(20px)',
-                  border: '1px solid rgba(59, 130, 246, 0.2)',
-                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(59, 130, 246, 0.1)',
+                  background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 58, 138, 0.4) 100%)',
+                  backdropFilter: 'blur(25px)',
+                  border: '1px solid rgba(59, 130, 246, 0.15)',
+                  boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(59, 130, 246, 0.1), 0 0 20px rgba(59, 130, 246, 0.1)',
+                  transition: 'box-shadow 0.4s ease-out'
                 }}
               >
-                {/* Card background effects */}
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-cyan-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-blue-400/10 to-cyan-400/10 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                {/* Enhanced background patterns */}
+                <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 rounded-full blur-3xl animate-pulse"></div>
+                <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-full blur-2xl animate-pulse delay-1000"></div>
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-conic from-blue-500/5 via-transparent to-cyan-500/5 rounded-full blur-2xl animate-spin" style={{ animationDuration: '20s' }}></div>
+
+                {/* Subtle grid overlay */}
+                <div className="absolute inset-0 opacity-10">
+                  <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(59,130,246,0.05)_25%,rgba(59,130,246,0.05)_50%,transparent_50%,transparent_75%,rgba(59,130,246,0.05)_75%)] bg-[length:20px_20px]"></div>
+                </div>
 
                 <div className="flex items-center gap-4 h-full relative z-10">
                   <motion.div
@@ -458,22 +485,29 @@ const EventDetailPage: React.FC = () => {
                 <motion.div
                   whileHover={{
                     scale: 1.05,
-                    y: -8,
+                    y: -12,
                     rotateY: -5,
-                    rotateX: 5
+                    rotateX: 3
                   }}
-                  transition={{ duration: 0.3, ease: "easeOut" }}
-                  className="glass-card p-6 rounded-2xl group cursor-pointer h-full relative overflow-hidden"
+                  transition={{ duration: 0.4, ease: "easeOut" }}
+                  className="glass-card p-8 rounded-2xl relative overflow-hidden group"
                   style={{
-                    background: 'linear-gradient(135deg, rgba(147, 51, 234, 0.1) 0%, rgba(219, 39, 119, 0.05) 100%)',
-                    backdropFilter: 'blur(20px)',
-                    border: '1px solid rgba(147, 51, 234, 0.2)',
-                    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(147, 51, 234, 0.1)',
+                    background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 58, 138, 0.4) 100%)',
+                    backdropFilter: 'blur(25px)',
+                    border: '1px solid rgba(147, 51, 234, 0.15)',
+                    boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(147, 51, 234, 0.1), 0 0 20px rgba(147, 51, 234, 0.1)',
+                    transition: 'box-shadow 0.4s ease-out'
                   }}
                 >
-                  {/* Card background effects */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-pink-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-purple-400/10 to-pink-400/10 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  {/* Enhanced background patterns */}
+                  <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-full blur-3xl animate-pulse"></div>
+                  <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-br from-pink-500/10 to-purple-500/10 rounded-full blur-2xl animate-pulse delay-1000"></div>
+                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-conic from-purple-500/5 via-transparent to-pink-500/5 rounded-full blur-2xl animate-spin" style={{ animationDuration: '20s' }}></div>
+
+                  {/* Subtle grid overlay */}
+                  <div className="absolute inset-0 opacity-10">
+                    <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(147,51,234,0.05)_25%,rgba(147,51,234,0.05)_50%,transparent_50%,transparent_75%,rgba(147,51,234,0.05)_75%)] bg-[length:20px_20px]"></div>
+                  </div>
 
                   <div className="flex items-center gap-4 h-full relative z-10">
                     <motion.div
@@ -499,22 +533,29 @@ const EventDetailPage: React.FC = () => {
               <motion.div
                 whileHover={{
                   scale: 1.05,
-                  y: -8,
+                  y: -12,
                   rotateY: 5,
-                  rotateX: -5
+                  rotateX: -3
                 }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
-                className="glass-card p-6 rounded-2xl group cursor-pointer h-full relative overflow-hidden"
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className="glass-card p-8 rounded-2xl relative overflow-hidden group"
                 style={{
-                  background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.05) 100%)',
-                  backdropFilter: 'blur(20px)',
-                  border: '1px solid rgba(16, 185, 129, 0.2)',
-                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(16, 185, 129, 0.1)',
+                  background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 58, 138, 0.4) 100%)',
+                  backdropFilter: 'blur(25px)',
+                  border: '1px solid rgba(16, 185, 129, 0.15)',
+                  boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(16, 185, 129, 0.1), 0 0 20px rgba(16, 185, 129, 0.1)',
+                  transition: 'box-shadow 0.4s ease-out'
                 }}
               >
-                {/* Card background effects */}
-                <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 via-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-green-400/10 to-emerald-400/10 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                {/* Enhanced background patterns */}
+                <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-green-500/10 to-emerald-500/10 rounded-full blur-3xl animate-pulse"></div>
+                <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-br from-emerald-500/10 to-green-500/10 rounded-full blur-2xl animate-pulse delay-1000"></div>
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-conic from-green-500/5 via-transparent to-emerald-500/5 rounded-full blur-2xl animate-spin" style={{ animationDuration: '20s' }}></div>
+
+                {/* Subtle grid overlay */}
+                <div className="absolute inset-0 opacity-10">
+                  <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(16,185,129,0.05)_25%,rgba(16,185,129,0.05)_50%,transparent_50%,transparent_75%,rgba(16,185,129,0.05)_75%)] bg-[length:20px_20px]"></div>
+                </div>
 
                 <div className="flex items-center gap-4 h-full relative z-10">
                   <motion.div
@@ -542,12 +583,19 @@ const EventDetailPage: React.FC = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="glass-card p-8 rounded-2xl relative overflow-hidden group"
+              whileHover={{
+                scale: 1.02,
+                y: -10,
+                rotateY: 2,
+                rotateX: 2
+              }}
+              className="glass-card p-8 rounded-2xl relative overflow-hidden group cursor-pointer"
               style={{
                 background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 58, 138, 0.4) 100%)',
                 backdropFilter: 'blur(25px)',
                 border: '1px solid rgba(59, 130, 246, 0.15)',
-                boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(59, 130, 246, 0.1)',
+                boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(59, 130, 246, 0.1), 0 0 20px rgba(59, 130, 246, 0.1)',
+                transition: 'box-shadow 0.4s ease-out'
               }}
             >
               {/* Enhanced background patterns */}
@@ -573,7 +621,7 @@ const EventDetailPage: React.FC = () => {
                     className="w-14 h-14 bg-gradient-to-br from-blue-500 via-cyan-600 to-blue-700 rounded-2xl flex items-center justify-center mr-4 shadow-2xl relative group/icon"
                   >
                     <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent rounded-2xl opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
-                    <span className="text-white text-2xl relative z-10">📖</span>
+                    <BookOpen className="w-6 h-6 text-white relative z-10" />
                   </motion.div>
                   <div>
                     <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-blue-100">About This Event</h2>
@@ -674,10 +722,30 @@ const EventDetailPage: React.FC = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.5 }}
-                className="glass-card p-6 rounded-2xl overflow-hidden relative"
+                whileHover={{
+                  scale: 1.02,
+                  y: -8,
+                  rotateY: 3,
+                  rotateX: -1
+                }}
+                className="glass-card p-8 rounded-2xl relative overflow-hidden group"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 58, 138, 0.4) 100%)',
+                  backdropFilter: 'blur(25px)',
+                  border: '1px solid rgba(59, 130, 246, 0.15)',
+                  boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(59, 130, 246, 0.1), 0 0 20px rgba(59, 130, 246, 0.1)',
+                  transition: 'box-shadow 0.4s ease-out'
+                }}
               >
-                {/* Subtle animated background */}
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-cyan-500/5 to-purple-500/5 animate-pulse" />
+                {/* Enhanced background patterns */}
+                <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 rounded-full blur-3xl animate-pulse"></div>
+                <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-full blur-2xl animate-pulse delay-1000"></div>
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-conic from-blue-500/5 via-transparent to-cyan-500/5 rounded-full blur-2xl animate-spin" style={{ animationDuration: '20s' }}></div>
+
+                {/* Subtle grid overlay */}
+                <div className="absolute inset-0 opacity-10">
+                  <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(59,130,246,0.05)_25%,rgba(59,130,246,0.05)_50%,transparent_50%,transparent_75%,rgba(59,130,246,0.05)_75%)] bg-[length:20px_20px]"></div>
+                </div>
 
                 <div className="relative z-10">
                   <div className="text-center mb-6">
@@ -687,7 +755,7 @@ const EventDetailPage: React.FC = () => {
                       transition={{ duration: 0.5, delay: 0.7, type: "spring", stiffness: 200 }}
                       className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-full mb-3 shadow-lg"
                     >
-                      <span className="text-2xl">⏰</span>
+                      <Timer className="w-6 h-6 text-white" />
                     </motion.div>
                     <h3 className="text-xl font-semibold text-white mb-2">
                       Event Countdown
@@ -710,12 +778,19 @@ const EventDetailPage: React.FC = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
+                whileHover={{
+                  scale: 1.02,
+                  y: -10,
+                  rotateY: -2,
+                  rotateX: 2
+                }}
                 className="glass-card p-8 rounded-2xl relative overflow-hidden group cursor-pointer"
                 style={{
                   background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(59, 130, 246, 0.3) 100%)',
                   backdropFilter: 'blur(25px)',
                   border: '1px solid rgba(59, 130, 246, 0.2)',
-                  boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(59, 130, 246, 0.1)',
+                  boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(59, 130, 246, 0.1), 0 0 20px rgba(59, 130, 246, 0.15)',
+                  transition: 'box-shadow 0.4s ease-out'
                 }}
               >
                 {/* Enhanced animated background elements */}
@@ -742,7 +817,7 @@ const EventDetailPage: React.FC = () => {
                       className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-blue-500 via-cyan-600 to-blue-700 rounded-3xl mb-6 shadow-2xl relative group/icon"
                     >
                       <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent rounded-3xl opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
-                      <span className="text-4xl relative z-10">🎫</span>
+                      <Ticket className="w-8 h-8 text-white relative z-10" />
                     </motion.div>
                     <h3 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-100 to-cyan-100 mb-3 drop-shadow-lg">
                       Join the Experience
@@ -761,29 +836,19 @@ const EventDetailPage: React.FC = () => {
                         className="w-full bg-gradient-to-r from-blue-600 via-cyan-600 to-blue-600 hover:from-blue-500 hover:via-cyan-500 hover:to-blue-500 text-white py-5 text-xl font-bold rounded-2xl transition-all duration-300 shadow-2xl hover:shadow-blue-500/40 hover:scale-105 relative overflow-hidden group border border-blue-400/30"
                       >
                         <span className="relative z-10 flex items-center justify-center gap-3">
-                          <motion.span
+                          <motion.div
                             animate={{ rotate: [0, 10, -10, 0] }}
                             transition={{ duration: 2, repeat: Infinity }}
-                            className="text-2xl"
                           >
-                            🚀
-                          </motion.span>
+                            <Rocket className="w-6 h-6" />
+                          </motion.div>
                           <span>Register Now</span>
                         </span>
                         <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/25 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
                         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
                       </Button>
 
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 0.5, delay: 1 }}
-                        className="text-center mt-6"
-                      >
-                        <p className="text-sm text-cyan-300/70 font-medium bg-cyan-400/5 px-4 py-2 rounded-full border border-cyan-400/20 inline-block">
-                          ⚡ Limited seats available • First come, first served
-                        </p>
-                      </motion.div>
+
                     </motion.div>
                   ) : (
                     <motion.div
@@ -799,22 +864,21 @@ const EventDetailPage: React.FC = () => {
                       >
                         <Button
                           onClick={() => navigate('/registration/internal')}
-                          className="w-full bg-gradient-to-r from-blue-600/90 to-blue-500/90 hover:from-blue-600 hover:to-blue-500 text-white py-5 font-bold rounded-2xl transition-all duration-300 flex flex-col items-center gap-3 shadow-xl hover:shadow-blue-500/40 hover:scale-105 group border border-blue-400/30 relative overflow-hidden"
+                          className="w-full bg-gradient-to-r from-blue-600/90 to-blue-500/90 hover:from-blue-600 hover:to-blue-500 text-white py-6 font-bold rounded-2xl transition-all duration-300 flex flex-col items-center gap-2 shadow-xl hover:shadow-blue-500/40 hover:scale-105 group border border-blue-400/30 relative overflow-hidden"
                         >
                           <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
-                          <div className="flex items-center gap-3 relative z-10">
-                            <motion.span
-                              whileHover={{ rotate: 360 }}
+                          <div className="flex items-center justify-center gap-3 relative z-10">
+                            <motion.div
+                              whileHover={{ rotate: 360, scale: 1.1 }}
                               transition={{ duration: 0.6 }}
-                              className="text-2xl"
+                              className="flex-shrink-0"
                             >
-                              🎓
-                            </motion.span>
-                            <span className="text-lg">Internal Registration</span>
+                              <GraduationCap className="w-7 h-7" />
+                            </motion.div>
+                            <div className="text-center">
+                              <span className="text-xl font-bold block">Internal Registration</span>
+                            </div>
                           </div>
-                          <span className="text-sm opacity-80 group-hover:opacity-100 transition-opacity relative z-10 text-cyan-100">
-                            For Karunya University Students
-                          </span>
                         </Button>
                       </motion.div>
 
@@ -825,22 +889,21 @@ const EventDetailPage: React.FC = () => {
                       >
                         <Button
                           onClick={() => navigate('/registration/external')}
-                          className="w-full bg-gradient-to-r from-cyan-600/90 to-blue-600/90 hover:from-cyan-500 hover:to-blue-500 text-white py-5 font-bold rounded-2xl transition-all duration-300 flex flex-col items-center gap-3 shadow-xl hover:shadow-cyan-500/40 hover:scale-105 group border border-cyan-400/30 relative overflow-hidden"
+                          className="w-full bg-gradient-to-r from-cyan-600/90 to-blue-600/90 hover:from-cyan-500 hover:to-blue-500 text-white py-6 font-bold rounded-2xl transition-all duration-300 flex flex-col items-center gap-2 shadow-xl hover:shadow-cyan-500/40 hover:scale-105 group border border-cyan-400/30 relative overflow-hidden"
                         >
                           <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
-                          <div className="flex items-center gap-3 relative z-10">
-                            <motion.span
-                              whileHover={{ rotate: 360 }}
+                          <div className="flex items-center justify-center gap-3 relative z-10">
+                            <motion.div
+                              whileHover={{ rotate: 360, scale: 1.1 }}
                               transition={{ duration: 0.6 }}
-                              className="text-2xl"
+                              className="flex-shrink-0"
                             >
-                              🌍
-                            </motion.span>
-                            <span className="text-lg">External Registration</span>
+                              <Globe className="w-7 h-7" />
+                            </motion.div>
+                            <div className="text-center">
+                              <span className="text-xl font-bold block">External Registration</span>
+                            </div>
                           </div>
-                          <span className="text-sm opacity-80 group-hover:opacity-100 transition-opacity relative z-10 text-blue-100">
-                            For External Participants
-                          </span>
                         </Button>
                       </motion.div>
 
@@ -870,17 +933,30 @@ const EventDetailPage: React.FC = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.7 }}
+                whileHover={{
+                  scale: 1.02,
+                  y: -8,
+                  rotateY: -2,
+                  rotateX: -1
+                }}
                 className="glass-card p-8 rounded-2xl text-center relative overflow-hidden group"
                 style={{
-                  background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(75, 85, 99, 0.3) 100%)',
+                  background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 58, 138, 0.4) 100%)',
                   backdropFilter: 'blur(25px)',
-                  border: '1px solid rgba(75, 85, 99, 0.2)',
-                  boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(75, 85, 99, 0.1)',
+                  border: '1px solid rgba(75, 85, 99, 0.15)',
+                  boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(75, 85, 99, 0.1), 0 0 20px rgba(75, 85, 99, 0.1)',
+                  transition: 'box-shadow 0.4s ease-out'
                 }}
               >
-                {/* Subtle background effects */}
-                <div className="absolute inset-0 bg-gradient-to-br from-gray-500/5 to-gray-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-gray-500/10 to-gray-600/10 rounded-full blur-2xl animate-pulse"></div>
+                {/* Enhanced background patterns */}
+                <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-gray-500/10 to-gray-600/10 rounded-full blur-3xl animate-pulse"></div>
+                <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-br from-gray-600/10 to-gray-500/10 rounded-full blur-2xl animate-pulse delay-1000"></div>
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-conic from-gray-500/5 via-transparent to-gray-600/5 rounded-full blur-2xl animate-spin" style={{ animationDuration: '20s' }}></div>
+
+                {/* Subtle grid overlay */}
+                <div className="absolute inset-0 opacity-10">
+                  <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(75,85,99,0.05)_25%,rgba(75,85,99,0.05)_50%,transparent_50%,transparent_75%,rgba(75,85,99,0.05)_75%)] bg-[length:20px_20px]"></div>
+                </div>
 
                 <div className="relative z-10">
                   <motion.div
@@ -889,7 +965,7 @@ const EventDetailPage: React.FC = () => {
                     className="w-20 h-20 bg-gradient-to-br from-gray-500 via-gray-600 to-gray-700 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-2xl relative group/icon"
                   >
                     <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-3xl opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
-                    <span className="text-4xl relative z-10">🏁</span>
+                    <Flag className="w-8 h-8 text-white relative z-10" />
                   </motion.div>
                   <h3 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-gray-300 mb-4 drop-shadow-lg">
                     Event Completed
@@ -912,23 +988,30 @@ const EventDetailPage: React.FC = () => {
         >
           {/* Rules & Regulations */}
           <motion.div
-            whileHover={{ y: -8, scale: 1.02 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
+            whileHover={{
+              scale: 1.03,
+              y: -12,
+              rotateY: 3,
+              rotateX: -2
+            }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
             className="glass-card p-8 rounded-2xl relative overflow-hidden group cursor-pointer"
             style={{
               background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(59, 130, 246, 0.3) 100%)',
               backdropFilter: 'blur(25px)',
               border: '1px solid rgba(59, 130, 246, 0.2)',
-              boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(59, 130, 246, 0.1)',
+              boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(59, 130, 246, 0.1), 0 0 20px rgba(59, 130, 246, 0.15)',
+              transition: 'box-shadow 0.4s ease-out'
             }}
           >
             {/* Enhanced background effects */}
             <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-cyan-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-blue-500/15 to-cyan-500/15 rounded-full blur-2xl animate-pulse"></div>
-            <div className="absolute bottom-0 left-0 w-20 h-20 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-full blur-xl animate-pulse delay-1000"></div>
+            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-500/15 to-cyan-500/15 rounded-full blur-2xl animate-pulse"></div>
+            <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-full blur-xl animate-pulse delay-1000"></div>
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-gradient-conic from-blue-500/5 via-transparent to-cyan-500/5 rounded-full blur-2xl animate-spin" style={{ animationDuration: '15s' }}></div>
 
             {/* Subtle grid overlay */}
-            <div className="absolute inset-0 opacity-5">
+            <div className="absolute inset-0 opacity-10">
               <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(59,130,246,0.05)_25%,rgba(59,130,246,0.05)_50%,transparent_50%,transparent_75%,rgba(59,130,246,0.05)_75%)] bg-[length:15px_15px]"></div>
             </div>
 
@@ -945,7 +1028,7 @@ const EventDetailPage: React.FC = () => {
                   className="w-14 h-14 bg-gradient-to-br from-blue-500 via-cyan-600 to-blue-700 rounded-2xl flex items-center justify-center mr-5 shadow-2xl relative group/icon"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent rounded-2xl opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
-                  <span className="text-white text-2xl relative z-10">📋</span>
+                  <ClipboardList className="w-6 h-6 text-white relative z-10" />
                 </motion.div>
                 <div>
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-blue-100">Rules & Regulations</span>
@@ -986,23 +1069,30 @@ const EventDetailPage: React.FC = () => {
 
           {/* Terms & Conditions */}
           <motion.div
-            whileHover={{ y: -8, scale: 1.02 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
+            whileHover={{
+              scale: 1.03,
+              y: -12,
+              rotateY: -3,
+              rotateX: 2
+            }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
             className="glass-card p-8 rounded-2xl relative overflow-hidden group cursor-pointer"
             style={{
               background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(6, 182, 212, 0.3) 100%)',
               backdropFilter: 'blur(25px)',
               border: '1px solid rgba(6, 182, 212, 0.2)',
-              boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(6, 182, 212, 0.1)',
+              boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(6, 182, 212, 0.1), 0 0 20px rgba(6, 182, 212, 0.15)',
+              transition: 'box-shadow 0.4s ease-out'
             }}
           >
             {/* Enhanced background effects */}
             <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-cyan-500/15 to-blue-500/15 rounded-full blur-2xl animate-pulse"></div>
-            <div className="absolute bottom-0 left-0 w-20 h-20 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-full blur-xl animate-pulse delay-1000"></div>
+            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-cyan-500/15 to-blue-500/15 rounded-full blur-2xl animate-pulse"></div>
+            <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-full blur-xl animate-pulse delay-1000"></div>
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-gradient-conic from-cyan-500/5 via-transparent to-blue-500/5 rounded-full blur-2xl animate-spin" style={{ animationDuration: '15s' }}></div>
 
             {/* Subtle grid overlay */}
-            <div className="absolute inset-0 opacity-5">
+            <div className="absolute inset-0 opacity-10">
               <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(6,182,212,0.05)_25%,rgba(6,182,212,0.05)_50%,transparent_50%,transparent_75%,rgba(6,182,212,0.05)_75%)] bg-[length:15px_15px]"></div>
             </div>
 
@@ -1019,7 +1109,7 @@ const EventDetailPage: React.FC = () => {
                   className="w-14 h-14 bg-gradient-to-br from-cyan-500 via-blue-600 to-cyan-700 rounded-2xl flex items-center justify-center mr-5 shadow-2xl relative group/icon"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent rounded-2xl opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
-                  <span className="text-white text-2xl relative z-10">📄</span>
+                  <FileText className="w-6 h-6 text-white relative z-10" />
                 </motion.div>
                 <div>
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-cyan-100">Terms & Conditions</span>

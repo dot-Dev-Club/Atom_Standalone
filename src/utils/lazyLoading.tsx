@@ -47,6 +47,8 @@ class LazyComponentErrorBoundary extends React.Component<
 
 // HOC for lazy loading components with enhanced features
 export const createLazyComponent = <T extends ComponentType<any>>(
+
+
   importFunc: () => Promise<{ default: T }>,
   options: {
     fallback?: React.ComponentType;
@@ -177,7 +179,7 @@ export const ComponentPreloader: React.FC<{
         }
         break;
       
-      case 'visible':
+      case 'visible': {
         const observer = new IntersectionObserver(
           ([entry]) => {
             if (entry.isIntersecting && !isVisible) {
@@ -194,6 +196,7 @@ export const ComponentPreloader: React.FC<{
         }
         
         return () => observer.disconnect();
+      }
     }
   }, [components, trigger, delay, isVisible]);
 
