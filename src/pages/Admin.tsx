@@ -162,7 +162,7 @@ const Admin: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative">
       {/* Background Effects */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-20 w-96 h-96 bg-atom-primary/10 rounded-full blur-3xl animate-pulse"></div>
@@ -170,132 +170,135 @@ const Admin: React.FC = () => {
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-conic from-atom-primary/5 via-electric/5 to-atom-primary/5 rounded-full blur-3xl animate-spin" style={{ animationDuration: '30s' }}></div>
       </div>
 
-      {/* Mobile sidebar overlay */}
-      <AnimatePresence>
-        {sidebarOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
-            onClick={() => setSidebarOpen(false)}
-          />
-        )}
-      </AnimatePresence>
-
-      {/* Sidebar */}
-      <div className={`fixed left-0 top-[97px] h-[calc(100vh-97px)] w-64 glass-card border-r border-glass-border z-40 transform transition-transform duration-300 ease-in-out ${
-        sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-      } lg:translate-x-0 lg:static lg:transform-none lg:top-0 lg:h-[calc(100vh-97px)]`}>
-        {/* Sidebar Header */}
-        <div className="flex items-center justify-between p-4 border-b border-glass-border">
-          <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-gradient-to-br from-atom-primary to-electric rounded-lg flex items-center justify-center">
-              <ThreeDIconPresets.Target size={20} className="text-white" />
+      {/* Layout Container */}
+      <div className="flex h-screen overflow-hidden">
+        {/* Sidebar */}
+        <div className={`fixed lg:static inset-y-0 left-0 z-50 w-64 glass-card border-r border-glass-border transform transition-transform duration-300 ease-in-out ${
+          sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        } lg:translate-x-0`}>
+          {/* Sidebar Header */}
+          <div className="flex items-center justify-between p-4 border-b border-glass-border h-24">
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 bg-gradient-to-br from-atom-primary to-electric rounded-lg flex items-center justify-center">
+                <ThreeDIconPresets.Target size={20} className="text-white" />
+              </div>
+              <div>
+                <h2 className="text-lg font-bold gradient-text">ATOM CMS</h2>
+                <p className="text-xs text-foreground-secondary">Admin Panel</p>
+              </div>
             </div>
-            <div>
-              <h2 className="text-lg font-bold gradient-text">ATOM CMS</h2>
-              <p className="text-xs text-foreground-secondary">Admin Panel</p>
-            </div>
-          </div>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setSidebarOpen(false)}
-            className="lg:hidden text-foreground hover:bg-glass/50"
-          >
-            <X className="w-4 h-4" />
-          </Button>
-        </div>
-
-        {/* Navigation */}
-        <nav className="flex-1 px-4 py-4 space-y-1">
-          {navigation.map((item) => {
-            const Icon = item.icon;
-            const isActive = activeSection === item.id;
-            return (
-              <motion.button
-                key={item.id}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => {
-                  setActiveSection(item.id);
-                  setSidebarOpen(false);
-                }}
-                className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-left transition-all duration-300 ${
-                  isActive
-                    ? 'bg-gradient-to-r from-atom-primary to-electric text-white shadow-lg'
-                    : 'text-foreground hover:bg-glass/50 backdrop-blur-sm'
-                }`}
-              >
-                <Icon className="w-5 h-5" />
-                <span className="font-medium">{item.name}</span>
-              </motion.button>
-            );
-          })}
-        </nav>
-
-        {/* Sidebar Footer */}
-        <div className="p-4 border-t border-glass-border">
-          <Button
-            variant="outline"
-            onClick={handleLogout}
-            className="w-full flex items-center justify-center space-x-2 bg-glass/50 text-red-400 border-red-500/30 hover:bg-red-500/10 backdrop-blur-sm"
-          >
-            <LogOut className="w-4 h-4" />
-            <span>Logout</span>
-          </Button>
-        </div>
-      </div>
-
-      {/* Header - Full Width at Top */}
-      <motion.header 
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="glass-card border-b border-glass-border p-6 relative z-30"
-      >
-        <div className="flex items-center justify-between max-w-7xl mx-auto">
-          <div className="flex items-center space-x-4">
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => setSidebarOpen(true)}
+              onClick={() => setSidebarOpen(false)}
               className="lg:hidden text-foreground hover:bg-glass/50"
             >
-              <Menu className="w-5 h-5" />
+              <X className="w-4 h-4" />
             </Button>
-            <div>
-              <h1 className="text-2xl font-bold gradient-text mb-2">
-                {navigation.find(item => item.id === activeSection)?.name || 'Dashboard'}
-              </h1>
-              <p className="text-sm text-foreground-secondary">Manage your website content</p>
-            </div>
           </div>
 
-          <div className="flex items-center space-x-4">
-            <ThreeDIconPresets.Target size={48} className="text-atom-primary" />
-            <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
-              <div className="w-2 h-2 bg-green-400 rounded-full mr-2"></div>
-              Online
-            </Badge>
+          {/* Navigation */}
+          <nav className="flex-1 px-4 py-4 space-y-1 overflow-y-auto">
+            {navigation.map((item) => {
+              const Icon = item.icon;
+              const isActive = activeSection === item.id;
+              return (
+                <motion.button
+                  key={item.id}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => {
+                    setActiveSection(item.id);
+                    setSidebarOpen(false);
+                  }}
+                  className={`w-full flex items-center space-x-3 px-3 py-3 rounded-lg text-left transition-all duration-300 ${
+                    isActive
+                      ? 'bg-gradient-to-r from-atom-primary to-electric text-white shadow-lg'
+                      : 'text-foreground hover:bg-glass/50 backdrop-blur-sm'
+                  }`}
+                >
+                  <Icon className="w-5 h-5 flex-shrink-0" />
+                  <span className="font-medium text-sm">{item.name}</span>
+                </motion.button>
+              );
+            })}
+          </nav>
+
+          {/* Sidebar Footer */}
+          <div className="p-4 border-t border-glass-border">
+            <Button
+              variant="outline"
+              onClick={handleLogout}
+              className="w-full flex items-center justify-center space-x-2 bg-glass/50 text-red-400 border-red-500/30 hover:bg-red-500/10 backdrop-blur-sm"
+            >
+              <LogOut className="w-4 h-4 flex-shrink-0" />
+              <span>Logout</span>
+            </Button>
           </div>
         </div>
-      </motion.header>
 
-      {/* Main Content */}
-      <div className="lg:ml-64 relative z-10">
-        {/* Content */}
-        <main className="p-6 lg:p-8">
-          <motion.div
-            key={activeSection}
-            initial={{ opacity: 0, y: 20 }}
+        {/* Mobile sidebar overlay */}
+        <AnimatePresence>
+          {sidebarOpen && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
+              onClick={() => setSidebarOpen(false)}
+            />
+          )}
+        </AnimatePresence>
+
+        {/* Main Content Area */}
+        <div className="flex-1 flex flex-col min-w-0">
+          {/* Header */}
+          <motion.header
+            initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            className="max-w-7xl mx-auto"
+            className="flex-shrink-0 glass-card border-b border-glass-border p-4 lg:px-6 h-24"
           >
-            {renderContent()}
-          </motion.div>
-        </main>
+            <div className="flex items-center justify-between h-full">
+              <div className="flex items-center space-x-4">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setSidebarOpen(true)}
+                  className="lg:hidden text-foreground hover:bg-glass/50"
+                >
+                  <Menu className="w-5 h-5" />
+                </Button>
+                <div>
+                  <h1 className="text-xl lg:text-2xl font-bold gradient-text">
+                    {navigation.find(item => item.id === activeSection)?.name || 'Dashboard'}
+                  </h1>
+                  <p className="text-xs lg:text-sm text-foreground-secondary">Manage your website content</p>
+                </div>
+              </div>
+
+              <div className="flex items-center space-x-4">
+                <ThreeDIconPresets.Target size={36} className="text-atom-primary lg:w-12 lg:h-12" />
+                <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
+                  <div className="w-1.5 h-1.5 bg-green-400 rounded-full mr-1.5"></div>
+                  Online
+                </Badge>
+              </div>
+            </div>
+          </motion.header>
+
+          {/* Content */}
+          <main className="flex-1 overflow-y-auto p-4 lg:p-6">
+            <motion.div
+              key={activeSection}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className="max-w-7xl mx-auto"
+            >
+              {renderContent()}
+            </motion.div>
+          </main>
+        </div>
       </div>
     </div>
   );
