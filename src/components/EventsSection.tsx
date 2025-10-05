@@ -38,22 +38,23 @@ const EventsSection = () => {
   };
 
   return (
-    <section 
-      ref={ref} 
+    <section
+      ref={ref}
       className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto events-section-container"
       style={{ pointerEvents: 'auto' }}
     >
+      {/* Header Section */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.6 }}
-        className="text-center mb-8 sm:mb-12 lg:mb-16"
+        className="text-center mb-8 sm:mb-12 lg:mb-16 flex flex-col items-center"
       >
-        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 gradient-text">
+        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 gradient-text text-center w-full">
           {upcomingEvents.length > 0 ? 'Upcoming Events' : 'Our Events'}
         </h2>
-        <p className="text-base sm:text-lg text-foreground-secondary max-w-2xl mx-auto">
-          {upcomingEvents.length > 0 
+        <p className="text-base sm:text-lg text-foreground-secondary max-w-2xl text-center">
+          {upcomingEvents.length > 0
             ? 'Join us for exciting events, workshops, and competitions that shape the future of technology'
             : 'Discover our past and upcoming events, workshops, and competitions that shape the future of technology'
           }
@@ -63,98 +64,102 @@ const EventsSection = () => {
       {previewEvents.length > 0 ? (
         <>
           {/* Events Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-8 sm:mb-12">
-            {previewEvents.map((event, index) => (
-              <motion.div
-                key={event.id}
-                initial={{ opacity: 0, y: 30, scale: 0.9 }}
-                animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
-                transition={{
-                  duration: 0.6,
-                  delay: index * 0.2,
-                  type: "spring",
-                  stiffness: 100
-                }}
-                className="glass-card p-4 sm:p-6 group hover-scale cursor-pointer transform-gpu"
-                style={{
-                  transformStyle: 'preserve-3d',
-                }}
-                whileHover={{
-                  rotateX: 5,
-                  rotateY: 5,
-                  scale: 1.05,
-                  transition: { duration: 0.3 }
-                }}
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  console.log('Event card clicked:', event.id, event.title);
-                  handleEventClick(event.id);
-                }}
-              >
-                {/* Event Image */}
-                <div className="relative mb-4 overflow-hidden rounded-xl">
-                  <img
-                    src={event.image}
-                    alt={event.title}
-                    className="w-full h-32 sm:h-40 object-cover transition-transform duration-300 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                  
-                  {/* Status Badge */}
-                  <Badge className={`absolute top-3 right-3 border-none ${
-                    event.status === 'upcoming' 
-                      ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white' 
-                      : 'bg-gradient-to-r from-gray-600 to-gray-700 text-white'
-                  }`}>
-                    <Calendar className="w-3 h-3 mr-1" />
-                    {event.status === 'upcoming' ? 'Upcoming' : 'Past Event'}
-                  </Badge>
-                </div>
+          <div className="flex justify-center">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-8 sm:mb-12 max-w-6xl w-full">
+              {previewEvents.map((event, index) => (
+                <motion.div
+                  key={event.id}
+                  initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                  animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
+                  transition={{
+                    duration: 0.6,
+                    delay: index * 0.2,
+                    type: "spring",
+                    stiffness: 100
+                  }}
+                  className="glass-card p-4 sm:p-6 group hover-scale cursor-pointer transform-gpu flex flex-col items-center text-center"
+                  style={{
+                    transformStyle: 'preserve-3d',
+                  }}
+                  whileHover={{
+                    rotateX: 5,
+                    rotateY: 5,
+                    scale: 1.05,
+                    transition: { duration: 0.3 }
+                  }}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('Event card clicked:', event.id, event.title);
+                    handleEventClick(event.id);
+                  }}
+                >
+                  {/* Event Image */}
+                  <div className="relative mb-4 overflow-hidden rounded-xl">
+                    <img
+                      src={event.image}
+                      alt={event.title}
+                      className="w-full h-32 sm:h-40 object-cover transition-transform duration-300 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
 
-                {/* Event Content */}
-                <div className="space-y-3">
-                  {/* Event Title */}
-                  <h3 className="text-lg sm:text-xl font-bold text-foreground line-clamp-2 group-hover:text-atom-primary transition-colors">
-                    {event.title}
-                  </h3>
-
-                  {/* Event Details */}
-                  <div className="space-y-2 text-sm text-foreground-secondary">
-                    <div className="flex items-center gap-2">
-                      <Calendar className="w-4 h-4 text-atom-primary flex-shrink-0" />
-                      <span>{formatDate(event.date)}</span>
-                      {event.time && (
-                        <>
-                          <Clock className="w-4 h-4 text-atom-accent ml-2 flex-shrink-0" />
-                          <span>{event.time}</span>
-                        </>
-                      )}
-                    </div>
-                    
-                    <div className="flex items-center gap-2">
-                      <MapPin className="w-4 h-4 text-green-500 flex-shrink-0" />
-                      <span className="line-clamp-1">{event.location}</span>
-                    </div>
-                  </div>
-
-                  {/* Event Category */}
-                  <div className="flex items-center justify-between">
-                    <Badge 
-                      variant="outline" 
-                      className="text-xs bg-atom-primary/10 text-atom-primary border-atom-primary/30"
+                    {/* Status Badge */}
+                    <Badge
+                      className={`absolute top-3 right-3 border-none ${
+                        event.status === 'upcoming'
+                          ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white'
+                          : 'bg-gradient-to-r from-gray-600 to-gray-700 text-white'
+                      }`}
                     >
-                      {event.category}
+                      <Calendar className="w-3 h-3 mr-1" />
+                      {event.status === 'upcoming' ? 'Upcoming' : 'Past Event'}
                     </Badge>
-                    
-                    <div className="flex items-center gap-1 text-xs text-foreground-secondary">
-                      <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
-                      <span>Learn More</span>
+                  </div>
+
+                  {/* Event Content */}
+                  <div className="space-y-3">
+                    {/* Event Title */}
+                    <h3 className="text-lg sm:text-xl font-bold text-foreground line-clamp-2 group-hover:text-atom-primary transition-colors">
+                      {event.title}
+                    </h3>
+
+                    {/* Event Details */}
+                    <div className="space-y-2 text-sm text-foreground-secondary w-full">
+                      <div className="flex items-center justify-center gap-2">
+                        <Calendar className="w-4 h-4 text-atom-primary flex-shrink-0" />
+                        <span>{formatDate(event.date)}</span>
+                        {event.time && (
+                          <>
+                            <Clock className="w-4 h-4 text-atom-accent ml-2 flex-shrink-0" />
+                            <span>{event.time}</span>
+                          </>
+                        )}
+                      </div>
+
+                      <div className="flex items-center justify-center gap-2">
+                        <MapPin className="w-4 h-4 text-green-500 flex-shrink-0" />
+                        <span className="line-clamp-1">{event.location}</span>
+                      </div>
+                    </div>
+
+                    {/* Event Category */}
+                    <div className="flex flex-col items-center gap-2 mt-4">
+                      <Badge
+                        variant="outline"
+                        className="text-xs bg-atom-primary/10 text-atom-primary border-atom-primary/30"
+                      >
+                        {event.category}
+                      </Badge>
+
+                      <div className="flex items-center gap-1 text-xs text-foreground-secondary">
+                        <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
+                        <span>Learn More</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              ))}
+            </div>
           </div>
 
           {/* Show More Button */}
