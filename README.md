@@ -135,12 +135,30 @@ A comprehensive, modern web platform for ATOM Club featuring a stunning public w
    npm install
    ```
 
-3. **Start development server**
+3. **Environment Setup**
+   Create a `.env` file in the root directory:
+   ```bash
+   touch .env
+   ```
+
+   Add the following environment variables:
+   ```env
+   # Backend API Configuration
+   VITE_BACKEND_URL=https://battle-of-binaries-api.onrender.com
+   ```
+
+   **Environment Variables Explanation:**
+   - `VITE_BACKEND_URL`: Base URL for the Battle of Binaries backend API
+     - Required for event registration functionality
+     - Used by registration forms and API calls
+     - Should point to your deployed backend server
+
+5. **Start development server**
    ```bash
    npm run dev
    ```
 
-4. **Build for production**
+6. **Build for production**
    ```bash
    npm run build
    npm run preview
