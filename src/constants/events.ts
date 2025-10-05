@@ -13,7 +13,7 @@ export interface Event {
   participants?: number;
   rating?: number;
   registrationLink?: string;
-  tags?: string[];
+  eventType: 'free' | 'paid';
 }
 
 export const events: Event[] = [
@@ -28,11 +28,11 @@ export const events: Event[] = [
   location: "Karunya University, Coimbatore",
   description:
     "An ultimate coding face-off — Battle of Binaries 1.0 — organized in association with CompTIA. Compete, code, and conquer to win certifications worth ₹75,000!",
-  image: "/src/assets/events/battle-of-binaries.jpg",
+  image: "/EVENTS/Battle of Binaries 1.0.jpg",
   status: "upcoming",
   category: "Competition",
   registrationLink: "https://forms.google.com/battle-of-binaries",
-  tags: ["Coding Contest", "CompTIA", "Programming", "Hackathon", "Binary Battle"],
+  eventType: "paid",
 },
 
 
@@ -46,10 +46,10 @@ export const events: Event[] = [
     location: "DSCS Gallery Hall",
     description:
       "Seminar on software automation testing methodologies using Java, conducted by Ms. Chris Zionna.",
-    image: "/src/assets/events/automation-testing.jpg",
+    image: "/EVENTS/Software Automation Testing in Java.jpg",
     status: "past",
     category: "Seminar",
-    tags: ["Java", "Automation Testing", "Software Engineering"],
+    eventType: "free",
   },
   {
     id: 5,
@@ -58,11 +58,11 @@ export const events: Event[] = [
     time: "02:30 PM",
     location: "Emmanuel Auditorium",
     description:
-      "A leadership retreat featuring Dr. Vizia Daniel Devarapalli Founder & Senior Pastor of God’s Power Ministries .",
-    image: "/src/assets/events/dscs-retreat.jpg",
+      "A leadership retreat featuring Dr. Vizia Daniel Devarapalli Founder & Senior Pastor of God's Power Ministries .",
+    image: "/EVENTS/DSCS Retreat 2025.jpg",
     status: "past",
     category: "Retreat",
-    tags: ["Leadership", "Motivation", "Community"],
+    eventType: "free",
   },
   {
     id: 6,
@@ -71,10 +71,10 @@ export const events: Event[] = [
     location: "AIML Gallery Hall",
     description:
       "Two-day hackathon fostering innovation and creativity, hosted by Dr. Radhakrishnan Subramaniam.",
-    image: "/src/assets/events/innovatex-hackathon.jpg",
+    image: "/EVENTS/INNOVATE-X HACKATHON.jpg",
     status: "past",
     category: "Hackathon",
-    tags: ["Innovation", "Hackathon", "Technology"],
+    eventType: "free",
   },
   {
     id: 7,
@@ -82,11 +82,11 @@ export const events: Event[] = [
     date: "2025-08-28",
     location: "DSCS Gallery Hall",
     description:
-      "A deep dive into Tamil Nadu’s startup and innovation ecosystem, presented by Mr. Premkumar Samuel.",
-    image: "/src/assets/events/entrepreneurial-ecosystem.jpg",
+      "A deep dive into Tamil Nadu's startup and innovation ecosystem, presented by Mr. Premkumar Samuel.",
+    image: "/EVENTS/The Entrepreneurial Ecosystem in Tamil Nadu.jpg",
     status: "past",
     category: "Seminar",
-    tags: ["Entrepreneurship", "Startups", "Tamil Nadu"],
+    eventType: "free",
   },
   {
     id: 8,
@@ -96,10 +96,10 @@ export const events: Event[] = [
     location: "Emmanuel Auditorium",
     description:
       "Official inauguration ceremony of ATOM Events 2025. Chief Guest: Mr. Pragadeesan, Associate Director at E&Y. A grand opening with inspiring speeches and ribbon-cutting ceremony.",
-    image: "/src/assets/events/inauguration.jpg",
+    image: "/EVENTS/ATOM INAUGURATION.jpg",
     status: "past",
     category: "Ceremony",
-    tags: ["Inauguration", "Opening", "Chief Guest", "E&Y"],
+    eventType: "free",
   },
   {
     id: 9,
@@ -108,10 +108,10 @@ export const events: Event[] = [
     location: "DSCS Gallery Hall",
     description:
       "Seminar exploring how digital disruption impacts employability, led by Dr. Radhakrishnan Subramaniam.",
-    image: "/src/assets/events/digital-disruption.jpg",
+    image: "/EVENTS/Digital Disruption and Employability Seminar.jpg",
     status: "past",
     category: "Seminar",
-    tags: ["Innovation", "Career", "Digital Transformation"],
+    eventType: "free",
   },
   {
     id: 10,
@@ -120,10 +120,10 @@ export const events: Event[] = [
     location: "DSCS Gallery Hall",
     description:
       "Build scalable, modern web applications from frontend to backend with industry best practices.",
-    image: "/src/assets/events/fullstack-bootcamp.jpg",
+    image: "/EVENTS/FULL STACK  Development BOOTCAMP.jpg",
     status: "past",
     category: "Bootcamp",
-    tags: ["React", "Node.js", "Web Development"],
+    eventType: "free",
   },
   {
     id: 11,
@@ -132,22 +132,22 @@ export const events: Event[] = [
     location: "DSCS Gallery Hall",
     description:
       "Master the art of cybersecurity with hands-on experience in defensive and offensive security techniques.",
-    image: "/src/assets/events/cyber-security.jpg",
+    image: "/EVENTS/CYBERSECURITY Bootcamp.jpg",
     status: "past",
     category: "Workshop",
-    tags: ["Cybersecurity", "Network Defense", "Ethical Hacking"],
+    eventType: "free",
   },
   {
     id: 12,
-    title: "AI/ML Bootcamp",
+    title: "AI Bootcamp",
     date: "2025-07-21",
     location: "DSCS Gallery Hall",
     description:
       "Dive deep into the world of artificial intelligence and machine learning with cutting-edge techniques and real-world applications.",
-    image: "/src/assets/events/aiml-bootcamp.jpg",
+    image: "/EVENTS/AI_ML Bootcamp.jpg",
     status: "past",
     category: "Bootcamp",
-    tags: ["AI", "Machine Learning", "Deep Learning"],
+    eventType: "free",
   },
 ];
 
@@ -184,10 +184,7 @@ export const filterEvents = (
   return eventList.filter((event) => {
     const matchesSearch =
       event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      event.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      event.tags?.some((tag) =>
-        tag.toLowerCase().includes(searchQuery.toLowerCase())
-      );
+      event.description.toLowerCase().includes(searchQuery.toLowerCase());
 
     const matchesCategory =
       selectedCategory === "all" || event.category === selectedCategory;

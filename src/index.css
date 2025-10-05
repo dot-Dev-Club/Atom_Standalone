@@ -313,4 +313,9 @@
       transform: translateY(0) !important;
     }
   }
+
+  /* Radial gradient utility for liquid countdown */
+  .bg-gradient-radial {
+    background: radial-gradient(circle, var(--tw-gradient-stops));
+  }
 }

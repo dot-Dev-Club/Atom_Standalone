@@ -18,7 +18,7 @@ interface Event {
   participants?: number;
   rating?: number;
   registrationLink?: string;
-  tags?: string[];
+  eventType: 'free' | 'paid';
 }
 
 interface PastEventTimelineProps {
@@ -106,7 +106,7 @@ const PastEventTimeline: React.FC<PastEventTimelineProps> = ({ events, onEventCl
   return (
     <div className="space-y-8">
       {/* Stats Overview */}
-      <motion.div
+      {/* <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
@@ -135,10 +135,10 @@ const PastEventTimeline: React.FC<PastEventTimelineProps> = ({ events, onEventCl
             <div className="text-green-300 text-sm">Event Categories</div>
           </CardContent>
         </Card>
-      </motion.div>
+      </motion.div> */}
 
       {/* Group By Toggle */}
-      <motion.div
+      {/* <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
@@ -159,7 +159,7 @@ const PastEventTimeline: React.FC<PastEventTimelineProps> = ({ events, onEventCl
             </button>
           ))}
         </div>
-      </motion.div>
+      </motion.div> */}
 
       {/* Timeline */}
       <div className="relative">
@@ -292,21 +292,6 @@ const PastEventTimeline: React.FC<PastEventTimelineProps> = ({ events, onEventCl
                                 <p className="text-gray-300 leading-relaxed">
                                   {event.description}
                                 </p>
-
-                                {/* Tags */}
-                                {event.tags && event.tags.length > 0 && (
-                                  <div className="flex flex-wrap gap-2">
-                                    {event.tags.map((tag, index) => (
-                                      <Badge 
-                                        key={index}
-                                        variant="outline" 
-                                        className="text-xs bg-white/5 text-gray-300 border-white/20"
-                                      >
-                                        {tag}
-                                      </Badge>
-                                    ))}
-                                  </div>
-                                )}
                               </motion.div>
                             )}
                           </AnimatePresence>

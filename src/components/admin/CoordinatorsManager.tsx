@@ -5,9 +5,12 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Plus, Edit, Trash2, ArrowLeft, Users } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Plus, Edit, Trash2, ArrowLeft, Users, UserCheck } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { toast } from 'sonner';
 import { coordinators as defaultCoordinators } from '@/constants/coordinators';
+import { ThreeDIconPresets } from '../ThreeDIcons';
 
 interface Coordinator {
   id: number;
@@ -92,126 +95,202 @@ const CoordinatorsManager: React.FC<CoordinatorsManagerProps> = ({ onBackToDashb
   };
 
   return (
-    <div className="space-y-4">
-      {/* Back Button */}
-      <div className="flex items-center justify-between">
-        <Button variant="outline" onClick={onBackToDashboard}>
-          <ArrowLeft className="w-4 h-4 mr-2" />
+    <div className="space-y-8">
+      {/* Header Section */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+      >
+        <Button 
+          variant="outline" 
+          onClick={onBackToDashboard}
+          className="bg-glass/50 backdrop-blur-xl border-glass-border hover:bg-glass/70 text-foreground transition-all duration-300 flex items-center gap-2"
+        >
+          <ArrowLeft className="w-4 h-4" />
           Back to Dashboard
         </Button>
-        <Button onClick={handleAdd}>
-          <Plus className="h-4 w-4 mr-2" />
+        <Button 
+          onClick={handleAdd}
+          className="bg-gradient-to-r from-atom-primary to-electric hover:from-atom-primary/90 hover:to-electric/90 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:scale-105 shadow-lg flex items-center gap-2"
+        >
+          <Plus className="h-4 w-4" />
+          <ThreeDIconPresets.Target size={16} />
           Add Coordinator
         </Button>
-      </div>
+      </motion.div>
 
-      {/* Header */}
-      <div className="bg-white border border-gray-200 rounded-lg p-4">
-        <h2 className="text-xl font-bold text-gray-900 mb-1">Coordinators Management</h2>
-        <p className="text-gray-600 text-sm">Total Coordinators: {coordinators.length}</p>
-      </div>
+      {/* Header Card */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.1 }}
+        className="glass-card p-8"
+      >
+        <div className="text-center space-y-4">
+          <h1 className="text-4xl sm:text-5xl font-bold gradient-text">
+            Coordinators Management
+          </h1>
+          <p className="text-foreground-secondary text-lg max-w-2xl mx-auto">
+            Manage your team coordinators and their information
+          </p>
+          <Badge className="bg-atom-primary/20 text-atom-primary border-atom-primary/30 px-4 py-2 inline-flex items-center gap-2">
+            <Users className="w-4 h-4" />
+            Total Coordinators: {coordinators.length}
+          </Badge>
+        </div>
+      </motion.div>
 
-      {/* Content */}
-      <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
-        <div className="p-4">
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-semibold text-gray-900">All Coordinators</h3>
-            <Button onClick={handleAdd} variant="outline" size="sm">
-              <Plus className="h-4 w-4 mr-2" />
+      {/* Content Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+        className="glass-card overflow-hidden"
+      >
+        <div className="p-8">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+            <h3 className="text-2xl font-bold text-foreground flex items-center gap-3">
+              <ThreeDIconPresets.Users size={24} />
+              All Coordinators
+            </h3>
+            <Button 
+              onClick={handleAdd} 
+              variant="outline" 
+              size="sm"
+              className="bg-glass/30 backdrop-blur-xl border-glass-border hover:bg-glass/50 text-foreground flex items-center gap-2"
+            >
+              <Plus className="h-4 w-4" />
               Add New
             </Button>
           </div>
 
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead>Role</TableHead>
-                <TableHead>Bio</TableHead>
-                <TableHead>Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {coordinators.map((coordinator) => (
-                <TableRow key={coordinator.id}>
-                  <TableCell className="font-medium">{coordinator.name}</TableCell>
-                  <TableCell>{coordinator.role}</TableCell>
-                  <TableCell className="max-w-xs truncate">{coordinator.bio}</TableCell>
-                  <TableCell>
-                    <div className="flex gap-2">
-                      <Button variant="outline" size="sm" onClick={() => handleEdit(coordinator)}>
-                        <Edit className="h-4 w-4" />
-                      </Button>
-                      <Button variant="outline" size="sm" onClick={() => handleDelete(coordinator.id)}>
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </TableCell>
+          <div className="overflow-x-auto rounded-xl border border-glass-border">
+            <Table>
+              <TableHeader>
+                <TableRow className="border-glass-border bg-glass/20">
+                  <TableHead className="text-foreground font-semibold py-4 px-6">Name</TableHead>
+                  <TableHead className="text-foreground font-semibold py-4 px-6">Role</TableHead>
+                  <TableHead className="text-foreground font-semibold py-4 px-6">Bio</TableHead>
+                  <TableHead className="text-foreground font-semibold py-4 px-6">Actions</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {coordinators.map((coordinator, index) => (
+                  <motion.tr
+                    key={coordinator.id}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.3, delay: index * 0.1 }}
+                    className="border-glass-border hover:bg-glass/20 transition-colors"
+                  >
+                    <TableCell className="font-medium text-foreground py-4 px-6">{coordinator.name}</TableCell>
+                    <TableCell className="py-4 px-6">
+                      <Badge className="bg-atom-primary/20 text-atom-primary border-atom-primary/30">
+                        {coordinator.role}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="text-foreground-secondary max-w-xs truncate py-4 px-6">{coordinator.bio}</TableCell>
+                    <TableCell className="py-4 px-6">
+                      <div className="flex gap-2">
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          onClick={() => handleEdit(coordinator)}
+                          className="bg-glass/30 backdrop-blur-xl border-glass-border hover:bg-glass/50 text-foreground"
+                        >
+                          <Edit className="h-4 w-4" />
+                        </Button>
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          onClick={() => handleDelete(coordinator.id)}
+                          className="bg-destructive/20 backdrop-blur-xl border-destructive/30 hover:bg-destructive/40 text-destructive"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </motion.tr>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
         </div>
-      </div>
+      </motion.div>
 
+      {/* Dialog for Add/Edit Coordinator */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto glass-card border-glass-border">
           <DialogHeader>
-            <DialogTitle>{editingCoordinator ? 'Edit Coordinator' : 'Add Coordinator'}</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className="gradient-text">{editingCoordinator ? 'Edit Coordinator' : 'Add Coordinator'}</DialogTitle>
+            <DialogDescription className="text-foreground-secondary">
               Fill in the coordinator details below.
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="name">Name *</Label>
+                <Label htmlFor="name" className="text-foreground">Name *</Label>
                 <Input
                   id="name"
+                  className="glass-card border-glass-border bg-glass/30 text-foreground"
                   value={formData.name || ''}
                   onChange={(e) => handleInputChange('name', e.target.value)}
                 />
               </div>
               <div>
-                <Label htmlFor="role">Role *</Label>
+                <Label htmlFor="role" className="text-foreground">Role *</Label>
                 <Input
                   id="role"
+                  className="glass-card border-glass-border bg-glass/30 text-foreground"
                   value={formData.role || ''}
                   onChange={(e) => handleInputChange('role', e.target.value)}
                 />
               </div>
             </div>
             <div>
-              <Label htmlFor="image">Image URL</Label>
+              <Label htmlFor="image" className="text-foreground">Image URL</Label>
               <Input
                 id="image"
+                className="glass-card border-glass-border bg-glass/30 text-foreground"
                 value={formData.image || ''}
                 onChange={(e) => handleInputChange('image', e.target.value)}
               />
             </div>
             <div>
-              <Label htmlFor="bio">Bio *</Label>
+              <Label htmlFor="bio" className="text-foreground">Bio *</Label>
               <Textarea
                 id="bio"
+                className="glass-card border-glass-border bg-glass/30 text-foreground"
                 value={formData.bio || ''}
                 onChange={(e) => handleInputChange('bio', e.target.value)}
                 rows={4}
               />
             </div>
             <div>
-              <Label htmlFor="linkedin">LinkedIn URL</Label>
+              <Label htmlFor="linkedin" className="text-foreground">LinkedIn URL</Label>
               <Input
                 id="linkedin"
+                className="glass-card border-glass-border bg-glass/30 text-foreground"
                 value={formData.linkedin || ''}
                 onChange={(e) => handleInputChange('linkedin', e.target.value)}
               />
             </div>
           </div>
           <div className="flex justify-end gap-2">
-            <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
+            <Button 
+              variant="outline" 
+              onClick={() => setIsDialogOpen(false)}
+              className="bg-glass/30 backdrop-blur-xl border-glass-border hover:bg-glass/50 text-foreground"
+            >
               Cancel
             </Button>
-            <Button onClick={handleSave}>
+            <Button 
+              onClick={handleSave}
+              className="bg-gradient-to-r from-atom-primary to-electric hover:from-atom-primary/90 hover:to-electric/90 text-white"
+            >
               {editingCoordinator ? 'Update' : 'Add'} Coordinator
             </Button>
           </div>
