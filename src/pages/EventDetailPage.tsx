@@ -129,86 +129,276 @@ const EventDetailPage: React.FC = () => {
 
   if (!event) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-cyan-900 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-gray-300 border-t-blue-600 rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-white text-lg">Loading event...</p>
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center relative overflow-hidden">
+        {/* Enhanced loading background */}
+        <div className="absolute inset-0">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-conic from-blue-500/10 via-cyan-500/10 to-purple-500/10 rounded-full blur-3xl animate-spin" style={{ animationDuration: '20s' }}></div>
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6 }}
+          className="text-center relative z-10"
+        >
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+            className="w-20 h-20 border-4 border-transparent border-t-blue-400 border-r-cyan-400 rounded-full mx-auto mb-6 relative"
+          >
+            <div className="absolute inset-2 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-full blur-sm"></div>
+          </motion.div>
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="text-white text-xl font-semibold"
+          >
+            Loading Event Details...
+          </motion.p>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="text-gray-400 text-sm mt-2"
+          >
+            Preparing an amazing experience
+          </motion.p>
+        </motion.div>
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 relative overflow-hidden">
-      {/* Animated Background Elements */}
+      {/* Enhanced Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-20 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-20 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-conic from-blue-500/5 via-cyan-500/5 to-blue-500/5 rounded-full blur-3xl animate-spin" style={{ animationDuration: '30s' }}></div>
+        {/* Primary gradient orbs */}
+        <motion.div
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.6, 0.3],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          className="absolute top-20 left-20 w-96 h-96 bg-gradient-to-br from-blue-500/20 via-cyan-500/15 to-transparent rounded-full blur-3xl"
+        />
+        <motion.div
+          animate={{
+            scale: [1.2, 1, 1.2],
+            opacity: [0.4, 0.7, 0.4],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 2
+          }}
+          className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-br from-purple-500/20 via-pink-500/15 to-transparent rounded-full blur-3xl"
+        />
+
+        {/* Conic gradient centerpiece */}
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{
+            duration: 40,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-gradient-conic from-blue-500/8 via-cyan-500/6 via-purple-500/8 via-pink-500/6 to-blue-500/8 rounded-full blur-3xl"
+        />
+
+        {/* Floating geometric shapes */}
+        <motion.div
+          animate={{
+            y: [-20, 20, -20],
+            rotate: [0, 180, 360],
+          }}
+          transition={{
+            duration: 15,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          className="absolute top-1/4 right-1/4 w-32 h-32 bg-gradient-to-br from-cyan-400/10 to-blue-500/10 rounded-lg blur-xl"
+        />
+        <motion.div
+          animate={{
+            y: [20, -20, 20],
+            rotate: [360, 180, 0],
+          }}
+          transition={{
+            duration: 12,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 3
+          }}
+          className="absolute bottom-1/3 left-1/3 w-24 h-24 bg-gradient-to-br from-purple-400/10 to-pink-500/10 rounded-full blur-xl"
+        />
+
+        {/* Subtle grid overlay */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.03)_0%,transparent_50%)] opacity-50"></div>
       </div>
 
-      {/* Navigation */}
-      <div className="sticky top-0 z-40 backdrop-blur-xl bg-black/20 border-b border-white/10">
-        <div className="container mx-auto px-6 py-4">
-          <Button
+      {/* Enhanced Navigation */}
+      <motion.div
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="sticky top-0 z-40 backdrop-blur-2xl bg-black/30 border-b border-white/10 shadow-2xl"
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-transparent to-cyan-500/5"></div>
+        <div className="container mx-auto px-6 py-4 relative z-10">
+          <button
             onClick={goBack}
-            variant="ghost"
-            className="text-white hover:text-blue-400 transition-all duration-300"
+            className="text-white hover:text-blue-400 transition-all duration-300 hover:scale-105 group relative flex items-center px-4 py-2 rounded-lg"
           >
-            <ArrowLeft className="w-5 h-5 mr-2" />
-            Back to Events
-          </Button>
+            <motion.div
+              whileHover={{ x: -2 }}
+              transition={{ duration: 0.2 }}
+            >
+              <ArrowLeft className="w-5 h-5 mr-2" />
+            </motion.div>
+            <span className="relative z-10">Back to Events</span>
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          </button>
         </div>
-      </div>
+      </motion.div>
 
       {/* Main Content */}
       <div className="relative z-10 container mx-auto px-6 py-8 max-w-7xl">
-        {/* Hero Section with Event Image */}
+        {/* Enhanced Hero Section */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="relative w-full h-80 lg:h-96 overflow-hidden rounded-3xl mb-12 shadow-2xl"
+          initial={{ opacity: 0, y: 50, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+          className="relative w-full h-80 lg:h-96 overflow-hidden rounded-3xl mb-12 shadow-2xl group"
         >
-          <img
+          {/* Multi-layered background gradients */}
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/80 via-slate-900/60 to-cyan-900/80 z-10"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent z-20"></div>
+
+          {/* Event image with enhanced effects */}
+          <motion.img
             src={event.image}
             alt={event.title}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110"
+            initial={{ scale: 1.1 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent rounded-3xl" />
 
-          {/* Event Title Overlay */}
-          <div className="absolute bottom-0 left-0 right-0 p-8">
-            <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
+          {/* Enhanced floating particles */}
+          <div className="absolute inset-0 overflow-hidden rounded-3xl z-30">
+            {[...Array(8)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute w-3 h-3 bg-white/30 rounded-full shadow-lg"
+                style={{
+                  left: `${15 + i * 10}%`,
+                  top: `${20 + (i % 3) * 20}%`,
+                }}
+                animate={{
+                  y: [-15, 15, -15],
+                  x: [-5, 5, -5],
+                  opacity: [0.4, 0.9, 0.4],
+                  scale: [0.8, 1.2, 0.8],
+                }}
+                transition={{
+                  duration: 4 + i * 0.8,
+                  repeat: Infinity,
+                  delay: i * 0.3,
+                  ease: "easeInOut"
+                }}
+              />
+            ))}
+
+            {/* Additional geometric particles */}
+            {[...Array(4)].map((_, i) => (
+              <motion.div
+                key={`geo-${i}`}
+                className="absolute w-2 h-2 bg-gradient-to-br from-cyan-400/60 to-blue-500/60 rounded-sm shadow-lg"
+                style={{
+                  left: `${70 + i * 8}%`,
+                  top: `${60 + i * 15}%`,
+                }}
+                animate={{
+                  rotate: [0, 360],
+                  scale: [0.5, 1.5, 0.5],
+                }}
+                transition={{
+                  duration: 6 + i,
+                  repeat: Infinity,
+                  delay: i * 0.5,
+                }}
+              />
+            ))}
+          </div>
+
+          {/* Enhanced Event Title Overlay */}
+          <div className="absolute bottom-0 left-0 right-0 p-8 z-40">
+            <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
               <div className="flex-1">
-                <motion.h1
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
+                <motion.div
+                  initial={{ opacity: 0, x: -30 }}
+                  animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.8, delay: 0.2 }}
+                  className="mb-4"
+                >
+                  <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-white/15 to-white/5 backdrop-blur-xl rounded-full text-sm text-white/90 mb-3 border border-white/20 shadow-xl">
+                    <motion.span
+                      animate={{ scale: [1, 1.2, 1] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                      className="w-3 h-3 bg-gradient-to-r from-green-400 to-emerald-400 rounded-full mr-3 shadow-lg"
+                    ></motion.span>
+                    {event.status === 'upcoming' ? 'Coming Soon' : 'Event Completed'}
+                  </div>
+                </motion.div>
+
+                <motion.h1
+                  initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
                   className="text-4xl lg:text-6xl font-bold text-white leading-tight mb-4"
                 >
                   {event.title}
                 </motion.h1>
+
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.4 }}
+                  transition={{ duration: 0.8, delay: 0.5 }}
                   className="flex flex-wrap gap-3"
                 >
-                  <Badge
-                    className={`text-sm font-semibold px-4 py-2 ${
-                      event.eventType === 'free'
-                        ? 'bg-green-500/20 text-green-400 border-green-500/30 backdrop-blur-sm'
-                        : 'bg-orange-500/20 text-orange-400 border-orange-500/30 backdrop-blur-sm'
-                    }`}
+                  <motion.div
+                    whileHover={{ scale: 1.05, y: -2 }}
+                    transition={{ duration: 0.2 }}
                   >
-                    {event.eventType === 'free' ? '🎉 Free Event' : '💰 Paid Event'}
-                  </Badge>
-                  <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 backdrop-blur-sm px-4 py-2">
-                    {event.status === 'upcoming' ? '🚀 Upcoming' : '🏁 Completed'}
-                  </Badge>
+                    <Badge
+                      className={`text-sm font-semibold px-4 py-2 transition-all duration-300 hover:scale-105 ${
+                        event.eventType === 'free'
+                          ? 'bg-gradient-to-r from-green-500/25 to-emerald-500/25 text-green-200 border border-green-400/40 backdrop-blur-xl hover:from-green-500/35 hover:to-emerald-500/35 shadow-lg hover:shadow-green-500/25'
+                          : 'bg-gradient-to-r from-orange-500/25 to-red-500/25 text-orange-200 border border-orange-400/40 backdrop-blur-xl hover:from-orange-500/35 hover:to-red-500/35 shadow-lg hover:shadow-orange-500/25'
+                      }`}
+                    >
+                      {event.eventType === 'free' ? '🎉 Free Event' : '💰 Paid Event'}
+                    </Badge>
+                  </motion.div>
+                  <motion.div
+                    whileHover={{ scale: 1.05, y: -2 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Badge className="bg-gradient-to-r from-blue-500/25 to-cyan-500/25 text-blue-200 border border-blue-400/40 backdrop-blur-xl px-4 py-2 hover:from-blue-500/35 hover:to-cyan-500/35 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-blue-500/25">
+                      {event.status === 'upcoming' ? '🚀 Upcoming' : '🏁 Completed'}
+                    </Badge>
+                  </motion.div>
                 </motion.div>
               </div>
+
             </div>
           </div>
         </motion.div>
@@ -224,79 +414,254 @@ const EventDetailPage: React.FC = () => {
               transition={{ duration: 0.8, delay: 0.3 }}
               className="grid md:grid-cols-3 gap-6"
             >
-              <div className="glass-card p-6 rounded-2xl hover:scale-105 transition-transform duration-300">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-xl flex items-center justify-center">
-                    <Calendar className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-400 font-medium">Date</p>
-                    <p className="text-white font-semibold">{formatDate(event.date)}</p>
+              <motion.div
+                whileHover={{
+                  scale: 1.05,
+                  y: -8,
+                  rotateY: 5,
+                  rotateX: 5
+                }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="glass-card p-6 rounded-2xl group cursor-pointer h-full relative overflow-hidden"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(6, 182, 212, 0.05) 100%)',
+                  backdropFilter: 'blur(20px)',
+                  border: '1px solid rgba(59, 130, 246, 0.2)',
+                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(59, 130, 246, 0.1)',
+                }}
+              >
+                {/* Card background effects */}
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-cyan-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-blue-400/10 to-cyan-400/10 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                <div className="flex items-center gap-4 h-full relative z-10">
+                  <motion.div
+                    whileHover={{
+                      rotate: 360,
+                      scale: 1.1
+                    }}
+                    transition={{ duration: 0.6, ease: "easeInOut" }}
+                    className="w-12 h-12 bg-gradient-to-br from-blue-500 via-blue-600 to-cyan-600 rounded-xl flex items-center justify-center shadow-xl group-hover:shadow-blue-500/40 flex-shrink-0 relative"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-xl"></div>
+                    <Calendar className="w-6 h-6 text-white relative z-10" />
+                  </motion.div>
+                  <div className="flex-1">
+                    <p className="text-sm text-blue-300/80 font-medium mb-1">Event Date</p>
+                    <p className="text-white font-semibold text-lg">{formatDate(event.date)}</p>
+                    <p className="text-xs text-blue-200/60 mt-1">Mark your calendar</p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
               {event.time && (
-                <div className="glass-card p-6 rounded-2xl hover:scale-105 transition-transform duration-300">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center">
-                      <Clock className="w-6 h-6 text-white" />
-                    </div>
-                    <div>
-                      <p className="text-sm text-gray-400 font-medium">Time</p>
-                      <p className="text-white font-semibold">{event.time}</p>
+                <motion.div
+                  whileHover={{
+                    scale: 1.05,
+                    y: -8,
+                    rotateY: -5,
+                    rotateX: 5
+                  }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  className="glass-card p-6 rounded-2xl group cursor-pointer h-full relative overflow-hidden"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(147, 51, 234, 0.1) 0%, rgba(219, 39, 119, 0.05) 100%)',
+                    backdropFilter: 'blur(20px)',
+                    border: '1px solid rgba(147, 51, 234, 0.2)',
+                    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(147, 51, 234, 0.1)',
+                  }}
+                >
+                  {/* Card background effects */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-pink-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-purple-400/10 to-pink-400/10 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                  <div className="flex items-center gap-4 h-full relative z-10">
+                    <motion.div
+                      whileHover={{
+                        rotate: 360,
+                        scale: 1.1
+                      }}
+                      transition={{ duration: 0.6, ease: "easeInOut" }}
+                      className="w-12 h-12 bg-gradient-to-br from-purple-500 via-purple-600 to-pink-600 rounded-xl flex items-center justify-center shadow-xl group-hover:shadow-purple-500/40 flex-shrink-0 relative"
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-xl"></div>
+                      <Clock className="w-6 h-6 text-white relative z-10" />
+                    </motion.div>
+                    <div className="flex-1">
+                      <p className="text-sm text-purple-300/80 font-medium mb-1">Start Time</p>
+                      <p className="text-white font-semibold text-lg">{event.time}</p>
+                      <p className="text-xs text-purple-200/60 mt-1">Don't be late!</p>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               )}
 
-              <div className="glass-card p-6 rounded-2xl hover:scale-105 transition-transform duration-300">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center">
-                    <MapPin className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-400 font-medium">Location</p>
-                    <p className="text-white font-semibold">{event.location}</p>
+              <motion.div
+                whileHover={{
+                  scale: 1.05,
+                  y: -8,
+                  rotateY: 5,
+                  rotateX: -5
+                }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="glass-card p-6 rounded-2xl group cursor-pointer h-full relative overflow-hidden"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.05) 100%)',
+                  backdropFilter: 'blur(20px)',
+                  border: '1px solid rgba(16, 185, 129, 0.2)',
+                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(16, 185, 129, 0.1)',
+                }}
+              >
+                {/* Card background effects */}
+                <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 via-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-green-400/10 to-emerald-400/10 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                <div className="flex items-center gap-4 h-full relative z-10">
+                  <motion.div
+                    whileHover={{
+                      rotate: 360,
+                      scale: 1.1
+                    }}
+                    transition={{ duration: 0.6, ease: "easeInOut" }}
+                    className="w-12 h-12 bg-gradient-to-br from-green-500 via-green-600 to-emerald-600 rounded-xl flex items-center justify-center shadow-xl group-hover:shadow-green-500/40 flex-shrink-0 relative"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-xl"></div>
+                    <MapPin className="w-6 h-6 text-white relative z-10" />
+                  </motion.div>
+                  <div className="flex-1">
+                    <p className="text-sm text-green-300/80 font-medium mb-1">Venue</p>
+                    <p className="text-white font-semibold text-lg">{event.location}</p>
+                    <p className="text-xs text-green-200/60 mt-1">See you there!</p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </motion.div>
 
-            {/* About This Event */}
+            {/* Enhanced About This Event */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="glass-card p-8 rounded-2xl"
+              className="glass-card p-8 rounded-2xl relative overflow-hidden group"
+              style={{
+                background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 58, 138, 0.4) 100%)',
+                backdropFilter: 'blur(25px)',
+                border: '1px solid rgba(59, 130, 246, 0.15)',
+                boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(59, 130, 246, 0.1)',
+              }}
             >
-              <h2 className="text-2xl font-semibold text-white mb-6 flex items-center">
-                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-lg flex items-center justify-center mr-4">
-                  <span className="text-white text-lg">ℹ️</span>
-                </div>
-                About This Event
-              </h2>
-              <div className="text-gray-300 leading-relaxed text-lg">
-              <div className="prose prose-invert max-w-none">
-                <ReactMarkdown
-                  components={{
-                    h1: ({ children }) => <h1 className="text-2xl font-bold text-white mb-4">{children}</h1>,
-                    h2: ({ children }) => <h2 className="text-xl font-bold text-white mb-3">{children}</h2>,
-                    h3: ({ children }) => <h3 className="text-lg font-bold text-white mb-2">{children}</h3>,
-                    p: ({ children }) => <p className="text-gray-300 mb-4 leading-relaxed">{children}</p>,
-                    ul: ({ children }) => <ul className="text-gray-300 mb-4 ml-6 list-disc">{children}</ul>,
-                    ol: ({ children }) => <ol className="text-gray-300 mb-4 ml-6 list-decimal">{children}</ol>,
-                    li: ({ children }) => <li className="mb-1">{children}</li>,
-                    strong: ({ children }) => <strong className="text-white font-semibold">{children}</strong>,
-                    em: ({ children }) => <em className="text-gray-200 italic">{children}</em>,
-                    code: ({ children }) => <code className="bg-gray-800 text-green-400 px-2 py-1 rounded text-sm">{children}</code>,
-                    blockquote: ({ children }) => <blockquote className="border-l-4 border-blue-500 pl-4 text-gray-200 italic">{children}</blockquote>,
-                    a: ({ children, href }) => <a href={href} className="text-blue-400 hover:text-blue-300 underline" target="_blank" rel="noopener noreferrer">{children}</a>,
-                  }}
-                >
-                  {event.description}
-                </ReactMarkdown>
+              {/* Enhanced background patterns */}
+              <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 rounded-full blur-3xl animate-pulse"></div>
+              <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-full blur-2xl animate-pulse delay-1000"></div>
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-conic from-blue-500/5 via-transparent to-cyan-500/5 rounded-full blur-2xl animate-spin" style={{ animationDuration: '20s' }}></div>
+
+              {/* Subtle grid overlay */}
+              <div className="absolute inset-0 opacity-10">
+                <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(59,130,246,0.05)_25%,rgba(59,130,246,0.05)_50%,transparent_50%,transparent_75%,rgba(59,130,246,0.05)_75%)] bg-[length:20px_20px]"></div>
               </div>
+
+              <div className="relative z-10">
+                <motion.div
+                  initial={{ x: -20, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ duration: 0.6, delay: 0.5 }}
+                  className="flex items-center mb-6"
+                >
+                  <motion.div
+                    whileHover={{ rotate: 360, scale: 1.1 }}
+                    transition={{ duration: 0.6 }}
+                    className="w-14 h-14 bg-gradient-to-br from-blue-500 via-cyan-600 to-blue-700 rounded-2xl flex items-center justify-center mr-4 shadow-2xl relative group/icon"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent rounded-2xl opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
+                    <span className="text-white text-2xl relative z-10">📖</span>
+                  </motion.div>
+                  <div>
+                    <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-blue-100">About This Event</h2>
+                    <p className="text-blue-300/70 text-sm">Everything you need to know</p>
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.8, delay: 0.6 }}
+                  className="prose prose-invert max-w-none"
+                >
+                  <div className="text-gray-300 leading-relaxed text-lg space-y-4">
+                    <ReactMarkdown
+                      components={{
+                        h1: ({ children }) => (
+                          <h1 className="text-4xl font-bold text-white mb-6 mt-8 first:mt-0">
+                            {children}
+                          </h1>
+                        ),
+                        h2: ({ children }) => (
+                          <h2 className="text-3xl font-bold text-white mb-4 mt-6">
+                            {children}
+                          </h2>
+                        ),
+                        h3: ({ children }) => (
+                          <h3 className="text-2xl font-bold text-white mb-3 mt-5">
+                            {children}
+                          </h3>
+                        ),
+                        p: ({ children }) => (
+                          <p className="text-gray-300 mb-4 leading-relaxed">
+                            {children}
+                          </p>
+                        ),
+                        ul: ({ children }) => (
+                          <ul className="text-gray-300 mb-4 ml-6 space-y-2">
+                            {children}
+                          </ul>
+                        ),
+                        ol: ({ children }) => (
+                          <ol className="text-gray-300 mb-4 ml-6 space-y-2">
+                            {children}
+                          </ol>
+                        ),
+                        li: ({ children }) => (
+                          <li className="flex items-start">
+                            <span className="text-gray-400 mr-3 mt-1.5 text-xs">•</span>
+                            <span className="leading-relaxed">{children}</span>
+                          </li>
+                        ),
+                        strong: ({ children }) => (
+                          <strong className="text-white font-semibold">
+                            {children}
+                          </strong>
+                        ),
+                        em: ({ children }) => (
+                          <em className="text-gray-200 italic">
+                            {children}
+                          </em>
+                        ),
+                        code: ({ children }) => (
+                          <code className="bg-gray-800 text-gray-200 px-2 py-1 rounded text-sm font-mono">
+                            {children}
+                          </code>
+                        ),
+                        blockquote: ({ children }) => (
+                          <blockquote className="border-l-4 border-gray-600 pl-6 pr-4 py-4 my-6 italic text-gray-300">
+                            {children}
+                          </blockquote>
+                        ),
+                        a: ({ children, href }) => (
+                          <a
+                            href={href}
+                            className="text-blue-400 hover:text-blue-300 underline"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {children}
+                          </a>
+                        ),
+                      }}
+                    >
+                      {event.description}
+                    </ReactMarkdown>
+                  </div>
+                </motion.div>
               </div>
             </motion.div>
           </div>
@@ -309,38 +674,32 @@ const EventDetailPage: React.FC = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.5 }}
-                className="glass-card p-6 rounded-2xl"
+                className="glass-card p-6 rounded-2xl overflow-hidden relative"
               >
-                <div className="text-center mb-6">
-                  <h3 className="text-xl font-semibold text-white mb-2">
-                    ⏰ Event Countdown
-                  </h3>
-                  <p className="text-gray-400 text-sm">Time remaining until event</p>
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  {[
-                    { label: 'Days', value: timeLeft.days, color: 'from-blue-500 to-cyan-600' },
-                    { label: 'Hours', value: timeLeft.hours, color: 'from-purple-500 to-pink-600' },
-                    { label: 'Minutes', value: timeLeft.minutes, color: 'from-green-500 to-emerald-600' },
-                    { label: 'Seconds', value: timeLeft.seconds, color: 'from-orange-500 to-red-600' },
-                  ].map((unit, index) => (
+                {/* Subtle animated background */}
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-cyan-500/5 to-purple-500/5 animate-pulse" />
+
+                <div className="relative z-10">
+                  <div className="text-center mb-6">
                     <motion.div
-                      key={unit.label}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.3, delay: index * 0.1 }}
-                      className="text-center"
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ duration: 0.5, delay: 0.7, type: "spring", stiffness: 200 }}
+                      className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-full mb-3 shadow-lg"
                     >
-                      <div className={`w-16 h-16 bg-gradient-to-br ${unit.color} rounded-xl flex items-center justify-center mx-auto mb-2 shadow-lg`}>
-                        <span className="text-white font-bold text-lg">
-                          {unit.value.toString().padStart(2, '0')}
-                        </span>
-                      </div>
-                      <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                        {unit.label}
-                      </span>
+                      <span className="text-2xl">⏰</span>
                     </motion.div>
-                  ))}
+                    <h3 className="text-xl font-semibold text-white mb-2">
+                      Event Countdown
+                    </h3>
+                    <p className="text-gray-400 text-sm">Time remaining until launch</p>
+                  </div>
+
+                  {/* Use the refined ClockCountdown component */}
+                  <ClockCountdown
+                    targetDate={new Date(event.date + (event.time ? ' ' + event.time : ''))}
+                    size="md"
+                  />
                 </div>
               </motion.div>
             )}
@@ -351,47 +710,157 @@ const EventDetailPage: React.FC = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
-                className="glass-card p-6 rounded-2xl"
+                className="glass-card p-8 rounded-2xl relative overflow-hidden group cursor-pointer"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(59, 130, 246, 0.3) 100%)',
+                  backdropFilter: 'blur(25px)',
+                  border: '1px solid rgba(59, 130, 246, 0.2)',
+                  boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(59, 130, 246, 0.1)',
+                }}
               >
-                <h3 className="text-xl font-semibold text-white text-center mb-6 flex items-center justify-center">
-                  <span className="mr-2">🎫</span>
-                  Register for Event
-                </h3>
+                {/* Enhanced animated background elements */}
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-cyan-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-green-500/15 to-emerald-500/15 rounded-full blur-3xl animate-pulse"></div>
+                <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-br from-cyan-500/10 to-blue-500/10 rounded-full blur-2xl animate-pulse delay-1000"></div>
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-gradient-conic from-blue-500/5 via-transparent to-cyan-500/5 rounded-full blur-2xl animate-spin" style={{ animationDuration: '15s' }}></div>
 
-                {!showRegistrationOptions ? (
-                  <Button
-                    onClick={() => setShowRegistrationOptions(true)}
-                    className="w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white py-4 text-lg font-bold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+                {/* Subtle grid overlay */}
+                <div className="absolute inset-0 opacity-5">
+                  <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(59,130,246,0.05)_25%,rgba(59,130,246,0.05)_50%,transparent_50%,transparent_75%,rgba(59,130,246,0.05)_75%)] bg-[length:15px_15px]"></div>
+                </div>
+
+                <div className="relative z-10">
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.5, delay: 0.7, type: "spring", stiffness: 200 }}
+                    className="text-center mb-8"
                   >
-                    🚀 Register Now
-                  </Button>
-                ) : (
-                  <div className="space-y-4">
-                    <Button
-                      onClick={() => navigate('/registration/internal')}
-                      className="w-full bg-gradient-to-r from-blue-600/80 to-blue-500/60 hover:from-blue-600 hover:to-blue-500 text-white py-3 font-semibold rounded-xl transition-all duration-300 flex flex-col items-center gap-1 shadow-lg hover:shadow-xl hover:scale-105"
+                    <motion.div
+                      whileHover={{ rotate: 360, scale: 1.1 }}
+                      transition={{ duration: 0.6, ease: "easeInOut" }}
+                      className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-blue-500 via-cyan-600 to-blue-700 rounded-3xl mb-6 shadow-2xl relative group/icon"
                     >
-                      <span>🎓 Internal Registration</span>
-                      <span className="text-sm opacity-80">For Karunya Students</span>
-                    </Button>
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent rounded-3xl opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
+                      <span className="text-4xl relative z-10">🎫</span>
+                    </motion.div>
+                    <h3 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-100 to-cyan-100 mb-3 drop-shadow-lg">
+                      Join the Experience
+                    </h3>
+                    <p className="text-cyan-300/80 text-base font-medium">Secure your spot before it's too late</p>
+                  </motion.div>
 
-                    <Button
-                      onClick={() => navigate('/registration/external')}
-                      className="w-full bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white py-3 font-semibold rounded-xl transition-all duration-300 flex flex-col items-center gap-1 shadow-lg hover:shadow-xl hover:scale-105"
+                  {!showRegistrationOptions ? (
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: 0.8 }}
                     >
-                      <span>🌍 External Registration</span>
-                      <span className="text-sm opacity-80">For External Participants</span>
-                    </Button>
+                      <Button
+                        onClick={() => setShowRegistrationOptions(true)}
+                        className="w-full bg-gradient-to-r from-blue-600 via-cyan-600 to-blue-600 hover:from-blue-500 hover:via-cyan-500 hover:to-blue-500 text-white py-5 text-xl font-bold rounded-2xl transition-all duration-300 shadow-2xl hover:shadow-blue-500/40 hover:scale-105 relative overflow-hidden group border border-blue-400/30"
+                      >
+                        <span className="relative z-10 flex items-center justify-center gap-3">
+                          <motion.span
+                            animate={{ rotate: [0, 10, -10, 0] }}
+                            transition={{ duration: 2, repeat: Infinity }}
+                            className="text-2xl"
+                          >
+                            🚀
+                          </motion.span>
+                          <span>Register Now</span>
+                        </span>
+                        <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/25 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
+                      </Button>
 
-                    <Button
-                      variant="ghost"
-                      onClick={() => setShowRegistrationOptions(false)}
-                      className="w-full text-gray-400 hover:text-white transition-colors mt-2"
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.5, delay: 1 }}
+                        className="text-center mt-6"
+                      >
+                        <p className="text-sm text-cyan-300/70 font-medium bg-cyan-400/5 px-4 py-2 rounded-full border border-cyan-400/20 inline-block">
+                          ⚡ Limited seats available • First come, first served
+                        </p>
+                      </motion.div>
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.3 }}
+                      className="space-y-4"
                     >
-                      ← Back
-                    </Button>
-                  </div>
-                )}
+                      <motion.div
+                        initial={{ x: -20, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ duration: 0.3, delay: 0.1 }}
+                      >
+                        <Button
+                          onClick={() => navigate('/registration/internal')}
+                          className="w-full bg-gradient-to-r from-blue-600/90 to-blue-500/90 hover:from-blue-600 hover:to-blue-500 text-white py-5 font-bold rounded-2xl transition-all duration-300 flex flex-col items-center gap-3 shadow-xl hover:shadow-blue-500/40 hover:scale-105 group border border-blue-400/30 relative overflow-hidden"
+                        >
+                          <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+                          <div className="flex items-center gap-3 relative z-10">
+                            <motion.span
+                              whileHover={{ rotate: 360 }}
+                              transition={{ duration: 0.6 }}
+                              className="text-2xl"
+                            >
+                              🎓
+                            </motion.span>
+                            <span className="text-lg">Internal Registration</span>
+                          </div>
+                          <span className="text-sm opacity-80 group-hover:opacity-100 transition-opacity relative z-10 text-cyan-100">
+                            For Karunya University Students
+                          </span>
+                        </Button>
+                      </motion.div>
+
+                      <motion.div
+                        initial={{ x: 20, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ duration: 0.3, delay: 0.2 }}
+                      >
+                        <Button
+                          onClick={() => navigate('/registration/external')}
+                          className="w-full bg-gradient-to-r from-cyan-600/90 to-blue-600/90 hover:from-cyan-500 hover:to-blue-500 text-white py-5 font-bold rounded-2xl transition-all duration-300 flex flex-col items-center gap-3 shadow-xl hover:shadow-cyan-500/40 hover:scale-105 group border border-cyan-400/30 relative overflow-hidden"
+                        >
+                          <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+                          <div className="flex items-center gap-3 relative z-10">
+                            <motion.span
+                              whileHover={{ rotate: 360 }}
+                              transition={{ duration: 0.6 }}
+                              className="text-2xl"
+                            >
+                              🌍
+                            </motion.span>
+                            <span className="text-lg">External Registration</span>
+                          </div>
+                          <span className="text-sm opacity-80 group-hover:opacity-100 transition-opacity relative z-10 text-blue-100">
+                            For External Participants
+                          </span>
+                        </Button>
+                      </motion.div>
+
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.3, delay: 0.3 }}
+                        className="text-center pt-2"
+                      >
+                        <Button
+                          variant="ghost"
+                          onClick={() => setShowRegistrationOptions(false)}
+                          className="text-cyan-300/80 hover:text-cyan-200 hover:bg-cyan-400/10 transition-all duration-300 text-base font-medium px-6 py-3 rounded-xl border border-cyan-400/20 hover:border-cyan-400/40"
+                        >
+                          ← Back to overview
+                        </Button>
+                      </motion.div>
+                    </motion.div>
+                  )}
+                </div>
               </motion.div>
             )}
 
@@ -401,17 +870,34 @@ const EventDetailPage: React.FC = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.7 }}
-                className="glass-card p-6 rounded-2xl text-center"
+                className="glass-card p-8 rounded-2xl text-center relative overflow-hidden group"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(75, 85, 99, 0.3) 100%)',
+                  backdropFilter: 'blur(25px)',
+                  border: '1px solid rgba(75, 85, 99, 0.2)',
+                  boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(75, 85, 99, 0.1)',
+                }}
               >
-                <div className="w-16 h-16 bg-gradient-to-br from-gray-500 to-gray-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl">🏁</span>
+                {/* Subtle background effects */}
+                <div className="absolute inset-0 bg-gradient-to-br from-gray-500/5 to-gray-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-gray-500/10 to-gray-600/10 rounded-full blur-2xl animate-pulse"></div>
+
+                <div className="relative z-10">
+                  <motion.div
+                    whileHover={{ rotate: 360, scale: 1.1 }}
+                    transition={{ duration: 0.6, ease: "easeInOut" }}
+                    className="w-20 h-20 bg-gradient-to-br from-gray-500 via-gray-600 to-gray-700 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-2xl relative group/icon"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-3xl opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
+                    <span className="text-4xl relative z-10">🏁</span>
+                  </motion.div>
+                  <h3 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-gray-300 mb-4 drop-shadow-lg">
+                    Event Completed
+                  </h3>
+                  <p className="text-gray-300/80 text-lg font-medium">
+                    This event has ended. Thank you for your interest!
+                  </p>
                 </div>
-                <h3 className="text-xl font-semibold text-white mb-2">
-                  Event Completed
-                </h3>
-                <p className="text-gray-400">
-                  This event has ended. Thank you for your interest!
-                </p>
               </motion.div>
             )}
           </div>
@@ -425,72 +911,152 @@ const EventDetailPage: React.FC = () => {
           className="grid md:grid-cols-2 gap-8 mt-12"
         >
           {/* Rules & Regulations */}
-          <div className="glass-card p-6 rounded-2xl">
-            <h3 className="text-lg font-semibold text-white mb-4 flex items-center">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-lg flex items-center justify-center mr-3">
-                <span className="text-white">📋</span>
-              </div>
-              Rules & Regulations
-            </h3>
-            <div className="space-y-3">
-              <ul className="space-y-2 text-sm text-gray-300">
-                <li className="flex items-start">
-                  <span className="text-blue-400 mr-2 mt-1">•</span>
-                  All participants must register before the event deadline
-                </li>
-                <li className="flex items-start">
-                  <span className="text-blue-400 mr-2 mt-1">•</span>
-                  Participants must bring valid ID proof for verification
-                </li>
-                <li className="flex items-start">
-                  <span className="text-blue-400 mr-2 mt-1">•</span>
-                  Late arrivals may not be permitted to participate
-                </li>
-                <li className="flex items-start">
-                  <span className="text-blue-400 mr-2 mt-1">•</span>
-                  Follow all venue guidelines and instructions from organizers
-                </li>
-                <li className="flex items-start">
-                  <span className="text-blue-400 mr-2 mt-1">•</span>
-                  Respectful behavior towards all participants is mandatory
-                </li>
-              </ul>
+          <motion.div
+            whileHover={{ y: -8, scale: 1.02 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="glass-card p-8 rounded-2xl relative overflow-hidden group cursor-pointer"
+            style={{
+              background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(59, 130, 246, 0.3) 100%)',
+              backdropFilter: 'blur(25px)',
+              border: '1px solid rgba(59, 130, 246, 0.2)',
+              boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(59, 130, 246, 0.1)',
+            }}
+          >
+            {/* Enhanced background effects */}
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-cyan-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-blue-500/15 to-cyan-500/15 rounded-full blur-2xl animate-pulse"></div>
+            <div className="absolute bottom-0 left-0 w-20 h-20 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-full blur-xl animate-pulse delay-1000"></div>
+
+            {/* Subtle grid overlay */}
+            <div className="absolute inset-0 opacity-5">
+              <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(59,130,246,0.05)_25%,rgba(59,130,246,0.05)_50%,transparent_50%,transparent_75%,rgba(59,130,246,0.05)_75%)] bg-[length:15px_15px]"></div>
             </div>
-          </div>
+
+            <div className="relative z-10">
+              <motion.h3
+                initial={{ x: -20, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.9 }}
+                className="text-2xl font-bold text-white mb-8 flex items-center"
+              >
+                <motion.div
+                  whileHover={{ rotate: 360, scale: 1.1 }}
+                  transition={{ duration: 0.6, ease: "easeInOut" }}
+                  className="w-14 h-14 bg-gradient-to-br from-blue-500 via-cyan-600 to-blue-700 rounded-2xl flex items-center justify-center mr-5 shadow-2xl relative group/icon"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent rounded-2xl opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
+                  <span className="text-white text-2xl relative z-10">📋</span>
+                </motion.div>
+                <div>
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-blue-100">Rules & Regulations</span>
+                  <p className="text-sm text-cyan-300/70 font-medium mt-1">Please read carefully</p>
+                </div>
+              </motion.h3>
+
+              <div className="space-y-5">
+                {[
+                  "All participants must register before the event deadline",
+                  "Participants must bring valid ID proof for verification",
+                  "Late arrivals may not be permitted to participate",
+                  "Follow all venue guidelines and instructions from organizers",
+                  "Respectful behavior towards all participants is mandatory"
+                ].map((rule, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.4, delay: 1 + index * 0.1 }}
+                    className="flex items-start group/item"
+                  >
+                    <motion.span
+                      whileHover={{ scale: 1.3, rotate: 180 }}
+                      transition={{ duration: 0.3 }}
+                      className="text-cyan-400 mr-4 mt-1.5 text-sm font-bold bg-cyan-400/10 rounded-full w-6 h-6 flex items-center justify-center border border-cyan-400/20 group-hover/item:bg-cyan-400/20 transition-colors duration-200"
+                    >
+                      {index + 1}
+                    </motion.span>
+                    <span className="text-gray-100 leading-relaxed group-hover/item:text-white transition-colors duration-200 font-medium">
+                      {rule}
+                    </span>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
 
           {/* Terms & Conditions */}
-          <div className="glass-card p-6 rounded-2xl">
-            <h3 className="text-lg font-semibold text-white mb-4 flex items-center">
-              <div className="w-8 h-8 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-lg flex items-center justify-center mr-3">
-                <span className="text-white">📄</span>
-              </div>
-              Terms & Conditions
-            </h3>
-            <div className="space-y-3">
-              <ul className="space-y-2 text-sm text-gray-300">
-                <li className="flex items-start">
-                  <span className="text-cyan-400 mr-2 mt-1">•</span>
-                  Allow photography and videography during the event
-                </li>
-                <li className="flex items-start">
-                  <span className="text-cyan-400 mr-2 mt-1">•</span>
-                  Comply with all event rules and venue policies
-                </li>
-                <li className="flex items-start">
-                  <span className="text-cyan-400 mr-2 mt-1">•</span>
-                  Organizers are not liable for personal belongings
-                </li>
-                <li className="flex items-start">
-                  <span className="text-cyan-400 mr-2 mt-1">•</span>
-                  Event details may change with prior notice
-                </li>
-                <li className="flex items-start">
-                  <span className="text-cyan-400 mr-2 mt-1">•</span>
-                  Provide accurate information during registration
-                </li>
-              </ul>
+          <motion.div
+            whileHover={{ y: -8, scale: 1.02 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="glass-card p-8 rounded-2xl relative overflow-hidden group cursor-pointer"
+            style={{
+              background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(6, 182, 212, 0.3) 100%)',
+              backdropFilter: 'blur(25px)',
+              border: '1px solid rgba(6, 182, 212, 0.2)',
+              boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(6, 182, 212, 0.1)',
+            }}
+          >
+            {/* Enhanced background effects */}
+            <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-cyan-500/15 to-blue-500/15 rounded-full blur-2xl animate-pulse"></div>
+            <div className="absolute bottom-0 left-0 w-20 h-20 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-full blur-xl animate-pulse delay-1000"></div>
+
+            {/* Subtle grid overlay */}
+            <div className="absolute inset-0 opacity-5">
+              <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(6,182,212,0.05)_25%,rgba(6,182,212,0.05)_50%,transparent_50%,transparent_75%,rgba(6,182,212,0.05)_75%)] bg-[length:15px_15px]"></div>
             </div>
-          </div>
+
+            <div className="relative z-10">
+              <motion.h3
+                initial={{ x: -20, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ duration: 0.6, delay: 1.1 }}
+                className="text-2xl font-bold text-white mb-8 flex items-center"
+              >
+                <motion.div
+                  whileHover={{ rotate: 360, scale: 1.1 }}
+                  transition={{ duration: 0.6, ease: "easeInOut" }}
+                  className="w-14 h-14 bg-gradient-to-br from-cyan-500 via-blue-600 to-cyan-700 rounded-2xl flex items-center justify-center mr-5 shadow-2xl relative group/icon"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent rounded-2xl opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
+                  <span className="text-white text-2xl relative z-10">📄</span>
+                </motion.div>
+                <div>
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-cyan-100">Terms & Conditions</span>
+                  <p className="text-sm text-blue-300/70 font-medium mt-1">Important information</p>
+                </div>
+              </motion.h3>
+
+              <div className="space-y-5">
+                {[
+                  "Allow photography and videography during the event",
+                  "Comply with all event rules and venue policies",
+                  "Organizers are not liable for personal belongings",
+                  "Event details may change with prior notice",
+                  "Provide accurate information during registration"
+                ].map((term, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.4, delay: 1.2 + index * 0.1 }}
+                    className="flex items-start group/item"
+                  >
+                    <motion.span
+                      whileHover={{ scale: 1.2, rotate: 360 }}
+                      transition={{ duration: 0.3 }}
+                      className="text-green-400 mr-4 mt-1.5 text-lg bg-green-400/10 rounded-full w-7 h-7 flex items-center justify-center border border-green-400/20 group-hover/item:bg-green-400/20 transition-colors duration-200"
+                    >
+                      ✓
+                    </motion.span>
+                    <span className="text-gray-100 leading-relaxed group-hover/item:text-white transition-colors duration-200 font-medium">
+                      {term}
+                    </span>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
         </motion.div>
       </div>
     </div>

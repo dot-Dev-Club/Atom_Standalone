@@ -75,7 +75,7 @@ const Event: React.FC = () => {
         >
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 via-cyan-500 to-blue-400 bg-clip-text text-transparent mb-4">
-              🚀 Upcoming Events
+              Upcoming Events
             </h2>
             <p className="text-lg text-gray-300 max-w-2xl mx-auto">
               Join us in our upcoming events and be part of the innovation journey
@@ -104,7 +104,7 @@ const Event: React.FC = () => {
               role="status"
               aria-live="polite"
             >
-              <div className="text-6xl mb-6">🚀</div>
+              <div className="text-6xl mb-6"></div>
               <h3 className="text-2xl font-bold text-white mb-4">No Upcoming Events</h3>
               <p className="text-gray-400 max-w-md mx-auto">
                 Stay tuned! We're planning exciting events. Follow our social media for updates.
@@ -122,7 +122,7 @@ const Event: React.FC = () => {
         >
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-400 via-pink-500 to-purple-400 bg-clip-text text-transparent mb-4">
-              📜 Past Events
+              Past Events
             </h2>
             <p className="text-lg text-gray-300 max-w-2xl mx-auto">
               Explore our successful events and achievements from the past
@@ -139,7 +139,7 @@ const Event: React.FC = () => {
               role="status"
               aria-live="polite"
             >
-              <div className="text-6xl mb-6">📜</div>
+              <div className="text-6xl mb-6"></div>
               <h3 className="text-2xl font-bold text-white mb-4">No Past Events</h3>
               <p className="text-gray-400 max-w-md mx-auto">
                 Our event history will appear here after we host our first events.
