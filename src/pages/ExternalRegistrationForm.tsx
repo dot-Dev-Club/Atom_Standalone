@@ -52,6 +52,7 @@ const ExternalRegistrationForm: React.FC = () => {
     if (!formData.college_name.trim()) newErrors.college_name = 'College name is required';
     if (!formData.email.trim()) newErrors.email = 'Email is required';
     else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Invalid email format';
+    if (!formData.recipt_no.trim()) newErrors.recipt_no = 'Receipt number is required';
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -245,7 +246,18 @@ const ExternalRegistrationForm: React.FC = () => {
                     {errors.email && <p className="text-red-400 text-sm">{errors.email}</p>}
                   </div>
 
-
+                  <div className="space-y-2">
+                    <Label htmlFor="recipt_no" className="text-white font-medium">Receipt Number *</Label>
+                    <Input
+                      id="recipt_no"
+                      name="recipt_no"
+                      value={formData.recipt_no}
+                      onChange={handleInputChange}
+                      className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-teal-500"
+                      placeholder="Enter receipt number"
+                    />
+                    {errors.recipt_no && <p className="text-red-400 text-sm">{errors.recipt_no}</p>}
+                  </div>
                 </div>
 
                 <div className="pt-8 border-t border-white/10">
