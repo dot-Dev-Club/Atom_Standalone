@@ -1,24 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { useSearchParams } from 'react-router-dom';
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Calendar, MapPin, Clock, Users, Star } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import EventCard from '@/components/events/EventCard';
-import ModernEventModal from '@/components/events/ModernEventModal';
 import PastEventTimeline from '@/components/events/PastEventTimeline';
 import { type Event } from '@/constants/events';
-import { getEvents, getUpcomingEvents, getPastEvents, refreshEventsData } from '@/utils/dataService';
+import { getUpcomingEvents, getPastEvents } from '@/utils/dataService';
+import { generateSlug } from '@/utils/slug';
 import '@/styles/events.css';
 import '@/styles/event-enhancements.css';
 import '@/styles/event-card-enhancements.css';
 
 const Event: React.FC = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const navigate = useNavigate();
   const upcomingEvents = getUpcomingEvents();
   const pastEvents = getPastEvents();
 
@@ -31,39 +24,12 @@ const Event: React.FC = () => {
     });
   }, []);
 
-  // Handle URL query parameters for direct event access
-  useEffect(() => {
-    const eventId = searchParams.get('event');
-    if (eventId) {
-      const event = getEvents().find(e => e.id === parseInt(eventId));
-      if (event) {
-        setSelectedEvent(event);
-        setIsModalOpen(true);
-        // Remove the query parameter from URL after opening modal
-        setSearchParams({}, { replace: true });
-      }
-    }
-  }, [searchParams, setSearchParams]);
-
   const handleEventClick = (event: Event) => {
-    setSelectedEvent(event);
-    setIsModalOpen(true);
+    const slug = generateSlug(event.title);
+    navigate(`/events/${slug}`);
   };
 
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-    setSelectedEvent(null);
-  };
-
-  const handleRegistration = () => {
-    // For now, we'll default to external registration
-    // This can be enhanced later with registration type selection
-    setIsModalOpen(false);
-    setSelectedEvent(null);
-    
-    // Navigate to external registration form
-    window.location.href = '/registration/external';
-  };
+  // Remove modal-related functions since we're not using modals anymore
 
   return (
     <div 
@@ -182,14 +148,6 @@ const Event: React.FC = () => {
           )}
         </motion.section>
       </div>
-
-      {/* Modern Event Modal */}
-      <ModernEventModal
-        event={selectedEvent}
-        isOpen={isModalOpen}
-        onClose={handleModalClose}
-        onRegister={selectedEvent?.status === 'upcoming' ? handleRegistration : undefined}
-      />
     </div>
   );
 };
