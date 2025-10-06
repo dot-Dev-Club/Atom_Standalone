@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Calendar, Clock, MapPin, PartyPopper, DollarSign, Rocket, Flag, BookOpen, Timer, Ticket, Zap, ClipboardList, FileText, GraduationCap, Globe } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Event } from '@/constants/events';
@@ -257,12 +256,6 @@ const EventDetailPage: React.FC = () => {
             onClick={goBack}
             className="text-white hover:text-blue-400 transition-all duration-300 hover:scale-105 group relative flex items-center px-4 py-2 rounded-lg"
           >
-            <motion.div
-              whileHover={{ x: -2 }}
-              transition={{ duration: 0.2 }}
-            >
-              <ArrowLeft className="w-5 h-5 mr-2" />
-            </motion.div>
             <span className="relative z-10">Back to Events</span>
             <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           </button>
@@ -385,17 +378,7 @@ const EventDetailPage: React.FC = () => {
                           : 'bg-gradient-to-r from-orange-500/25 to-red-500/25 text-orange-200 border border-orange-400/40 backdrop-blur-xl hover:from-orange-500/35 hover:to-red-500/35 shadow-lg hover:shadow-orange-500/25'
                       }`}
                     >
-                      {event.eventType === 'free' ? (
-                        <>
-                          <PartyPopper className="w-4 h-4 mr-1" />
-                          Free Event
-                        </>
-                      ) : (
-                        <>
-                          <DollarSign className="w-4 h-4 mr-1" />
-                          Paid Event
-                        </>
-                      )}
+                      {event.eventType === 'free' ? 'Free Event' : 'Paid Event'}
                     </Badge>
                   </motion.div>
                   <motion.div
@@ -403,17 +386,7 @@ const EventDetailPage: React.FC = () => {
                     transition={{ duration: 0.2 }}
                   >
                     <Badge className="bg-gradient-to-r from-blue-500/25 to-cyan-500/25 text-blue-200 border border-blue-400/40 backdrop-blur-xl px-4 py-2 hover:from-blue-500/35 hover:to-cyan-500/35 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-blue-500/25">
-                      {event.status === 'upcoming' ? (
-                        <>
-                          <Rocket className="w-4 h-4 mr-1" />
-                          Upcoming
-                        </>
-                      ) : (
-                        <>
-                          <Flag className="w-4 h-4 mr-1" />
-                          Completed
-                        </>
-                      )}
+                      {event.status === 'upcoming' ? 'Upcoming' : 'Completed'}
                     </Badge>
                   </motion.div>
                 </motion.div>
@@ -462,21 +435,9 @@ const EventDetailPage: React.FC = () => {
                 </div>
 
                 <div className="flex items-center gap-4 h-full relative z-10">
-                  <motion.div
-                    whileHover={{
-                      rotate: 360,
-                      scale: 1.1
-                    }}
-                    transition={{ duration: 0.6, ease: "easeInOut" }}
-                    className="w-12 h-12 bg-gradient-to-br from-blue-500 via-blue-600 to-cyan-600 rounded-xl flex items-center justify-center shadow-xl group-hover:shadow-blue-500/40 flex-shrink-0 relative"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-xl"></div>
-                    <Calendar className="w-6 h-6 text-white relative z-10" />
-                  </motion.div>
                   <div className="flex-1">
                     <p className="text-sm text-blue-300/80 font-medium mb-1">Event Date</p>
                     <p className="text-white font-semibold text-lg">{formatDate(event.date)}</p>
-                    <p className="text-xs text-blue-200/60 mt-1">Mark your calendar</p>
                   </div>
                 </div>
               </motion.div>
@@ -510,21 +471,9 @@ const EventDetailPage: React.FC = () => {
                   </div>
 
                   <div className="flex items-center gap-4 h-full relative z-10">
-                    <motion.div
-                      whileHover={{
-                        rotate: 360,
-                        scale: 1.1
-                      }}
-                      transition={{ duration: 0.6, ease: "easeInOut" }}
-                      className="w-12 h-12 bg-gradient-to-br from-purple-500 via-purple-600 to-pink-600 rounded-xl flex items-center justify-center shadow-xl group-hover:shadow-purple-500/40 flex-shrink-0 relative"
-                    >
-                      <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-xl"></div>
-                      <Clock className="w-6 h-6 text-white relative z-10" />
-                    </motion.div>
                     <div className="flex-1">
                       <p className="text-sm text-purple-300/80 font-medium mb-1">Start Time</p>
                       <p className="text-white font-semibold text-lg">{event.time}</p>
-                      <p className="text-xs text-purple-200/60 mt-1">Don't be late!</p>
                     </div>
                   </div>
                 </motion.div>
@@ -558,21 +507,9 @@ const EventDetailPage: React.FC = () => {
                 </div>
 
                 <div className="flex items-center gap-4 h-full relative z-10">
-                  <motion.div
-                    whileHover={{
-                      rotate: 360,
-                      scale: 1.1
-                    }}
-                    transition={{ duration: 0.6, ease: "easeInOut" }}
-                    className="w-12 h-12 bg-gradient-to-br from-green-500 via-green-600 to-emerald-600 rounded-xl flex items-center justify-center shadow-xl group-hover:shadow-green-500/40 flex-shrink-0 relative"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-xl"></div>
-                    <MapPin className="w-6 h-6 text-white relative z-10" />
-                  </motion.div>
                   <div className="flex-1">
                     <p className="text-sm text-green-300/80 font-medium mb-1">Venue</p>
                     <p className="text-white font-semibold text-lg">{event.location}</p>
-                    <p className="text-xs text-green-200/60 mt-1">See you there!</p>
                   </div>
                 </div>
               </motion.div>
@@ -615,17 +552,8 @@ const EventDetailPage: React.FC = () => {
                   transition={{ duration: 0.6, delay: 0.5 }}
                   className="flex items-center mb-6"
                 >
-                  <motion.div
-                    whileHover={{ rotate: 360, scale: 1.1 }}
-                    transition={{ duration: 0.6 }}
-                    className="w-14 h-14 bg-gradient-to-br from-blue-500 via-cyan-600 to-blue-700 rounded-2xl flex items-center justify-center mr-4 shadow-2xl relative group/icon"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent rounded-2xl opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
-                    <BookOpen className="w-6 h-6 text-white relative z-10" />
-                  </motion.div>
                   <div>
                     <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-blue-100">About This Event</h2>
-                    <p className="text-blue-300/70 text-sm">Everything you need to know</p>
                   </div>
                 </motion.div>
 
@@ -749,18 +677,9 @@ const EventDetailPage: React.FC = () => {
 
                 <div className="relative z-10">
                   <div className="text-center mb-6">
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ duration: 0.5, delay: 0.7, type: "spring", stiffness: 200 }}
-                      className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-full mb-3 shadow-lg"
-                    >
-                      <Timer className="w-6 h-6 text-white" />
-                    </motion.div>
                     <h3 className="text-xl font-semibold text-white mb-2">
                       Event Countdown
                     </h3>
-                    <p className="text-gray-400 text-sm">Time remaining until launch</p>
                   </div>
 
                   {/* Use the refined ClockCountdown component */}
@@ -811,18 +730,9 @@ const EventDetailPage: React.FC = () => {
                     transition={{ duration: 0.5, delay: 0.7, type: "spring", stiffness: 200 }}
                     className="text-center mb-8"
                   >
-                    <motion.div
-                      whileHover={{ rotate: 360, scale: 1.1 }}
-                      transition={{ duration: 0.6, ease: "easeInOut" }}
-                      className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-blue-500 via-cyan-600 to-blue-700 rounded-3xl mb-6 shadow-2xl relative group/icon"
-                    >
-                      <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent rounded-3xl opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
-                      <Ticket className="w-8 h-8 text-white relative z-10" />
-                    </motion.div>
                     <h3 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-100 to-cyan-100 mb-3 drop-shadow-lg">
                       Join the Experience
                     </h3>
-                    <p className="text-cyan-300/80 text-base font-medium">Secure your spot before it's too late</p>
                   </motion.div>
 
                   {!showRegistrationOptions ? (
@@ -836,12 +746,6 @@ const EventDetailPage: React.FC = () => {
                         className="w-full bg-gradient-to-r from-blue-600 via-cyan-600 to-blue-600 hover:from-blue-500 hover:via-cyan-500 hover:to-blue-500 text-white py-5 text-xl font-bold rounded-2xl transition-all duration-300 shadow-2xl hover:shadow-blue-500/40 hover:scale-105 relative overflow-hidden group border border-blue-400/30"
                       >
                         <span className="relative z-10 flex items-center justify-center gap-3">
-                          <motion.div
-                            animate={{ rotate: [0, 10, -10, 0] }}
-                            transition={{ duration: 2, repeat: Infinity }}
-                          >
-                            <Rocket className="w-6 h-6" />
-                          </motion.div>
                           <span>Register Now</span>
                         </span>
                         <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/25 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
@@ -867,17 +771,8 @@ const EventDetailPage: React.FC = () => {
                           className="w-full bg-gradient-to-r from-blue-600/90 to-blue-500/90 hover:from-blue-600 hover:to-blue-500 text-white py-6 font-bold rounded-2xl transition-all duration-300 flex flex-col items-center gap-2 shadow-xl hover:shadow-blue-500/40 hover:scale-105 group border border-blue-400/30 relative overflow-hidden"
                         >
                           <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
-                          <div className="flex items-center justify-center gap-3 relative z-10">
-                            <motion.div
-                              whileHover={{ rotate: 360, scale: 1.1 }}
-                              transition={{ duration: 0.6 }}
-                              className="flex-shrink-0"
-                            >
-                              <GraduationCap className="w-7 h-7" />
-                            </motion.div>
-                            <div className="text-center">
-                              <span className="text-xl font-bold block">Internal Registration</span>
-                            </div>
+                          <div className="text-center relative z-10">
+                            <span className="text-xl font-bold block">Internal Registration</span>
                           </div>
                         </Button>
                       </motion.div>
@@ -892,17 +787,8 @@ const EventDetailPage: React.FC = () => {
                           className="w-full bg-gradient-to-r from-cyan-600/90 to-blue-600/90 hover:from-cyan-500 hover:to-blue-500 text-white py-6 font-bold rounded-2xl transition-all duration-300 flex flex-col items-center gap-2 shadow-xl hover:shadow-cyan-500/40 hover:scale-105 group border border-cyan-400/30 relative overflow-hidden"
                         >
                           <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
-                          <div className="flex items-center justify-center gap-3 relative z-10">
-                            <motion.div
-                              whileHover={{ rotate: 360, scale: 1.1 }}
-                              transition={{ duration: 0.6 }}
-                              className="flex-shrink-0"
-                            >
-                              <Globe className="w-7 h-7" />
-                            </motion.div>
-                            <div className="text-center">
-                              <span className="text-xl font-bold block">External Registration</span>
-                            </div>
+                          <div className="text-center relative z-10">
+                            <span className="text-xl font-bold block">External Registration</span>
                           </div>
                         </Button>
                       </motion.div>
@@ -959,14 +845,6 @@ const EventDetailPage: React.FC = () => {
                 </div>
 
                 <div className="relative z-10">
-                  <motion.div
-                    whileHover={{ rotate: 360, scale: 1.1 }}
-                    transition={{ duration: 0.6, ease: "easeInOut" }}
-                    className="w-20 h-20 bg-gradient-to-br from-gray-500 via-gray-600 to-gray-700 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-2xl relative group/icon"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-3xl opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
-                    <Flag className="w-8 h-8 text-white relative z-10" />
-                  </motion.div>
                   <h3 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-gray-300 mb-4 drop-shadow-lg">
                     Event Completed
                   </h3>
@@ -1022,17 +900,8 @@ const EventDetailPage: React.FC = () => {
                 transition={{ duration: 0.6, delay: 0.9 }}
                 className="text-2xl font-bold text-white mb-8 flex items-center"
               >
-                <motion.div
-                  whileHover={{ rotate: 360, scale: 1.1 }}
-                  transition={{ duration: 0.6, ease: "easeInOut" }}
-                  className="w-14 h-14 bg-gradient-to-br from-blue-500 via-cyan-600 to-blue-700 rounded-2xl flex items-center justify-center mr-5 shadow-2xl relative group/icon"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent rounded-2xl opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
-                  <ClipboardList className="w-6 h-6 text-white relative z-10" />
-                </motion.div>
                 <div>
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-blue-100">Rules & Regulations</span>
-                  <p className="text-sm text-cyan-300/70 font-medium mt-1">Please read carefully</p>
                 </div>
               </motion.h3>
 
@@ -1103,17 +972,8 @@ const EventDetailPage: React.FC = () => {
                 transition={{ duration: 0.6, delay: 1.1 }}
                 className="text-2xl font-bold text-white mb-8 flex items-center"
               >
-                <motion.div
-                  whileHover={{ rotate: 360, scale: 1.1 }}
-                  transition={{ duration: 0.6, ease: "easeInOut" }}
-                  className="w-14 h-14 bg-gradient-to-br from-cyan-500 via-blue-600 to-cyan-700 rounded-2xl flex items-center justify-center mr-5 shadow-2xl relative group/icon"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent rounded-2xl opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
-                  <FileText className="w-6 h-6 text-white relative z-10" />
-                </motion.div>
                 <div>
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-cyan-100">Terms & Conditions</span>
-                  <p className="text-sm text-blue-300/70 font-medium mt-1">Important information</p>
                 </div>
               </motion.h3>
 
