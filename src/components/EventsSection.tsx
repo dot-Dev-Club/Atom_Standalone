@@ -64,9 +64,8 @@ const EventsSection = () => {
       {previewEvents.length > 0 ? (
         <>
           {/* Events Grid */}
-          <div className="flex justify-center">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-8 sm:mb-12 max-w-6xl w-full">
-              {previewEvents.map((event, index) => (
+          <div className="flex justify-center items-center min-h-[60vh] w-full">
+            {previewEvents.slice(0, 1).map((event, index) => (
                 <motion.div
                   key={event.id}
                   initial={{ opacity: 0, y: 30, scale: 0.9 }}
@@ -77,7 +76,7 @@ const EventsSection = () => {
                     type: "spring",
                     stiffness: 100
                   }}
-                  className="glass-card p-4 sm:p-6 group hover-scale cursor-pointer transform-gpu flex flex-col items-center text-center"
+                  className="glass-card p-4 sm:p-6 group hover-scale cursor-pointer transform-gpu flex flex-col items-center text-center mx-auto max-w-md"
                   style={{
                     transformStyle: 'preserve-3d',
                   }}
@@ -159,7 +158,6 @@ const EventsSection = () => {
                   </div>
                 </motion.div>
               ))}
-            </div>
           </div>
 
           {/* Show More Button */}
