@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { registerParticipant } from '@/utils/api';
 import '@/styles/event-enhancements.css';
 
@@ -34,6 +35,7 @@ const ExternalRegistrationForm: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errors, setErrors] = useState<Partial<FormData>>({});
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -277,7 +279,7 @@ const ExternalRegistrationForm: React.FC = () => {
                       />
                       <Button
                         type="button"
-                        onClick={() => window.open('https://eduserve.karunya.edu/Online/ExternalEvents.aspx', '_blank')}
+                        onClick={() => setIsPaymentModalOpen(true)}
                         className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-6 py-2 rounded-lg font-semibold text-sm transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-orange-500/40 whitespace-nowrap"
                       >
                         Pay Now
@@ -310,6 +312,39 @@ const ExternalRegistrationForm: React.FC = () => {
             </CardContent>
           </Card>
         </motion.div>
+
+        {/* Payment Modal */}
+        <Dialog open={isPaymentModalOpen} onOpenChange={setIsPaymentModalOpen}>
+          <DialogContent className="bg-gradient-to-br from-yellow-50 to-orange-50 border-2 border-orange-300 shadow-2xl">
+            <DialogHeader>
+              <DialogTitle className="text-2xl font-bold text-orange-800 flex items-center gap-2">
+                <span className="text-orange-600">⚠️</span>
+                Payment Instructions
+              </DialogTitle>
+              <DialogDescription className="text-gray-700 text-base leading-relaxed">
+                After payment, you will receive a payment receipt number. Kindly paste it in the Receipt Number field on the registration page.
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter className="gap-3">
+              <Button
+                variant="outline"
+                onClick={() => setIsPaymentModalOpen(false)}
+                className="border-gray-300 text-gray-700 hover:bg-gray-100"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={() => {
+                  setIsPaymentModalOpen(false);
+                  window.open('https://eduserve.karunya.edu/Online/ExternalEvents.aspx', '_blank');
+                }}
+                className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white"
+              >
+                Proceed to Payment
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );
