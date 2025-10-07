@@ -266,14 +266,23 @@ const ExternalRegistrationForm: React.FC = () => {
 
                   <div className="space-y-2">
                     <Label htmlFor="recipt_no" className="text-white font-medium">Receipt Number *</Label>
-                    <Input
-                      id="recipt_no"
-                      name="recipt_no"
-                      value={formData.recipt_no}
-                      onChange={handleInputChange}
-                      className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-teal-500"
-                      placeholder="Enter receipt number"
-                    />
+                    <div className="flex gap-3">
+                      <Input
+                        id="recipt_no"
+                        name="recipt_no"
+                        value={formData.recipt_no}
+                        onChange={handleInputChange}
+                        className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-teal-500 flex-1"
+                        placeholder="Enter receipt number"
+                      />
+                      <Button
+                        type="button"
+                        onClick={() => window.open('https://eduserve.karunya.edu/Online/ExternalEvents.aspx', '_blank')}
+                        className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-6 py-2 rounded-lg font-semibold text-sm transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-orange-500/40 whitespace-nowrap"
+                      >
+                        Pay Now
+                      </Button>
+                    </div>
                     {errors.recipt_no && <p className="text-red-400 text-sm">{errors.recipt_no}</p>}
                   </div>
                 </div>
