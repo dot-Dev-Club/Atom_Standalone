@@ -14,6 +14,7 @@ interface FormData {
   division: string;
   year_of_study: string;
   email: string;
+  phone_no: string;
   recipt_no: string;
 }
 
@@ -24,6 +25,7 @@ const InternalRegistrationForm: React.FC = () => {
     division: '',
     year_of_study: '',
     email: '',
+    phone_no: '',
     recipt_no: ''
   });
 
@@ -49,6 +51,8 @@ const InternalRegistrationForm: React.FC = () => {
     if (!formData.year_of_study.trim()) newErrors.year_of_study = 'Year of study is required';
     if (!formData.email.trim()) newErrors.email = 'Email is required';
     else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Invalid email format';
+    if (!formData.phone_no.trim()) newErrors.phone_no = 'Phone number is required';
+    else if (!/^\d{10}$/.test(formData.phone_no.replace(/\s|-/g, ''))) newErrors.phone_no = 'Phone number must be 10 digits';
     if (!formData.recipt_no.trim()) newErrors.recipt_no = 'Receipt number is required';
 
     setErrors(newErrors);
@@ -228,6 +232,20 @@ const InternalRegistrationForm: React.FC = () => {
                       placeholder="student@karunya.edu"
                     />
                     {errors.email && <p className="text-red-400 text-sm">{errors.email}</p>}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="phone_no" className="text-white font-medium">Phone Number *</Label>
+                    <Input
+                      id="phone_no"
+                      name="phone_no"
+                      type="tel"
+                      value={formData.phone_no}
+                      onChange={handleInputChange}
+                      className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500"
+                      placeholder="Enter 10-digit phone number"
+                    />
+                    {errors.phone_no && <p className="text-red-400 text-sm">{errors.phone_no}</p>}
                   </div>
 
                   <div className="space-y-2">
