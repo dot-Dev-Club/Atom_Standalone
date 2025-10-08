@@ -1,3 +1,5 @@
+import { Event } from '@/constants/events';
+
 /**
  * Convert a string to URL-safe slug
  */
@@ -18,6 +20,6 @@ export const generateSlug = (text: string): string => {
 /**
  * Find event by slug from the events list
  */
-export const findEventBySlug = (slug: string, events: any[]) => {
+export const findEventBySlug = (slug: string, events: Event[]) => {
   return events.find(event => generateSlug(event.title) === slug);
 };

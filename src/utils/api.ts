@@ -14,7 +14,7 @@ interface RegistrationData {
 interface ApiResponse {
   success: boolean;
   message?: string;
-  data?: any;
+  data?: unknown;
 }
 
 export const registerParticipant = async (

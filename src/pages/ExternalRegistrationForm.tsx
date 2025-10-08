@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { registerParticipant } from '@/utils/api';
 import '@/styles/event-enhancements.css';
 
@@ -15,6 +16,7 @@ interface FormData {
   year_of_study: string;
   college_name: string;
   email: string;
+  phone_no: string;
   recipt_no: string;
 }
 
@@ -26,12 +28,14 @@ const ExternalRegistrationForm: React.FC = () => {
     year_of_study: '',
     college_name: '',
     email: '',
+    phone_no: '',
     recipt_no: ''
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errors, setErrors] = useState<Partial<FormData>>({});
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -52,6 +56,8 @@ const ExternalRegistrationForm: React.FC = () => {
     if (!formData.college_name.trim()) newErrors.college_name = 'College name is required';
     if (!formData.email.trim()) newErrors.email = 'Email is required';
     else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Invalid email format';
+    if (!formData.phone_no.trim()) newErrors.phone_no = 'Phone number is required';
+    else if (!/^\d{10}$/.test(formData.phone_no.replace(/\s|-/g, ''))) newErrors.phone_no = 'Phone number must be 10 digits';
     if (!formData.recipt_no.trim()) newErrors.recipt_no = 'Receipt number is required';
 
     setErrors(newErrors);
@@ -247,15 +253,38 @@ const ExternalRegistrationForm: React.FC = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="recipt_no" className="text-white font-medium">Receipt Number *</Label>
+                    <Label htmlFor="phone_no" className="text-white font-medium">Phone Number *</Label>
                     <Input
-                      id="recipt_no"
-                      name="recipt_no"
-                      value={formData.recipt_no}
+                      id="phone_no"
+                      name="phone_no"
+                      type="tel"
+                      value={formData.phone_no}
                       onChange={handleInputChange}
                       className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-teal-500"
-                      placeholder="Enter receipt number"
+                      placeholder="Enter 10-digit phone number"
                     />
+                    {errors.phone_no && <p className="text-red-400 text-sm">{errors.phone_no}</p>}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="recipt_no" className="text-white font-medium">Receipt Number *</Label>
+                    <div className="flex gap-3">
+                      <Input
+                        id="recipt_no"
+                        name="recipt_no"
+                        value={formData.recipt_no}
+                        onChange={handleInputChange}
+                        className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-teal-500 flex-1"
+                        placeholder="Enter receipt number"
+                      />
+                      <Button
+                        type="button"
+                        onClick={() => setIsPaymentModalOpen(true)}
+                        className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-6 py-2 rounded-lg font-semibold text-sm transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-orange-500/40 whitespace-nowrap"
+                      >
+                        Pay Now
+                      </Button>
+                    </div>
                     {errors.recipt_no && <p className="text-red-400 text-sm">{errors.recipt_no}</p>}
                   </div>
                 </div>
@@ -283,6 +312,59 @@ const ExternalRegistrationForm: React.FC = () => {
             </CardContent>
           </Card>
         </motion.div>
+
+        {/* Payment Modal */}
+        <Dialog open={isPaymentModalOpen} onOpenChange={setIsPaymentModalOpen}>
+          <DialogContent className="bg-gradient-to-br from-teal-50 to-cyan-50 border-2 border-teal-300 shadow-2xl max-w-2xl">
+            <DialogHeader>
+              <DialogTitle className="text-2xl font-bold text-teal-800 flex items-center gap-2">
+                <span className="text-teal-600">💳</span>
+                Payment Instructions - External Users
+              </DialogTitle>
+              <DialogDescription className="text-gray-700 text-base leading-relaxed">
+                <div className="space-y-4">
+                  <p className="font-semibold">Follow these steps to complete your payment:</p>
+                  
+                  <div className="bg-white/50 rounded-lg p-4">
+                    <p className="font-medium text-teal-800 mb-2">1. Click "Proceed to pay"</p>
+                    <p className="font-medium text-teal-800 mb-3">2. Complete the following steps:</p>
+                    
+                    <ul className="space-y-2 text-sm text-gray-700 ml-4">
+                      <li>• Select participants</li>
+                      <li>• Enter name</li>
+                      <li>• Select event: <span className="font-semibold">CTF(9)</span></li>
+                      <li>• Select quantity: <span className="font-semibold">1</span></li>
+                      <li>• Click the register button</li>
+                      <li>• Proceed to payment</li>
+                    </ul>
+                  </div>
+                  
+                  <p className="text-sm text-gray-600 italic">
+                    After payment, you will receive a payment receipt number. Kindly paste it in the Receipt Number field on the registration page.
+                  </p>
+                </div>
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter className="gap-3">
+              <Button
+                variant="outline"
+                onClick={() => setIsPaymentModalOpen(false)}
+                className="border-teal-300 text-teal-700 hover:bg-teal-50"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={() => {
+                  setIsPaymentModalOpen(false);
+                  window.open('https://eduserve.karunya.edu/Online/ExternalEvents.aspx', '_blank');
+                }}
+                className="bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white"
+              >
+                Proceed to Payment
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );

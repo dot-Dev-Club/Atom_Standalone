@@ -36,7 +36,7 @@ interface ClubProject {
 interface Club {
   id: number;
   name: string;
-  icon: string | React.ComponentType<any>;
+  icon: string | React.ComponentType;
   description: string;
   objectives: string;
   extraInfo: string;
@@ -104,7 +104,7 @@ const ClubsManager: React.FC<ClubsManagerProps> = ({ onBackToDashboard }) => {
     }));
   };
 
-  const updateCoordinator = (index: number, field: keyof ClubCoordinator, value: any) => {
+  const updateCoordinator = (index: number, field: keyof ClubCoordinator, value: string | boolean) => {
     const updatedCoordinators = [...(formData.coordinators || [])];
     updatedCoordinators[index] = { ...updatedCoordinators[index], [field]: value };
     setFormData(prev => ({ ...prev, coordinators: updatedCoordinators }));

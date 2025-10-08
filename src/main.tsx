@@ -16,11 +16,14 @@ if (typeof window !== 'undefined') {
         console.log('LCP:', entry.startTime);
       }
       if (entry.entryType === 'first-input') {
-        const fidEntry = entry as any;
+        const fidEntry = entry as PerformanceEventTiming;
         console.log('FID:', fidEntry.processingStart - fidEntry.startTime);
       }
-      if (entry.entryType === 'layout-shift' && !(entry as any).hadRecentInput) {
-        console.log('CLS:', (entry as any).value);
+      if (entry.entryType === 'layout-shift') {
+        const clsEntry = entry as PerformanceEntry & { hadRecentInput?: boolean; value?: number };
+        if (!clsEntry.hadRecentInput) {
+          console.log('CLS:', clsEntry.value);
+        }
       }
     });
   });

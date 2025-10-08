@@ -35,7 +35,7 @@ export const Contact = () => {
 
     if (!formData.mobile.trim()) {
       newErrors.mobile = "Mobile number is required";
-    } else if (!/^\+?[\d\s\-\(\)]+$/.test(formData.mobile.trim())) {
+    } else if (!/^\+?[\d\s\-()]+$/.test(formData.mobile.trim())) {
       newErrors.mobile = "Please enter a valid mobile number";
     }
 

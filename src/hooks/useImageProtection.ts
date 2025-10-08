@@ -116,7 +116,7 @@ export const useImageProtection = (options: UseImageProtectionOptions = {}) => {
       console.warn('🚫 STOP! This is a browser feature intended for developers. Content on this site is protected by copyright. Unauthorized downloading or copying is prohibited.');
       
       // Detect if DevTools is open
-      let devtools = { open: false, orientation: null };
+      const devtools = { open: false, orientation: null };
       const threshold = 160;
 
       setInterval(() => {

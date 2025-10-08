@@ -12,7 +12,7 @@ export const usePerformanceMonitor = (enabled: boolean = false) => {
   useEffect(() => {
     if (!enabled || typeof window === 'undefined') return;
 
-    let metrics: Partial<PerformanceMetrics> = {};
+    const metrics: Partial<PerformanceMetrics> = {};
 
     // Measure First Contentful Paint (FCP)
     const measureFCP = () => {
@@ -42,7 +42,7 @@ export const usePerformanceMonitor = (enabled: boolean = false) => {
     const measureFID = () => {
       const observer = new PerformanceObserver((list) => {
         const entries = list.getEntries();
-        entries.forEach((entry: any) => {
+        entries.forEach((entry: PerformanceEventTiming) => {
           metrics.fid = entry.processingStart - entry.startTime;
           console.log('⚡ First Input Delay:', metrics.fid.toFixed(2), 'ms');
         });
@@ -55,7 +55,7 @@ export const usePerformanceMonitor = (enabled: boolean = false) => {
       let clsValue = 0;
       const observer = new PerformanceObserver((list) => {
         const entries = list.getEntries();
-        entries.forEach((entry: any) => {
+        entries.forEach((entry: PerformanceEntry & { hadRecentInput?: boolean; value?: number }) => {
           if (!entry.hadRecentInput) {
             clsValue += entry.value;
           }
@@ -79,7 +79,7 @@ export const usePerformanceMonitor = (enabled: boolean = false) => {
     // Memory usage (if available)
     const measureMemory = () => {
       if ('memory' in performance) {
-        const memory = (performance as any).memory;
+        const memory = (performance as Performance & { memory?: { usedJSHeapSize: number; totalJSHeapSize: number; jsHeapSizeLimit: number } }).memory;
         console.log('💾 Memory Usage:', {
           used: (memory.usedJSHeapSize / 1024 / 1024).toFixed(2) + ' MB',
           total: (memory.totalJSHeapSize / 1024 / 1024).toFixed(2) + ' MB',

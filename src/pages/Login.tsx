@@ -1,20 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Lock, User, Key, Atom, Sparkles, Zap } from 'lucide-react';
+import { Lock, User, Key, Sparkles, Zap } from 'lucide-react';
 import { motion } from 'framer-motion';
+import Waves from '@/components/Waves';
+import atomLogo from '@/assets/atom-logo.png';
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
+  const [clickCount, setClickCount] = useState(0);
+  const logoRef = useRef(null);
   const { login } = useAuth();
   const navigate = useNavigate();
+
+  const handleMouseMove = (e) => {
+    if (logoRef.current) {
+      const rect = logoRef.current.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      
+      const deltaX = (e.clientX - centerX) / rect.width;
+      const deltaY = (e.clientY - centerY) / rect.height;
+      
+      setMousePosition({
+        x: deltaX * 20, // Reduced intensity for login page
+        y: deltaY * 20
+      });
+    }
+  };
+
+  const handleMouseEnter = () => {
+    setIsHovering(true);
+  };
+
+  const handleMouseLeave = () => {
+    setMousePosition({ x: 0, y: 0 });
+    setIsHovering(false);
+  };
+
+  const handleClick = () => {
+    setClickCount(prev => prev + 1);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,23 +69,25 @@ const Login: React.FC = () => {
 
   return (
     <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0">
-        {/* Floating particles */}
-        <div className="absolute top-20 left-20 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-20 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-conic from-cyan-500/5 via-blue-500/5 to-purple-500/5 rounded-full blur-3xl animate-spin" style={{ animationDuration: '20s' }}></div>
+      {/* Waves Background */}
+      <Waves
+        lineColor="rgba(255, 255, 255, 0.25)"
+        backgroundColor="transparent"
+        waveSpeedX={0.012}
+        waveSpeedY={0.008}
+        waveAmpX={25}
+        waveAmpY={15}
+        xGap={15}
+        yGap={25}
+        friction={0.95}
+        tension={0.008}
+        maxCursorMove={100}
+        className="opacity-80"
+      />
 
-        {/* Grid pattern */}
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute inset-0 bg-gradient-to-br from-transparent via-cyan-500/5 to-transparent"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(99,102,241,0.15)_1px,transparent_0)] bg-[length:20px_20px]"></div>
-        </div>
-      </div>
-
-      {/* Floating icons */}
+      {/* Additional floating elements */}
       <motion.div
-        className="absolute top-20 right-20 text-cyan-400/20"
+        className="absolute top-20 right-20 text-cyan-400/20 z-10"
         animate={{
           y: [0, -20, 0],
           rotate: [0, 180, 360]
@@ -61,11 +98,16 @@ const Login: React.FC = () => {
           ease: "easeInOut"
         }}
       >
-        <Atom size={48} />
+        <motion.img 
+          src={atomLogo} 
+          alt="ATOM" 
+          className="w-12 h-12 opacity-20"
+          style={{ objectFit: 'contain' }}
+        />
       </motion.div>
 
       <motion.div
-        className="absolute bottom-32 left-16 text-purple-400/20"
+        className="absolute bottom-32 left-16 text-purple-400/20 z-10"
         animate={{
           y: [0, 20, 0],
           scale: [1, 1.2, 1]
@@ -81,7 +123,7 @@ const Login: React.FC = () => {
       </motion.div>
 
       <motion.div
-        className="absolute top-1/3 right-1/4 text-blue-400/15"
+        className="absolute top-1/3 right-1/4 text-blue-400/15 z-10"
         animate={{
           rotate: [0, 360],
           scale: [1, 1.1, 1]
@@ -111,26 +153,110 @@ const Login: React.FC = () => {
             className="text-center mb-8"
           >
             <div className="relative inline-block">
-              <motion.div
-                className="w-20 h-20 mx-auto bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-2xl shadow-cyan-500/25"
-                whileHover={{ scale: 1.05, rotate: 5 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                <Atom className="w-10 h-10 text-white" />
-              </motion.div>
-              <motion.div
-                className="absolute -top-1 -right-1 w-6 h-6 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center"
+              <motion.div 
+                ref={logoRef}
+                className="relative cursor-pointer select-none"
+                onMouseMove={handleMouseMove}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                onClick={handleClick}
                 animate={{
-                  scale: [1, 1.2, 1],
-                  rotate: [0, 180, 360]
+                  x: mousePosition.x,
+                  y: mousePosition.y,
+                  scale: isHovering ? 1.1 : 1,
+                  rotateX: mousePosition.y * -0.5,
+                  rotateY: mousePosition.x * 0.5,
+                  rotateZ: isHovering ? mousePosition.x * 0.3 : 0
                 }}
                 transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "easeInOut"
+                  type: "spring",
+                  stiffness: 200,
+                  damping: 20,
+                  mass: 0.8
+                }}
+                style={{
+                  transformStyle: "preserve-3d"
+                }}
+                whileTap={{
+                  scale: 0.95,
+                  rotateZ: 360,
+                  transition: { duration: 0.6 }
                 }}
               >
-                <Sparkles className="w-3 h-3 text-white" />
+                {/* Animated Glow Ring */}
+                <motion.div
+                  className="absolute inset-0 rounded-full"
+                  animate={isHovering ? {
+                    background: [
+                      "radial-gradient(circle, rgba(33,150,243,0.2) 0%, transparent 70%)",
+                      "radial-gradient(circle, rgba(255,64,129,0.2) 0%, transparent 70%)",
+                      "radial-gradient(circle, rgba(76,175,80,0.2) 0%, transparent 70%)",
+                      "radial-gradient(circle, rgba(33,150,243,0.2) 0%, transparent 70%)"
+                    ],
+                    scale: [1, 1.1, 1],
+                    rotate: [0, 180, 360]
+                  } : {
+                    background: "transparent",
+                    scale: 1,
+                    rotate: 0
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: isHovering ? Infinity : 0,
+                    ease: "easeInOut"
+                  }}
+                />
+                
+                {/* Particle Effects */}
+                {isHovering && [0, 1, 2, 3].map((i) => (
+                  <motion.div
+                    key={i}
+                    className="absolute w-1.5 h-1.5 bg-blue-400 rounded-full"
+                    initial={{
+                      x: 120 + Math.cos(i * 90 * Math.PI / 180) * 80,
+                      y: 120 + Math.sin(i * 90 * Math.PI / 180) * 80,
+                      scale: 0
+                    }}
+                    animate={{
+                      x: 120 + Math.cos((i * 90 + Date.now() * 0.001) * Math.PI / 180) * (60 + mousePosition.x),
+                      y: 120 + Math.sin((i * 90 + Date.now() * 0.001) * Math.PI / 180) * (60 + mousePosition.y),
+                      scale: [0, 1, 0],
+                      opacity: [0, 1, 0]
+                    }}
+                    transition={{
+                      duration: 1.2,
+                      repeat: Infinity,
+                      delay: i * 0.15,
+                      ease: "easeInOut"
+                    }}
+                  />
+                ))}
+                
+                <motion.img 
+                  src={atomLogo} 
+                  alt="ATOM Club Logo" 
+                  className="w-24 h-24 md:w-28 md:h-28 relative z-10"
+                  style={{ objectFit: 'contain' }}
+                  animate={{
+                    filter: isHovering 
+                      ? `drop-shadow(0 0 20px rgba(33, 150, 243, 0.6)) brightness(1.1) contrast(1.05)` 
+                      : `drop-shadow(0 4px 8px rgba(0,0,0,0.2))`,
+                    rotateY: clickCount * 180
+                  }}
+                  transition={{
+                    filter: { duration: 0.3 },
+                    rotateY: { duration: 0.8, ease: "easeOut" }
+                  }}
+                />
+                
+                {/* Click Ripple Effect */}
+                <motion.div
+                  key={clickCount}
+                  className="absolute inset-0 border-2 border-blue-400 rounded-full"
+                  initial={{ scale: 0, opacity: 0.8 }}
+                  animate={{ scale: 1.5, opacity: 0 }}
+                  transition={{ duration: 0.8, ease: "easeOut" }}
+                />
               </motion.div>
             </div>
 
@@ -142,29 +268,35 @@ const Login: React.FC = () => {
             >
               ATOM CMS
             </motion.h1>
-
-            <motion.p
-              className="text-slate-400 text-sm"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-            >
-              Content Management System
-            </motion.p>
           </motion.div>
 
-          {/* Login Card */}
+          {/* Login Card with Glass Morphism */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl shadow-2xl shadow-black/20 p-8"
+            className="relative backdrop-blur-md bg-white/3 border border-white/8 rounded-3xl shadow-2xl shadow-black/30 p-8 overflow-hidden"
+            style={{
+              background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%)',
+              backdropFilter: 'blur(12px) saturate(150%) contrast(110%)',
+              WebkitBackdropFilter: 'blur(12px) saturate(150%) contrast(110%)',
+              border: '1px solid rgba(255, 255, 255, 0.06)',
+              boxShadow: '0 20px 40px -8px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.03) inset, 0 8px 32px rgba(0, 0, 0, 0.2)'
+            }}
           >
+            {/* Enhanced Glass morphism background effects */}
+            <div className="absolute inset-0 bg-gradient-to-br from-white/3 via-transparent to-white/2 opacity-20"></div>
+            <div className="absolute top-0 left-0 w-40 h-40 bg-gradient-to-br from-cyan-500/6 to-transparent rounded-full blur-3xl"></div>
+            <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-br from-purple-500/6 to-transparent rounded-full blur-2xl"></div>
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-gradient-conic from-blue-500/4 via-transparent to-cyan-500/4 rounded-full blur-2xl"></div>
+
+            {/* Subtle inner glow with reduced opacity for wave visibility */}
+            <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-cyan-500/3 via-transparent to-purple-500/3 opacity-15"></div>
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.5 }}
-              className="text-center mb-6"
+              className="relative z-10 text-center mb-6"
             >
               <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl mb-4 shadow-lg">
                 <Lock className="w-6 h-6 text-white" />
@@ -178,7 +310,7 @@ const Login: React.FC = () => {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.6 }}
-                className="space-y-2"
+                className="relative z-10 space-y-2"
               >
                 <Label htmlFor="username" className="text-slate-300 text-sm font-medium">
                   Username
@@ -201,7 +333,7 @@ const Login: React.FC = () => {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.7 }}
-                className="space-y-2"
+                className="relative z-10 space-y-2"
               >
                 <Label htmlFor="password" className="text-slate-300 text-sm font-medium">
                   Password
@@ -225,6 +357,7 @@ const Login: React.FC = () => {
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.3 }}
+                  className="relative z-10"
                 >
                   <Alert variant="destructive" className="border-red-500/20 bg-red-500/10">
                     <AlertDescription className="text-red-400">
@@ -238,6 +371,7 @@ const Login: React.FC = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.8 }}
+                className="relative z-10"
               >
                 <Button
                   type="submit"
@@ -247,12 +381,12 @@ const Login: React.FC = () => {
                   {isLoading ? (
                     <div className="flex items-center justify-center">
                       <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2"></div>
-                      Signing In...
+                      ACCESSING THE SYSTEM ...
                     </div>
                   ) : (
                     <div className="flex items-center justify-center">
                       <Lock className="w-5 h-5 mr-2" />
-                      Sign In
+                      ACCESS THE SYSTEM
                     </div>
                   )}
                 </Button>
@@ -263,7 +397,7 @@ const Login: React.FC = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 1 }}
-              className="mt-6 text-center"
+              className="relative z-10 mt-6 text-center"
             >
               <p className="text-xs text-slate-500">
                 Secured by ATOM • Content Management System
