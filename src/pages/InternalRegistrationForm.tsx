@@ -299,21 +299,42 @@ const InternalRegistrationForm: React.FC = () => {
 
         {/* Payment Modal */}
         <Dialog open={isPaymentModalOpen} onOpenChange={setIsPaymentModalOpen}>
-          <DialogContent className="bg-gradient-to-br from-yellow-50 to-orange-50 border-2 border-orange-300 shadow-2xl">
+          <DialogContent className="bg-gradient-to-br from-blue-50 to-cyan-50 border-2 border-blue-300 shadow-2xl max-w-2xl">
             <DialogHeader>
-              <DialogTitle className="text-2xl font-bold text-orange-800 flex items-center gap-2">
-                <span className="text-orange-600">⚠️</span>
-                Payment Instructions
+              <DialogTitle className="text-2xl font-bold text-blue-800 flex items-center gap-2">
+                <span className="text-blue-600">💳</span>
+                Payment Instructions - Internal Users
               </DialogTitle>
               <DialogDescription className="text-gray-700 text-base leading-relaxed">
-                After payment, you will receive a payment receipt number. Kindly paste it in the Receipt Number field on the registration page.
+                <div className="space-y-4">
+                  <p className="font-semibold">Follow these steps to complete your payment:</p>
+                  
+                  <div className="bg-white/50 rounded-lg p-4">
+                    <p className="font-medium text-blue-800 mb-2">1. Click "Proceed to pay"</p>
+                    <p className="font-medium text-blue-800 mb-3">2. Complete the following steps:</p>
+                    
+                    <ul className="space-y-2 text-sm text-gray-700 ml-4">
+                      <li>• Enter registration number</li>
+                      <li>• Enter date of birth (DOB)</li>
+                      <li>• Select currency: <span className="font-semibold">INR</span></li>
+                      <li>• Select event: <span className="font-semibold">CTF(5)</span></li>
+                      <li>• Select quantity: <span className="font-semibold">1</span></li>
+                      <li>• Click the register button</li>
+                      <li>• Proceed to payment</li>
+                    </ul>
+                  </div>
+                  
+                  <p className="text-sm text-gray-600 italic">
+                    After payment, you will receive a payment receipt number. Kindly paste it in the Receipt Number field on the registration page.
+                  </p>
+                </div>
               </DialogDescription>
             </DialogHeader>
             <DialogFooter className="gap-3">
               <Button
                 variant="outline"
                 onClick={() => setIsPaymentModalOpen(false)}
-                className="border-gray-300 text-gray-700 hover:bg-gray-100"
+                className="border-blue-300 text-blue-700 hover:bg-blue-50"
               >
                 Cancel
               </Button>
@@ -322,7 +343,7 @@ const InternalRegistrationForm: React.FC = () => {
                   setIsPaymentModalOpen(false);
                   window.open('https://eduserve.karunya.edu/online/PayAddOnFees.aspx', '_blank');
                 }}
-                className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white"
+                className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white"
               >
                 Proceed to Payment
               </Button>
