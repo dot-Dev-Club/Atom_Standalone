@@ -25,9 +25,9 @@ export const events: Event[] = [
   title: "Battle of Binaries 1.0",
   date: "2025-10-17",
   time: "09:30 AM",
-  location: "Karunya University, Coimbatore",
+  location: "Karunya Institute of Technology and Sciences, Coimbatore",
   description:
-    "An ultimate coding face-off — Battle of Binaries 1.0 — organized in association with CompTIA. Compete, code, and conquer to win certifications worth ₹75,000!",
+    "An ultimate coding face-off — Battle of Binaries 1.0 — organized in association with CompTIA. Compete, code, and conquer to win vouchers worth ₹75,000!",
   image: "/EVENTS/Battle of Binaries 1.0.jpg",
   status: "upcoming",
   category: "Competition",
