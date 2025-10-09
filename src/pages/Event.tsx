@@ -83,7 +83,7 @@ const Event: React.FC = () => {
           </div>
 
           {upcomingEvents.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5 md:gap-6 lg:gap-8 max-w-6xl xl:max-w-7xl mx-auto">
               {upcomingEvents.map((event, index) => (
                 <motion.article
                   key={event.id}

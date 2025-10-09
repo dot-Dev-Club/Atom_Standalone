@@ -42,7 +42,7 @@ const EventCard: React.FC<EventCardProps> = ({ event, onClick }) => {
     <motion.div
       whileHover={{ scale: 1.02, y: -5 }}
       transition={{ duration: 0.3 }}
-      className="cursor-pointer mx-auto max-w-sm sm:max-w-md lg:max-w-4xl h-auto min-h-[320px] sm:min-h-[350px]"
+      className="cursor-pointer h-auto min-h-[320px] w-full"
       onClick={onClick}
     >
       <Card className={`group relative overflow-hidden rounded-3xl border-0 bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-xl transition-all duration-500 hover:shadow-2xl hover:shadow-blue-500/25 ${
