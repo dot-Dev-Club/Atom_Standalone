@@ -981,10 +981,8 @@ const EventDetailPage: React.FC = () => {
 
               <div className="space-y-5">
                 {[
-                  "Allow photography and videography during the event",
                   "Comply with all event rules and venue policies",
                   "Organizers are not liable for personal belongings",
-                  "Event details may change with prior notice",
                   "Provide accurate information during registration"
                 ].map((term, index) => (
                   <motion.div

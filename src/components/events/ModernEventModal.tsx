@@ -526,10 +526,6 @@ const ModernEventModal: React.FC<ModernEventModalProps> = ({
                       <ul className="space-y-2 text-sm text-foreground-secondary">
                         <li className="flex items-start">
                           <span className="text-electric mr-2 mt-1">•</span>
-                          Allow photography and videography during the event
-                        </li>
-                        <li className="flex items-start">
-                          <span className="text-electric mr-2 mt-1">•</span>
                           Comply with all event rules and venue policies
                         </li>
                         <li className="flex items-start">
@@ -538,7 +534,7 @@ const ModernEventModal: React.FC<ModernEventModalProps> = ({
                         </li>
                         <li className="flex items-start">
                           <span className="text-electric mr-2 mt-1">•</span>
-                          Event details may change with prior notice
+                          
                         </li>
                         <li className="flex items-start">
                           <span className="text-electric mr-2 mt-1">•</span>

@@ -9,7 +9,7 @@ const sampleEvents = [
     title: "Battle of Binaries 1.0",
     date: "2025-10-17",
     time: "09:30 AM",
-    location: "Karunya University, Coimbatore",
+    location: "Karunya Institute of Technology and Sciences, Coimbatore",
     description: "An ultimate coding face-off — Battle of Binaries 1.0 — organized in association with CompTIA. This is a comprehensive coding competition that will test your programming skills across multiple domains. Participate in various rounds including algorithm challenges, debugging sessions, and project presentations. Compete, code, and conquer to win certifications worth ₹75,000! The event features multiple tracks for different skill levels, from beginners to advanced programmers. Network with industry professionals and gain insights into the latest programming trends and technologies.",
     image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=450&fit=crop",
     status: "upcoming" as const,
@@ -27,7 +27,6 @@ const sampleEvents = [
     `,
     termsAndConditions: `
 By registering for Battle of Binaries 1.0, you agree to:
-• Allow photography and videography during the event for promotional purposes.
 • Comply with all competition rules and venue policies.
 • Understand that organizers are not liable for any technical issues with personal equipment.
 • Accept that event schedule may change with 24-hour prior notice.
