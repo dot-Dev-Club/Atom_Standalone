@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -20,12 +20,20 @@ interface Event {
   eventType: 'free' | 'paid';
 }
 
+
 interface FeaturedEventCardProps {
   event: Event;
   onClick?: () => void;
 }
 
 const FeaturedEventCard: React.FC<FeaturedEventCardProps> = ({ event, onClick }) => {
+  const [timeRemaining, setTimeRemaining] = useState<{
+    days: number;
+    hours: number;
+    minutes: number;
+    seconds: number;
+  } | null>(null);
+
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', {
@@ -34,6 +42,81 @@ const FeaturedEventCard: React.FC<FeaturedEventCardProps> = ({ event, onClick })
       year: 'numeric'
     });
   };
+
+  const calculateTimeRemaining = () => {
+    try {
+      // Handle different time formats and ensure iOS compatibility
+      let eventTimeStr = event.time || "00:00";
+      
+      // Convert 12-hour format to 24-hour format if needed
+      if (eventTimeStr.includes('AM') || eventTimeStr.includes('PM')) {
+        const timeParts = eventTimeStr.replace(/\s?(AM|PM)/i, '').split(':');
+        let hours = parseInt(timeParts[0]);
+        const minutes = timeParts[1] || '00';
+        const isPM = /PM/i.test(eventTimeStr);
+        
+        if (isPM && hours !== 12) hours += 12;
+        if (!isPM && hours === 12) hours = 0;
+        
+        eventTimeStr = `${hours.toString().padStart(2, '0')}:${minutes}`;
+      }
+      
+      // Create ISO 8601 compatible date string
+      const isoDateString = `${event.date}T${eventTimeStr}:00`;
+      
+      console.log('Creating date from:', isoDateString);
+      
+      const eventDateTime = new Date(isoDateString);
+      const now = new Date();
+      
+      // Check if date is valid
+      if (isNaN(eventDateTime.getTime())) {
+        console.error('Invalid date created from:', isoDateString);
+        return null;
+      }
+      
+      const difference = eventDateTime.getTime() - now.getTime();
+
+      if (difference > 0) {
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+        return { days, hours, minutes, seconds };
+      }
+      
+      return null;
+    } catch (error) {
+      console.error('Date parsing error:', error);
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    if (event.status === 'upcoming') {
+      // Initial calculation
+      setTimeRemaining(calculateTimeRemaining());
+
+      const timer = setInterval(() => {
+        setTimeRemaining(calculateTimeRemaining());
+      }, 1000);
+
+      // Handle app visibility changes (important for iOS)
+      const handleVisibilityChange = () => {
+        if (!document.hidden) {
+          setTimeRemaining(calculateTimeRemaining());
+        }
+      };
+
+      document.addEventListener('visibilitychange', handleVisibilityChange);
+
+      return () => {
+        clearInterval(timer);
+        document.removeEventListener('visibilitychange', handleVisibilityChange);
+      };
+    }
+  }, [event.date, event.time, event.status]);
 
   const isUpcoming = event.status === 'upcoming';
 
@@ -127,6 +210,41 @@ const FeaturedEventCard: React.FC<FeaturedEventCardProps> = ({ event, onClick })
                 <span className="text-lg font-medium">{event.location}</span>
               </div>
             </div>
+
+            {/* Countdown Timer */}
+            {isUpcoming && timeRemaining && (
+              <div className="mb-6">
+                <h3 className="text-white text-lg font-semibold mb-4">Event Countdown</h3>
+                <div className="bg-gradient-to-r from-blue-600/20 to-purple-600/20 backdrop-blur-sm rounded-xl p-4 border border-white/10">
+                  <div className="grid grid-cols-4 gap-4 text-center">
+                    <div className="flex flex-col">
+                      <div className="text-2xl font-bold text-white">
+                        {timeRemaining.days.toString().padStart(2, '0')}
+                      </div>
+                      <div className="text-sm text-gray-400">DAYS</div>
+                    </div>
+                    <div className="flex flex-col">
+                      <div className="text-2xl font-bold text-white">
+                        {timeRemaining.hours.toString().padStart(2, '0')}
+                      </div>
+                      <div className="text-sm text-gray-400">HOURS</div>
+                    </div>
+                    <div className="flex flex-col">
+                      <div className="text-2xl font-bold text-white">
+                        {timeRemaining.minutes.toString().padStart(2, '0')}
+                      </div>
+                      <div className="text-sm text-gray-400">MINUTES</div>
+                    </div>
+                    <div className="flex flex-col">
+                      <div className="text-2xl font-bold text-white">
+                        {timeRemaining.seconds.toString().padStart(2, '0')}
+                      </div>
+                      <div className="text-sm text-gray-400">SECONDS</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* Description */}
             <p className="text-gray-300 text-base leading-relaxed mb-8 opacity-90">
