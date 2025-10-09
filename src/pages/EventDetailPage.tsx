@@ -16,6 +16,53 @@ interface TimeLeft {
   seconds: number;
 }
 
+// Helper: build a Date object from ISO date (YYYY-MM-DD) and various time formats
+// Moved to module scope to ensure consistent parsing (Safari-safe) and reuse.
+const buildEventDate = (dateStr: string, timeStr?: string) => {
+  // Try to parse YYYY-MM-DD first
+  const isoMatch = dateStr.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+  let year: number, month: number, day: number;
+  if (isoMatch) {
+    year = parseInt(isoMatch[1], 10);
+    month = parseInt(isoMatch[2], 10) - 1;
+    day = parseInt(isoMatch[3], 10);
+  } else {
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return new Date(dateStr); // fallback
+    return d;
+  }
+
+  let hours = 0;
+  let minutes = 0;
+  let seconds = 0;
+
+  if (timeStr) {
+    // Match formats like '09:30 AM', '9:30 PM', '09:30', '09:30:00'
+    const t = timeStr.trim();
+    const match = t.match(/^(\d{1,2}):(\d{2})(?::(\d{2}))?\s*(AM|PM)?$/i);
+    if (match) {
+      let hh = parseInt(match[1], 10);
+      minutes = parseInt(match[2], 10);
+      seconds = match[3] ? parseInt(match[3], 10) : 0;
+      const ampm = match[4];
+      if (ampm) {
+        if (ampm.toUpperCase() === 'PM' && hh !== 12) hh += 12;
+        if (ampm.toUpperCase() === 'AM' && hh === 12) hh = 0;
+      }
+      hours = hh;
+    } else {
+      // Try plain numeric hour:minute without AM/PM
+      const simple = t.match(/^(\d{1,2}):(\d{2})$/);
+      if (simple) {
+        hours = parseInt(simple[1], 10);
+        minutes = parseInt(simple[2], 10);
+      }
+    }
+  }
+
+  return new Date(year, month, day, hours, minutes, seconds);
+};
+
 const EventDetailPage: React.FC = () => {
   const navigate = useNavigate();
   const { slug } = useParams<{ slug: string }>();
@@ -41,51 +88,6 @@ const EventDetailPage: React.FC = () => {
   useEffect(() => {
     if (!event || event.status !== 'upcoming') return;
 
-    // Helper: build a Date object from ISO date (YYYY-MM-DD) and various time formats
-    const buildEventDate = (dateStr: string, timeStr?: string) => {
-      // Try to parse YYYY-MM-DD first
-      const isoMatch = dateStr.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
-      let year: number, month: number, day: number;
-      if (isoMatch) {
-        year = parseInt(isoMatch[1], 10);
-        month = parseInt(isoMatch[2], 10) - 1;
-        day = parseInt(isoMatch[3], 10);
-      } else {
-        const d = new Date(dateStr);
-        if (isNaN(d.getTime())) return new Date(dateStr); // fallback
-        return d;
-      }
-
-      let hours = 0;
-      let minutes = 0;
-      let seconds = 0;
-
-      if (timeStr) {
-        // Match formats like '09:30 AM', '9:30 PM', '09:30', '09:30:00'
-        const t = timeStr.trim();
-        const match = t.match(/^(\d{1,2}):(\d{2})(?::(\d{2}))?\s*(AM|PM)?$/i);
-        if (match) {
-          let hh = parseInt(match[1], 10);
-          minutes = parseInt(match[2], 10);
-          seconds = match[3] ? parseInt(match[3], 10) : 0;
-          const ampm = match[4];
-          if (ampm) {
-            if (ampm.toUpperCase() === 'PM' && hh !== 12) hh += 12;
-            if (ampm.toUpperCase() === 'AM' && hh === 12) hh = 0;
-          }
-          hours = hh;
-        } else {
-          // Try plain numeric hour:minute without AM/PM
-          const simple = t.match(/^(\d{1,2}):(\d{2})$/);
-          if (simple) {
-            hours = parseInt(simple[1], 10);
-            minutes = parseInt(simple[2], 10);
-          }
-        }
-      }
-
-      return new Date(year, month, day, hours, minutes, seconds);
-    };
 
     const calculateTimeLeft = () => {
       const eventDate = buildEventDate(event.date, event.time);
@@ -684,7 +686,7 @@ const EventDetailPage: React.FC = () => {
 
                   {/* Use the refined ClockCountdown component */}
                   <ClockCountdown
-                    targetDate={new Date(event.date + (event.time ? ' ' + event.time : ''))}
+                    targetDate={buildEventDate(event.date, event.time)}
                     size="md"
                   />
                 </div>
