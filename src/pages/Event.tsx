@@ -25,6 +25,7 @@ const Event: React.FC = () => {
     });
   }, []);
 
+  
   const handleEventClick = (event: Event) => {
     const slug = generateSlug(event.title);
     navigate(`/events/${slug}`);
