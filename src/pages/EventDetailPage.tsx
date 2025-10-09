@@ -243,7 +243,7 @@ const EventDetailPage: React.FC = () => {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.03)_0%,transparent_50%)] opacity-50"></div>
       </div>
 
-      {/* Enhanced Navigation */}
+        {/* Enhanced Navigation */}
       <motion.div
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -251,10 +251,10 @@ const EventDetailPage: React.FC = () => {
         className="sticky top-0 z-40 backdrop-blur-2xl bg-black/30 border-b border-white/10 shadow-2xl"
       >
         <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-transparent to-cyan-500/5"></div>
-        <div className="container mx-auto px-6 py-4 relative z-10">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4 relative z-10">
           <button
             onClick={goBack}
-            className="text-white hover:text-blue-400 transition-all duration-300 hover:scale-105 group relative flex items-center px-4 py-2 rounded-lg"
+            className="text-white hover:text-blue-400 transition-all duration-300 hover:scale-105 group relative flex items-center px-3 sm:px-4 py-2 rounded-lg text-sm sm:text-base"
           >
             <span className="relative z-10">Back to Events</span>
             <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -263,7 +263,7 @@ const EventDetailPage: React.FC = () => {
       </motion.div>
 
       {/* Main Content */}
-      <div className="relative z-10 container mx-auto px-6 py-8 max-w-7xl">
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-10 max-w-7xl">
         {/* Enhanced Hero Section */}
         <motion.div
           initial={{ opacity: 0, y: 50, scale: 0.95 }}
@@ -397,15 +397,15 @@ const EventDetailPage: React.FC = () => {
         </motion.div>
 
         {/* Content Grid */}
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
           {/* Main Content Column */}
-          <div className="lg:col-span-2 space-y-8">
+          <div className="lg:col-span-2 space-y-6 lg:space-y-8">
             {/* Key Information Cards */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="grid md:grid-cols-3 gap-6"
+              className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6"
             >
               <motion.div
                 whileHover={{
@@ -862,7 +862,7 @@ const EventDetailPage: React.FC = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
-          className="grid md:grid-cols-2 gap-8 mt-12"
+          className="grid sm:grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mt-8 sm:mt-12"
         >
           {/* Rules & Regulations */}
           <motion.div

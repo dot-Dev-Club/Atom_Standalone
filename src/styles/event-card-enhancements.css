@@ -198,30 +198,7 @@
   overflow: hidden;
 }
 
-/* Mobile Responsive Adjustments */
-@media (max-width: 768px) {
-  .event-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
-    padding: 0 12px;
-  }
-  
-  .event-card-container {
-    width: 100%;
-    max-width: 350px;
-  }
-  
-  .tab-item {
-    padding: 10px 24px;
-    font-size: 14px;
-  }
-  
-  .know-more-button {
-    width: 120px;
-    height: 36px;
-    font-size: 13px;
-  }
-}
+/* Using Tailwind responsive classes instead of custom media queries */
 
 /* Touch Device Enhancements */
 @media (hover: none) and (pointer: coarse) {

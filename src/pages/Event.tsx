@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import EventCard from '@/components/events/EventCard';
+import FeaturedEventCard from '@/components/events/FeaturedEventCard';
 import PastEventTimeline from '@/components/events/PastEventTimeline';
 import { type Event } from '@/constants/events';
 import { getUpcomingEvents, getPastEvents } from '@/utils/dataService';
@@ -24,6 +25,7 @@ const Event: React.FC = () => {
     });
   }, []);
 
+  
   const handleEventClick = (event: Event) => {
     const slug = generateSlug(event.title);
     navigate(`/events/${slug}`);
@@ -45,23 +47,23 @@ const Event: React.FC = () => {
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-conic from-blue-500/5 via-cyan-500/5 to-blue-500/5 rounded-full blur-3xl animate-spin" style={{ animationDuration: '30s' }}></div>
       </div>
 
-      <div className="relative z-10 container mx-auto px-6 py-12">
-        
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 lg:py-12">
+
         {/* Hero Section */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className="text-center mb-8 sm:mb-10 lg:mb-16 px-2"
         >
-          <h1 className="text-6xl md:text-7xl font-bold bg-gradient-to-r from-blue-400 via-cyan-500 to-blue-400 bg-clip-text text-transparent mb-6">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold bg-gradient-to-r from-blue-400 via-cyan-500 to-blue-400 bg-clip-text text-transparent mb-4 sm:mb-6">
             ATOM EVENTS
           </h1>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed mb-4">
-            Join us in shaping the future through technology, innovation, and collaboration. 
+          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed mb-3 sm:mb-4 px-3 sm:px-0">
+            Join us in shaping the future through technology, innovation, and collaboration.
             Experience cutting-edge workshops, hackathons, and tech talks.
           </p>
-          <p className="text-sm text-gray-500 max-w-2xl mx-auto">
+          <p className="text-xs sm:text-sm text-gray-500 max-w-2xl mx-auto px-3 sm:px-0">
             Discover all our events in one place - from upcoming exciting events to our past achievements
           </p>
         </motion.div>
@@ -83,18 +85,50 @@ const Event: React.FC = () => {
           </div>
 
           {upcomingEvents.length > 0 ? (
-            <div className="event-grid">
-              {upcomingEvents.map((event, index) => (
+            <div className="space-y-8">
+              {/* Featured Event - First upcoming event */}
+              {upcomingEvents.slice(0, 1).map((event, index) => (
                 <motion.article
                   key={event.id}
                   initial={{ opacity: 0, y: 50 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
-                  aria-label={`Event: ${event.title}`}
+                  aria-label={`Featured Event: ${event.title}`}
+                  className="w-full"
                 >
-                  <EventCard event={event} onClick={() => handleEventClick(event)} />
+                  <FeaturedEventCard event={event} onClick={() => handleEventClick(event)} />
                 </motion.article>
               ))}
+
+              {/* Additional Upcoming Events - if more than one */}
+              {upcomingEvents.length > 1 && (
+                <div className="mt-16">
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
+                    className="text-center mb-8"
+                  >
+                    <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
+                      More Upcoming Events
+                    </h3>
+                  </motion.div>
+                  <div className="grid grid-cols-1 xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-3 xs:gap-4 sm:gap-5 md:gap-6 lg:gap-6 xl:gap-8 2xl:gap-8 max-w-6xl xl:max-w-7xl 2xl:max-w-[1920px] mx-auto px-2 xs:px-3 sm:px-0 lg:px-4 xl:px-6 2xl:px-8">
+                    {upcomingEvents.slice(1).map((event, index) => (
+                      <motion.article
+                        key={event.id}
+                        initial={{ opacity: 0, y: 50 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: (index + 1) * 0.1 }}
+                        aria-label={`Event: ${event.title}`}
+                        className="w-full"
+                      >
+                        <EventCard event={event} onClick={() => handleEventClick(event)} />
+                      </motion.article>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           ) : (
             <motion.div
