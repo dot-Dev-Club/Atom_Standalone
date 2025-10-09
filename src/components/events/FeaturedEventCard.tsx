@@ -45,37 +45,66 @@ const FeaturedEventCard: React.FC<FeaturedEventCardProps> = ({ event, onClick })
 
   const calculateTimeRemaining = () => {
     try {
-      // Handle different time formats and ensure iOS compatibility
-      let eventTimeStr = event.time || "00:00";
+      console.log('Event data:', { date: event.date, time: event.time });
       
-      // Convert 12-hour format to 24-hour format if needed
-      if (eventTimeStr.includes('AM') || eventTimeStr.includes('PM')) {
-        const timeParts = eventTimeStr.replace(/\s?(AM|PM)/i, '').split(':');
-        let hours = parseInt(timeParts[0]);
-        const minutes = timeParts[1] || '00';
-        const isPM = /PM/i.test(eventTimeStr);
+      // Parse the date parts
+      const dateParts = event.date.split('-');
+      const year = parseInt(dateParts[0]);
+      const month = parseInt(dateParts[1]) - 1; // Month is 0-indexed in JavaScript
+      const day = parseInt(dateParts[2]);
+      
+      console.log('Date parts:', { year, month, day });
+      
+      // Parse the time
+      let hours = 0;
+      let minutes = 0;
+      
+      if (event.time) {
+        const timeStr = event.time.trim();
+        console.log('Time string:', timeStr);
         
-        if (isPM && hours !== 12) hours += 12;
-        if (!isPM && hours === 12) hours = 0;
-        
-        eventTimeStr = `${hours.toString().padStart(2, '0')}:${minutes}`;
+        // Handle 12-hour format (e.g., "09:30 AM")
+        if (timeStr.includes('AM') || timeStr.includes('PM')) {
+          const timeMatch = timeStr.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
+          if (timeMatch) {
+            hours = parseInt(timeMatch[1]);
+            minutes = parseInt(timeMatch[2]);
+            const ampm = timeMatch[3].toUpperCase();
+            
+            console.log('Parsed time:', { hours, minutes, ampm });
+            
+            // Convert to 24-hour format
+            if (ampm === 'PM' && hours !== 12) {
+              hours += 12;
+            } else if (ampm === 'AM' && hours === 12) {
+              hours = 0;
+            }
+          }
+        } else {
+          // Handle 24-hour format (e.g., "09:30")
+          const timeParts = timeStr.split(':');
+          hours = parseInt(timeParts[0]) || 0;
+          minutes = parseInt(timeParts[1]) || 0;
+        }
       }
       
-      // Create ISO 8601 compatible date string
-      const isoDateString = `${event.date}T${eventTimeStr}:00`;
+      console.log('Final time values:', { hours, minutes });
       
-      console.log('Creating date from:', isoDateString);
-      
-      const eventDateTime = new Date(isoDateString);
+      // Create the event date using individual components
+      const eventDateTime = new Date(year, month, day, hours, minutes, 0, 0);
       const now = new Date();
+      
+      console.log('Event DateTime:', eventDateTime);
+      console.log('Current Time:', now);
       
       // Check if date is valid
       if (isNaN(eventDateTime.getTime())) {
-        console.error('Invalid date created from:', isoDateString);
+        console.error('Invalid date created');
         return null;
       }
       
       const difference = eventDateTime.getTime() - now.getTime();
+      console.log('Time difference (ms):', difference);
 
       if (difference > 0) {
         const days = Math.floor(difference / (1000 * 60 * 60 * 24));
@@ -83,12 +112,15 @@ const FeaturedEventCard: React.FC<FeaturedEventCardProps> = ({ event, onClick })
         const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
+        console.log('Calculated countdown:', { days, hours, minutes, seconds });
         return { days, hours, minutes, seconds };
       }
       
+      console.log('Event has passed');
       return null;
     } catch (error) {
       console.error('Date parsing error:', error);
+      console.error('Event data:', { date: event.date, time: event.time });
       return null;
     }
   };
@@ -212,36 +244,42 @@ const FeaturedEventCard: React.FC<FeaturedEventCardProps> = ({ event, onClick })
             </div>
 
             {/* Countdown Timer */}
-            {isUpcoming && timeRemaining && (
+            {isUpcoming && (
               <div className="mb-6">
                 <h3 className="text-white text-lg font-semibold mb-4">Event Countdown</h3>
                 <div className="bg-gradient-to-r from-blue-600/20 to-purple-600/20 backdrop-blur-sm rounded-xl p-4 border border-white/10">
-                  <div className="grid grid-cols-4 gap-4 text-center">
-                    <div className="flex flex-col">
-                      <div className="text-2xl font-bold text-white">
-                        {timeRemaining.days.toString().padStart(2, '0')}
+                  {timeRemaining ? (
+                    <div className="grid grid-cols-4 gap-4 text-center">
+                      <div className="flex flex-col">
+                        <div className="text-2xl font-bold text-white">
+                          {(timeRemaining.days || 0).toString().padStart(2, '0')}
+                        </div>
+                        <div className="text-sm text-gray-400">DAYS</div>
                       </div>
-                      <div className="text-sm text-gray-400">DAYS</div>
-                    </div>
-                    <div className="flex flex-col">
-                      <div className="text-2xl font-bold text-white">
-                        {timeRemaining.hours.toString().padStart(2, '0')}
+                      <div className="flex flex-col">
+                        <div className="text-2xl font-bold text-white">
+                          {(timeRemaining.hours || 0).toString().padStart(2, '0')}
+                        </div>
+                        <div className="text-sm text-gray-400">HOURS</div>
                       </div>
-                      <div className="text-sm text-gray-400">HOURS</div>
-                    </div>
-                    <div className="flex flex-col">
-                      <div className="text-2xl font-bold text-white">
-                        {timeRemaining.minutes.toString().padStart(2, '0')}
+                      <div className="flex flex-col">
+                        <div className="text-2xl font-bold text-white">
+                          {(timeRemaining.minutes || 0).toString().padStart(2, '0')}
+                        </div>
+                        <div className="text-sm text-gray-400">MINUTES</div>
                       </div>
-                      <div className="text-sm text-gray-400">MINUTES</div>
-                    </div>
-                    <div className="flex flex-col">
-                      <div className="text-2xl font-bold text-white">
-                        {timeRemaining.seconds.toString().padStart(2, '0')}
+                      <div className="flex flex-col">
+                        <div className="text-2xl font-bold text-white">
+                          {(timeRemaining.seconds || 0).toString().padStart(2, '0')}
+                        </div>
+                        <div className="text-sm text-gray-400">SECONDS</div>
                       </div>
-                      <div className="text-sm text-gray-400">SECONDS</div>
                     </div>
-                  </div>
+                  ) : (
+                    <div className="text-center py-4">
+                      <div className="text-white text-lg">Loading...</div>
+                    </div>
+                  )}
                 </div>
               </div>
             )}
