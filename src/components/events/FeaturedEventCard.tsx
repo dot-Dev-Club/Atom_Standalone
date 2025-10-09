@@ -20,6 +20,7 @@ interface Event {
   eventType: 'free' | 'paid';
 }
 
+
 interface FeaturedEventCardProps {
   event: Event;
   onClick?: () => void;
