@@ -184,12 +184,7 @@ const EventCard: React.FC<EventCardProps> = ({ event, onClick }) => {
                 )}
               </div>
 
-              {/* Description for Past Events - Desktop Optimized */}
-              {!isUpcoming && (
-                <p className="text-gray-300 text-sm sm:text-base lg:text-sm xl:text-base 2xl:text-lg leading-relaxed line-clamp-2 sm:line-clamp-3 lg:line-clamp-1 xl:line-clamp-2 2xl:line-clamp-3 mb-4 sm:mb-6 lg:mb-3 xl:mb-4 2xl:mb-5 opacity-90">
-                  {event.description}
-                </p>
-              )}
+              {/* Description removed - content only shown on detail page */}
             </div>
 
             {/* Action Button - Desktop Enhanced */}

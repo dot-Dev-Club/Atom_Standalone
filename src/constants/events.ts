@@ -24,10 +24,10 @@ export const events: Event[] = [
   id: 1,
   title: "Battle of Binaries 1.0",
   date: "2025-10-17",
-  time: "09:30 AM",
-  location: "Karunya University, Coimbatore",
+  time: "09:00 AM",
+  location: "Karunya Institute of Technology and Sciences, Coimbatore",
   description:
-    "An ultimate coding face-off — Battle of Binaries 1.0 — organized in association with CompTIA. Compete, code, and conquer to win certifications worth ₹75,000!",
+    "Get ready for the ultimate Capture The Flag (CTF) competition! Battle of Binaries 1.0 is a premier cybersecurity competition organized in association with CompTIA, designed to test your skills in ethical hacking, cryptography, reverse engineering, web exploitation, and more.\n\n Compete in real-time challenges with progressive difficulty levels and win amazing prizes including vouchers worth ₹75,000!\n\nImportant Information:\n\nRegistration Deadline: October 15, 2025\n\nLimited Seats Available - First come, first served basis. Register now to secure your spot!\n\nFormat: Individual challenges with real-time scoreboard\n\n",
   image: "/EVENTS/Battle of Binaries 1.0.jpg",
   status: "upcoming",
   category: "Competition",
