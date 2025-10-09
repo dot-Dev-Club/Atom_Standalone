@@ -1,0 +1,132 @@
+/* Mobile Responsiveness Improvements */
+
+/* Overall Mobile Adjustments */
+@media (max-width: 768px) {
+  /* Container adjustments for better mobile spacing */
+  .container.mx-auto {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* Typography scaling for mobile */
+  h1 {
+    font-size: 2rem;
+    line-height: 2.5rem;
+  }
+
+  h2 {
+    font-size: 1.75rem;
+    line-height: 2rem;
+  }
+
+  /* Button touch targets */
+  button, .btn, button[class*="btn"] {
+    min-height: 44px;
+    padding: 12px 16px;
+  }
+
+  /* Input field improvements */
+  input, textarea, select {
+    font-size: 16px; /* Prevents zoom on iOS */
+    padding: 12px 16px;
+  }
+
+  /* Form spacing adjustments */
+  form .space-y-6 > * + * {
+    margin-top: 1.25rem;
+  }
+
+  /* Card padding adjustments */
+  .glass-card, [class*="card"] {
+    padding: 1rem;
+  }
+
+  /* Grid stack adjustments */
+  .grid {
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Extra small screens */
+  .container.mx-auto {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+    line-height: 2.25rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+
+  /* Navbar improvements */
+  .sticky.top-0 {
+    padding: 0.75rem 1rem;
+  }
+
+  /* Hero sections on mobile */
+  .relative.w-full.h-80.lg\\:h-96 {
+    height: 240px;
+  }
+
+  /* Event grid single column */
+  .event-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem;
+    padding: 0 0.5rem;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  /* Remove hover states on touch devices */
+  .event-card-container:hover,
+  button:hover,
+  a:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Better active states for touch */
+  .event-card-container:active,
+  button:active {
+    transform: scale(0.98);
+  }
+}
+
+/* Landscape mobile adjustments */
+@media (max-height: 500px) and (orientation: landscape) {
+  /* Reduce vertical spacing in landscape */
+  .py-12 {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .py-8 {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  /* Compact hero sections */
+  .relative.w-full.h-80.lg\\:h-96 {
+    height: 180px;
+  }
+}
+
+/* High contrast mobile accessibility */
+@media (prefers-contrast: high) and (max-width: 768px) {
+  /* Enhanced borders on mobile for better visibility */
+  input, button, .glass-card {
+    border-width: 2px;
+    border-color: white;
+  }
+
+  .event-card-container {
+    border: 2px solid white;
+  }
+}

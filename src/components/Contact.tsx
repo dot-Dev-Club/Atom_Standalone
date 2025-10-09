@@ -121,13 +121,13 @@ This person is interested in joining the ATOM Club community.
   return (
     <section
       ref={ref}
-      className="py-12 px-4 sm:py-16 md:py-20 lg:py-24 max-w-5xl mx-auto"
+      className="py-8 px-4 sm:py-12 sm:px-6 md:py-16 lg:py-20 xl:py-24 max-w-5xl mx-auto"
     >
       <motion.h2
         initial={{ opacity: 0, y: 30 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.6 }}
-        className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-6 sm:mb-8 gradient-text"
+        className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-4 sm:mb-6 md:mb-8 gradient-text"
       >
         Get In Touch
       </motion.h2>
@@ -136,9 +136,9 @@ This person is interested in joining the ATOM Club community.
         initial={{ opacity: 0, y: 30 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.6, delay: 0.2 }}
-        className="text-base sm:text-lg text-center text-foreground-secondary mb-8 sm:mb-12 max-w-2xl mx-auto"
+        className="text-sm sm:text-base md:text-lg text-center text-foreground-secondary mb-6 sm:mb-8 md:mb-12 max-w-2xl mx-auto px-2"
       >
-        Ready to join the ATOM Club community? Send us your details and we’ll
+        Ready to join the ATOM Club community? Send us your details and we'll
         get back to you with more information about our programs and membership.
       </motion.p>
 
@@ -146,7 +146,7 @@ This person is interested in joining the ATOM Club community.
         initial={{ opacity: 0, y: 30 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.6, delay: 0.4 }}
-        className="glass-card p-6 sm:p-8 md:p-10 lg:p-12"
+        className="glass-card p-6 sm:p-8 md:p-10 lg:p-12 max-w-4xl mx-auto"
       >
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Name */}
