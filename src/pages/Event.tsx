@@ -83,7 +83,7 @@ const Event: React.FC = () => {
           </div>
 
           {upcomingEvents.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto px-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
               {upcomingEvents.map((event, index) => (
                 <motion.article
                   key={event.id}
@@ -91,7 +91,7 @@ const Event: React.FC = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   aria-label={`Event: ${event.title}`}
-                  className="w-full max-w-sm mx-auto"
+                  className="w-full"
                 >
                   <EventCard event={event} onClick={() => handleEventClick(event)} />
                 </motion.article>
