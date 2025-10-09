@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'https://api.atom.org.in/docs';
+const API_BASE_URL = 'https://api.atom.org.in';
 
 interface RegistrationData {
   name: string;
@@ -6,6 +6,7 @@ interface RegistrationData {
   email: string;
   recipt_no: string;
   year_of_study: string;
+  phone_no?: string;
   division?: string;
   dept_name?: string;
   college_name?: string;
@@ -25,12 +26,20 @@ export const registerParticipant = async (
     const endpoint = type === 'internal' ? '/register/internal' : '/register/external';
     const url = `${API_BASE_URL}${endpoint}`;
 
+    // Map phone_no to phone_number for backend compatibility
+    const requestData = {
+      ...data,
+      phone_number: data.phone_no,
+    };
+    // Remove phone_no from the request if it exists
+    delete requestData.phone_no;
+
     const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(requestData),
     });
 
     const result = await response.json();
