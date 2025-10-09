@@ -3,7 +3,6 @@ import { About } from '@/components/About';
 import { Achievements } from '@/components/Achievements';
 import { Coordinators } from '@/components/Coordinators';
 import { Clubs } from '@/components/Clubs';
-import { Contact } from '@/components/Contact'
 import PhotoGallerySection from '@/components/PhotoGallerySection';
 import EventsSection from '@/components/EventsSection';
 import { ThreeDBackground } from '@/components/ThreeDBackground';
@@ -45,7 +44,6 @@ const Index = () => {
             <PhotoGallerySection />
           </div>
           <Clubs />
-          <Contact />
         </div>
       </div>
     </main>

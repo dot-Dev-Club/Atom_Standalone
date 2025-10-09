@@ -815,6 +815,81 @@ const EventDetailPage: React.FC = () => {
               </motion.div>
             )}
 
+            {/* Contact Card - Only for Battle of Binaries */}
+            {event.id === 1 && event.status === 'upcoming' && !isExpired && (
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.7 }}
+                whileHover={{
+                  scale: 1.02,
+                  y: -10,
+                  rotateY: 2,
+                  rotateX: -2
+                }}
+                className="glass-card p-8 rounded-2xl relative overflow-hidden group cursor-pointer mt-6"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(6, 182, 212, 0.3) 100%)',
+                  backdropFilter: 'blur(25px)',
+                  border: '1px solid rgba(6, 182, 212, 0.2)',
+                  boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(6, 182, 212, 0.1), 0 0 20px rgba(6, 182, 212, 0.15)',
+                  transition: 'box-shadow 0.4s ease-out'
+                }}
+              >
+                {/* Enhanced animated background elements */}
+                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-blue-500/10 to-teal-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-cyan-500/15 to-teal-500/15 rounded-full blur-3xl animate-pulse"></div>
+                <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 rounded-full blur-2xl animate-pulse delay-1000"></div>
+
+                <div className="relative z-10">
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.5, delay: 0.8, type: "spring", stiffness: 200 }}
+                    className="text-center mb-6"
+                  >
+                    <h3 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-100 to-teal-100 mb-2 drop-shadow-lg">
+                      Need Help?
+                    </h3>
+                    <p className="text-cyan-200/80 text-base">Contact us for any queries</p>
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.9 }}
+                    className="space-y-4"
+                  >
+                    <a
+                      href="tel:7904826830"
+                      className="flex flex-col items-center justify-center gap-2 w-full bg-gradient-to-r from-cyan-600/30 to-blue-600/30 hover:from-cyan-600/50 hover:to-blue-600/50 text-white py-4 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-cyan-500/30 hover:scale-105 border border-cyan-400/20 group/phone"
+                    >
+                      <div className="flex items-center gap-3">
+                        <svg className="w-5 h-5 text-cyan-300 group-hover/phone:animate-pulse" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                        </svg>
+                        <span className="text-lg font-semibold">7904826830</span>
+                      </div>
+                      <span className="text-sm text-cyan-200/80 font-medium">Dharshan Kumar J</span>
+                    </a>
+
+                    <a
+                      href="tel:9944871330"
+                      className="flex flex-col items-center justify-center gap-2 w-full bg-gradient-to-r from-blue-600/30 to-cyan-600/30 hover:from-blue-600/50 hover:to-cyan-600/50 text-white py-4 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-blue-500/30 hover:scale-105 border border-blue-400/20 group/phone"
+                    >
+                      <div className="flex items-center gap-3">
+                        <svg className="w-5 h-5 text-blue-300 group-hover/phone:animate-pulse" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                        </svg>
+                        <span className="text-lg font-semibold">9944871330</span>
+                      </div>
+                      <span className="text-sm text-blue-200/80 font-medium">Bruno A</span>
+                    </a>
+                  </motion.div>
+                </div>
+              </motion.div>
+            )}
+
             {/* Past Event Status */}
             {(event.status !== 'upcoming' || isExpired) && (
               <motion.div
