@@ -7,6 +7,7 @@ import PastEventTimeline from '@/components/events/PastEventTimeline';
 import { type Event } from '@/constants/events';
 import { getUpcomingEvents, getPastEvents } from '@/utils/dataService';
 import { generateSlug } from '@/utils/slug';
+import atomLogo from '@/assets/atom-logo.png';
 import '@/styles/events.css';
 import '@/styles/event-enhancements.css';
 import '@/styles/event-card-enhancements.css';
@@ -25,10 +26,14 @@ const Event: React.FC = () => {
     });
   }, []);
 
-  
+
   const handleEventClick = (event: Event) => {
     const slug = generateSlug(event.title);
     navigate(`/events/${slug}`);
+  };
+
+  const handleLogoClick = () => {
+    navigate('/');
   };
 
   // Remove modal-related functions since we're not using modals anymore
@@ -49,12 +54,37 @@ const Event: React.FC = () => {
 
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 lg:py-12">
 
+        {/* ATOM Logo - Top Left */}
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6 }}
+          className="absolute top-4 left-4 sm:top-6 sm:left-6 lg:top-8 lg:left-8 z-20"
+        >
+          <motion.button
+            onClick={handleLogoClick}
+            className="flex items-center gap-3 p-2 sm:p-3 bg-white/10 backdrop-blur-md rounded-xl border border-white/20 hover:bg-white/20 hover:border-blue-500/50 transition-all duration-300 group cursor-pointer"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            aria-label="Go to Home"
+          >
+            <img 
+              src={atomLogo} 
+              alt="ATOM Logo" 
+              className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 transition-transform duration-300 group-hover:rotate-12"
+            />
+            <span className="text-white font-semibold text-sm sm:text-base lg:text-lg group-hover:text-blue-300 transition-colors duration-300">
+              ATOM
+            </span>
+          </motion.button>
+        </motion.div>
+
         {/* Hero Section */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-8 sm:mb-10 lg:mb-16 px-2"
+          className="text-center mb-8 sm:mb-10 lg:mb-16 px-2 pt-16 sm:pt-20 lg:pt-24"
         >
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold bg-gradient-to-r from-blue-400 via-cyan-500 to-blue-400 bg-clip-text text-transparent mb-4 sm:mb-6">
             ATOM EVENTS
