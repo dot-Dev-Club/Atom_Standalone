@@ -54,8 +54,8 @@ export const events: Event[] = [
   {
     id: 5,
     title: "DSCS Retreat 2025",
-    date: "2025-09-10",
-    time: "02:30 PM",
+    date: "2025-09-20",
+    time: "09:30 AM",
     location: "Emmanuel Auditorium",
     description:
       "A leadership retreat featuring Dr. Vizia Daniel Devarapalli Founder & Senior Pastor of God's Power Ministries .",
@@ -67,7 +67,7 @@ export const events: Event[] = [
   {
     id: 6,
     title: "INNOVATE-X Hackathon",
-    date: "2025-09-01",
+    date: "2025-09-01,2025-09-02",
     location: "AIML Gallery Hall",
     description:
       "Two-day hackathon fostering innovation and creativity, hosted by Dr. Radhakrishnan Subramaniam.",
@@ -134,7 +134,7 @@ export const events: Event[] = [
       "Master the art of cybersecurity with hands-on experience in defensive and offensive security techniques.",
     image: "/EVENTS/CYBERSECURITY Bootcamp.jpg",
     status: "past",
-    category: "Workshop",
+    category: "Bootcamp",
     eventType: "free",
   },
   {

@@ -115,6 +115,26 @@ const EventDetailPage: React.FC = () => {
   }, [event]);
 
   const formatDate = (dateString: string) => {
+    // Handle multi-day events (comma-separated dates)
+    if (dateString.includes(',')) {
+      const dates = dateString.split(',').map(d => d.trim());
+      const startDate = new Date(dates[0]);
+      const endDate = new Date(dates[1]);
+      
+      const startFormatted = startDate.toLocaleDateString('en-US', {
+        month: 'long',
+        day: 'numeric'
+      });
+      const endFormatted = endDate.toLocaleDateString('en-US', {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric'
+      });
+      
+      return `${startFormatted} - ${endFormatted}`;
+    }
+    
+    // Handle single-day events
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', {
       weekday: 'long',
@@ -383,14 +403,17 @@ const EventDetailPage: React.FC = () => {
                       {event.eventType === 'free' ? 'Free Event' : 'Paid Event'}
                     </Badge>
                   </motion.div>
-                  <motion.div
-                    whileHover={{ scale: 1.05, y: -2 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <Badge className="bg-gradient-to-r from-blue-500/25 to-cyan-500/25 text-blue-200 border border-blue-400/40 backdrop-blur-xl px-4 py-2 hover:from-blue-500/35 hover:to-cyan-500/35 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-blue-500/25">
-                      {event.status === 'upcoming' ? 'Upcoming' : 'Completed'}
-                    </Badge>
-                  </motion.div>
+                  {/* Only show status badge if not Battle of Binaries */}
+                  {event.id !== 1 && (
+                    <motion.div
+                      whileHover={{ scale: 1.05, y: -2 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <Badge className="bg-gradient-to-r from-blue-500/25 to-cyan-500/25 text-blue-200 border border-blue-400/40 backdrop-blur-xl px-4 py-2 hover:from-blue-500/35 hover:to-cyan-500/35 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-blue-500/25">
+                        {event.status === 'upcoming' ? 'Upcoming' : 'Completed'}
+                      </Badge>
+                    </motion.div>
+                  )}
                 </motion.div>
               </div>
 
@@ -516,6 +539,175 @@ const EventDetailPage: React.FC = () => {
                 </div>
               </motion.div>
             </motion.div>
+
+            {/* Event Highlights - Only for Battle of Binaries */}
+            {event.id === 1 && (
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.35 }}
+                whileHover={{
+                  scale: 1.02,
+                  y: -10,
+                  rotateY: -2,
+                  rotateX: 2
+                }}
+                className="glass-card p-8 rounded-2xl relative overflow-hidden group cursor-pointer"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(139, 92, 246, 0.3) 100%)',
+                  backdropFilter: 'blur(25px)',
+                  border: '1px solid rgba(139, 92, 246, 0.2)',
+                  boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(139, 92, 246, 0.1), 0 0 20px rgba(139, 92, 246, 0.15)',
+                  transition: 'box-shadow 0.4s ease-out'
+                }}
+              >
+                {/* Enhanced background effects */}
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-violet-500/10 to-fuchsia-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-purple-500/15 to-violet-500/15 rounded-full blur-3xl animate-pulse"></div>
+                <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-br from-fuchsia-500/10 to-purple-500/10 rounded-full blur-2xl animate-pulse delay-1000"></div>
+
+                <div className="relative z-10">
+                  <motion.div
+                    initial={{ x: -20, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ duration: 0.6, delay: 0.4 }}
+                    className="mb-6"
+                  >
+                    <h3 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-purple-100 to-violet-100 flex items-center gap-3">
+                      <svg className="w-7 h-7 text-purple-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                      Event Highlights
+                    </h3>
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.8, delay: 0.5 }}
+                    className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+                  >
+                    {/* Highlight 1 */}
+                    <div className="flex items-start gap-3 p-4 rounded-xl bg-gradient-to-br from-purple-500/10 to-violet-500/10 border border-purple-400/20 hover:border-purple-400/40 transition-all duration-300 hover:scale-105">
+                      <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-gradient-to-br from-purple-500/20 to-violet-500/20 flex items-center justify-center">
+                        <svg className="w-6 h-6 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <h4 className="text-white font-semibold mb-1">CTF Competition</h4>
+                        <p className="text-gray-300 text-sm">Real-world cybersecurity challenges</p>
+                      </div>
+                    </div>
+
+                    {/* Highlight 2 */}
+                    <div className="flex items-start gap-3 p-4 rounded-xl bg-gradient-to-br from-violet-500/10 to-fuchsia-500/10 border border-violet-400/20 hover:border-violet-400/40 transition-all duration-300 hover:scale-105">
+                      <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20 flex items-center justify-center">
+                        <svg className="w-6 h-6 text-violet-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <h4 className="text-white font-semibold mb-1">₹75,000 Worth Prizes</h4>
+                        <p className="text-gray-300 text-sm">Vouchers & certifications</p>
+                      </div>
+                    </div>
+                  </motion.div>
+                </div>
+              </motion.div>
+            )}
+
+            {/* CompTIA Partner Section - Only for Battle of Binaries */}
+            {event.id === 1 && (
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                whileHover={{
+                  scale: 1.02,
+                  y: -10,
+                  rotateY: 2,
+                  rotateX: -2
+                }}
+                className="glass-card p-6 sm:p-8 rounded-2xl relative overflow-hidden group cursor-pointer"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(220, 38, 38, 0.2) 100%)',
+                  backdropFilter: 'blur(25px)',
+                  border: '1px solid rgba(220, 38, 38, 0.2)',
+                  boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(220, 38, 38, 0.1), 0 0 20px rgba(220, 38, 38, 0.15)',
+                  transition: 'box-shadow 0.4s ease-out'
+                }}
+              >
+                {/* Enhanced background effects */}
+                <div className="absolute inset-0 bg-gradient-to-br from-red-500/10 via-orange-500/10 to-red-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-red-500/15 to-orange-500/15 rounded-full blur-3xl animate-pulse"></div>
+                <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-br from-orange-500/10 to-red-500/10 rounded-full blur-2xl animate-pulse delay-1000"></div>
+
+                <div className="relative z-10">
+                  <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
+                    {/* Text Content */}
+                    <div className="flex-1 text-center sm:text-left">
+                      <motion.div
+                        initial={{ x: -20, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ duration: 0.6, delay: 0.45 }}
+                      >
+                        <h3 className="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-red-100 to-orange-100 mb-2">
+                          Official Partner
+                        </h3>
+                        <p className="text-gray-300 text-sm sm:text-base">
+                          This event is organized in association with CompTIA, a leading provider of vendor-neutral IT certifications
+                        </p>
+                      </motion.div>
+                    </div>
+
+                    {/* CompTIA Logo */}
+                    <motion.div
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ duration: 0.5, delay: 0.5, type: "spring", stiffness: 200 }}
+                      className="flex-shrink-0"
+                    >
+                      <div className="relative group/logo">
+                        <div className="absolute inset-0 bg-gradient-to-r from-red-500/20 to-orange-500/20 rounded-2xl blur-xl group-hover/logo:blur-2xl transition-all duration-300"></div>
+                        <div className="relative bg-white/95 backdrop-blur-sm p-4 sm:p-6 rounded-2xl border border-white/20 hover:border-red-400/40 transition-all duration-300 hover:scale-105">
+                          <img 
+                            src="https://comptiacdn.azureedge.net/webcontent/images/default-source/newsiteupdates/comptia-logo.png?sfvrsn=216cff61_2"
+                            alt="CompTIA Logo" 
+                            className="w-32 sm:w-40 md:w-48 h-auto object-contain"
+                            loading="lazy"
+                          />
+                        </div>
+                      </div>
+                    </motion.div>
+                  </div>
+
+                  {/* Additional Info */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.6 }}
+                    className="mt-6 pt-6 border-t border-white/10"
+                  >
+                    <div className="flex flex-wrap gap-3 justify-center sm:justify-start">
+                      <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-500/20 to-orange-500/20 rounded-lg border border-red-400/30">
+                        <svg className="w-4 h-4 text-red-300" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                        <span className="text-sm font-medium text-white">Industry Recognized</span>
+                      </div>
+                      <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-orange-500/20 to-red-500/20 rounded-lg border border-orange-400/30">
+                        <svg className="w-4 h-4 text-orange-300" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                          <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd" />
+                        </svg>
+                        <span className="text-sm font-medium text-white">Certified Event</span>
+                      </div>
+                    </div>
+                  </motion.div>
+                </div>
+              </motion.div>
+            )}
 
             {/* Enhanced About This Event */}
             <motion.div
@@ -884,6 +1076,20 @@ const EventDetailPage: React.FC = () => {
                         <span className="text-lg font-semibold">9944871330</span>
                       </div>
                       <span className="text-sm text-blue-200/80 font-medium">Bruno A</span>
+                    </a>
+
+                    <a
+                      href="mailto:atom.karunya.edu"
+                      className="flex flex-col items-center justify-center gap-2 w-full bg-gradient-to-r from-teal-600/30 to-cyan-600/30 hover:from-teal-600/50 hover:to-cyan-600/50 text-white py-4 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-teal-500/30 hover:scale-105 border border-teal-400/20 group/email"
+                    >
+                      <div className="flex items-center gap-3">
+                        <svg className="w-5 h-5 text-teal-300 group-hover/email:animate-pulse" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                          <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                        </svg>
+                        <span className="text-lg font-semibold">atom.karunya.edu</span>
+                      </div>
+                      <span className="text-sm text-teal-200/80 font-medium">Email Us</span>
                     </a>
                   </motion.div>
                 </div>

@@ -41,18 +41,36 @@ const PastEventTimeline: React.FC<PastEventTimelineProps> = ({ events, onEventCl
   };
 
   const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return {
-      full: date.toLocaleDateString('en-US', {
+    // Handle multi-day events (comma-separated dates)
+    // Use the first date for grouping and year extraction
+    const firstDate = dateString.includes(',') ? dateString.split(',')[0].trim() : dateString;
+    const date = new Date(firstDate);
+    
+    // Format display for multi-day events
+    let fullDisplay, shortDisplay;
+    if (dateString.includes(',')) {
+      const dates = dateString.split(',').map(d => d.trim());
+      const startDate = new Date(dates[0]);
+      const endDate = new Date(dates[1]);
+      
+      fullDisplay = `${startDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })} - ${endDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}`;
+      shortDisplay = `${startDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} - ${endDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`;
+    } else {
+      fullDisplay = date.toLocaleDateString('en-US', {
         weekday: 'long',
         year: 'numeric',
         month: 'long',
         day: 'numeric'
-      }),
-      short: date.toLocaleDateString('en-US', {
+      });
+      shortDisplay = date.toLocaleDateString('en-US', {
         month: 'short',
         day: 'numeric'
-      }),
+      });
+    }
+    
+    return {
+      full: fullDisplay,
+      short: shortDisplay,
       year: date.getFullYear(),
       month: date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
     };
