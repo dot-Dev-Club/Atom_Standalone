@@ -1066,6 +1066,19 @@ const EventDetailPage: React.FC = () => {
                     </a>
 
                     <a
+                      href="tel:9345639487"
+                      className="flex flex-col items-center justify-center gap-2 w-full bg-gradient-to-r from-purple-600/30 to-blue-600/30 hover:from-purple-600/50 hover:to-blue-600/50 text-white py-4 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-purple-500/30 hover:scale-105 border border-purple-400/20 group/phone"
+                    >
+                      <div className="flex items-center gap-3">
+                        <svg className="w-5 h-5 text-purple-300 group-hover/phone:animate-pulse" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                        </svg>
+                        <span className="text-lg font-semibold">9345639487</span>
+                      </div>
+                      <span className="text-sm text-purple-200/80 font-medium">Kevin J</span>
+                    </a>
+
+                    <a
                       href="tel:9944871330"
                       className="flex flex-col items-center justify-center gap-2 w-full bg-gradient-to-r from-blue-600/30 to-cyan-600/30 hover:from-blue-600/50 hover:to-cyan-600/50 text-white py-4 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-blue-500/30 hover:scale-105 border border-blue-400/20 group/phone"
                     >
@@ -1079,7 +1092,7 @@ const EventDetailPage: React.FC = () => {
                     </a>
 
                     <a
-                      href="mailto:atom.karunya.edu"
+                      href="mailto:atom@karunya.edu.in"
                       className="flex flex-col items-center justify-center gap-2 w-full bg-gradient-to-r from-teal-600/30 to-cyan-600/30 hover:from-teal-600/50 hover:to-cyan-600/50 text-white py-4 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-teal-500/30 hover:scale-105 border border-teal-400/20 group/email"
                     >
                       <div className="flex items-center gap-3">
@@ -1087,7 +1100,7 @@ const EventDetailPage: React.FC = () => {
                           <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
                           <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                         </svg>
-                        <span className="text-lg font-semibold">atom.karunya.edu</span>
+                        <span className="text-lg font-semibold">atom@karunya.edu.in</span>
                       </div>
                       <span className="text-sm text-teal-200/80 font-medium">Email Us</span>
                     </a>
@@ -1264,7 +1277,11 @@ const EventDetailPage: React.FC = () => {
                 {[
                   "Comply with all event rules and venue policies",
                   "Organizers are not liable for personal belongings",
-                  "Provide accurate information during registration"
+                  "Provide accurate information during registration",
+                  ...(event.id === 1 ? [
+                    "Scoreboard results are final and cannot be contested",
+                    "Misconduct may lead to immediate disqualification"
+                  ] : [])
                 ].map((term, index) => (
                   <motion.div
                     key={index}

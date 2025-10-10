@@ -540,6 +540,14 @@ const ModernEventModal: React.FC<ModernEventModalProps> = ({
                           <span className="text-electric mr-2 mt-1">•</span>
                           Provide accurate information during registration
                         </li>
+                        <li className="flex items-start">
+                          <span className="text-electric mr-2 mt-1">•</span>
+                          Provide accurate information during registration
+                        </li>
+                        <li className="flex items-start">
+                          <span className="text-electric mr-2 mt-1">•</span>
+                          Provide accurate information during registration
+                        </li>
                       </ul>
                     </div>
                   </div>
