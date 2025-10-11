@@ -61,6 +61,7 @@ export const dotdevClub = {
       bio: "",
       linkedin: "linkedin.com/in/manisha-c",
     },
+    
     {
       name: "Varsha S",
       role: "Educator",
