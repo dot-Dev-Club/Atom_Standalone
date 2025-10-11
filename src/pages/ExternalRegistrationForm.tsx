@@ -326,16 +326,17 @@ const ExternalRegistrationForm: React.FC = () => {
                   <p className="font-semibold">Follow these steps to complete your payment:</p>
                   
                   <div className="bg-white/50 rounded-lg p-4">
-                    <p className="font-medium text-teal-800 mb-2">1. Click "Proceed to pay"</p>
-                    <p className="font-medium text-teal-800 mb-3">2. Complete the following steps:</p>
+                    <p className="font-medium text-teal-800 mb-2">1. Click "Proceed to Payment" button below</p>
+                    <p className="font-medium text-teal-800 mb-3">2. Complete the following steps on the payment portal:</p>
                     
                     <ul className="space-y-2 text-sm text-gray-700 ml-4">
                       <li>• Select participants</li>
-                      <li>• Enter name</li>
-                      <li>• Select event: <span className="font-semibold">CTF(9)</span></li>
+                      <li>• Search for <span className="font-semibold">S.No 4</span></li>
+                      <li>• Select event: <span className="font-semibold">Event-Capture the Flag (CTF) External - Cyber Security</span></li>
                       <li>• Select quantity: <span className="font-semibold">1</span></li>
-                      <li>• Click the register button</li>
-                      <li>• Proceed to payment</li>
+                      <li>• Amount will be displayed as: <span className="font-semibold text-orange-600">₹413</span></li>
+                      <li>• Click the <span className="font-semibold">Register</span> button</li>
+                      <li>• Proceed to make the payment</li>
                     </ul>
                   </div>
                   

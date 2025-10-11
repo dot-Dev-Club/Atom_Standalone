@@ -316,11 +316,12 @@ const InternalRegistrationForm: React.FC = () => {
                     <ul className="space-y-2 text-sm text-gray-700 ml-4">
                       <li>• Enter registration number</li>
                       <li>• Enter date of birth (DOB)</li>
-                      <li>• Select currency: <span className="font-semibold">INR</span></li>
-                      <li>• Select event: <span className="font-semibold">CTF(5)</span></li>
+                      <li>• Search for <span className="font-semibold">S.No 2</span></li>
+                      <li>• Select event: <span className="font-semibold">Event-Capture the Flag (CTF) Internal - Cyber Security</span></li>
                       <li>• Select quantity: <span className="font-semibold">1</span></li>
-                      <li>• Click the register button</li>
-                      <li>• Proceed to payment</li>
+                      <li>• Amount will be displayed as: <span className="font-semibold text-orange-600">₹177</span></li>
+                      <li>• Click the <span className="font-semibold">Register</span> button</li>
+                      <li>• Proceed to make the payment</li>
                     </ul>
                   </div>
                   
