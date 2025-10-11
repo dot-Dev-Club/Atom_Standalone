@@ -14,13 +14,40 @@ export const Coordinators = () => {
 
   const [viewAll, setViewAll] = useState(false);
 
+  // Helper to render LinkedIn anchor for selected coordinator
+  const renderLinkedIn = () => {
+    if (!selectedCoordinator || !selectedCoordinator.linkedin) return null;
+    const raw = selectedCoordinator.linkedin as string;
+    const linkedinUrl = raw.startsWith('http') ? raw : `https://${raw}`;
+
+    return (
+      <div className="w-full flex justify-center">
+        <div className="inline-flex justify-center w-full max-w-[520px]">
+          <a
+            href={linkedinUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-sm text-foreground-secondary hover:underline w-full justify-center px-2"
+            aria-label={`Open ${selectedCoordinator.name}'s LinkedIn`}
+          >
+            <Linkedin className="w-5 h-5 text-atom-primary flex-shrink-0" />
+            <span className="truncate block max-w-[420px] text-center">{raw}</span>
+          </a>
+        </div>
+      </div>
+    );
+  };
+
   const Card = ({ coordinator }: { coordinator: typeof coordinators[0] }) => (
     <motion.div
       key={coordinator.id}
-      className="flex-shrink-0 w-64 sm:w-72 glass-card p-4 sm:p-6 hover-scale cursor-pointer"
+      // Use a fixed width for the scrolling carousel, but make cards responsive and centered when viewing all
+      className={
+        viewAll
+          ? "glass-card p-4 sm:p-6 cursor-pointer w-full max-w-xs sm:max-w-sm mx-auto"
+          : "flex-shrink-0 w-64 sm:w-72 glass-card p-4 sm:p-6 cursor-pointer"
+      }
       onClick={() => setSelectedCoordinator(coordinator)}
-      whileHover={{ y: -5 }}
-      transition={{ type: "spring", stiffness: 300 }}
     >
       <div className="relative mb-3 sm:mb-4">
         <img
@@ -55,18 +82,18 @@ export const Coordinators = () => {
 
         {viewAll ? (
           <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 justify-items-center">
               {coordinators.map((c) => (
                 <Card key={c.id} coordinator={c} />
               ))}
             </div>
-            <div className="flex justify-center mt-8 sm:mt-10">
+            <div className="flex justify-center mt-8 sm:mt-10 w-full">
               <button
                 onClick={() => setViewAll(false)}
-                className="btn-metallic flex items-center gap-2 text-sm sm:text-base px-4 sm:px-6 py-2 sm:py-3"
+                className="btn-metallic mx-auto block items-center gap-2 text-sm sm:text-base px-4 sm:px-6 py-2 sm:py-3"
               >
-                <ArrowLeft className="w-4 h-4" />
-                Back to Carousel
+                <ArrowLeft className="w-4 h-4 inline-block" />
+                <span className="inline-block">Back to Carousel</span>
               </button>
             </div>
           </>
@@ -85,13 +112,13 @@ export const Coordinators = () => {
                 ))}
               </motion.div>
             </div>
-            <div className="flex justify-center mt-8 sm:mt-10">
+            <div className="flex justify-center mt-8 sm:mt-10 w-full">
               <button
                 onClick={() => setViewAll(true)}
-                className="btn-metallic flex items-center gap-2 text-sm sm:text-base px-4 sm:px-6 py-2 sm:py-3"
+                className="btn-metallic mx-auto block items-center gap-2 text-sm sm:text-base px-4 sm:px-6 py-2 sm:py-3"
               >
-                <Grid className="w-4 h-4" />
-                View All
+                <Grid className="w-4 h-4 inline-block" />
+                <span className="inline-block">View All</span>
               </button>
             </div>
           </>
@@ -134,17 +161,7 @@ export const Coordinators = () => {
               {selectedCoordinator.bio}
             </p>
             <div className="space-y-3">
-              <div className="flex items-center gap-3 text-xs sm:text-sm text-foreground-secondary flex-wrap">
-                <Linkedin className="w-4 h-4 text-atom-primary flex-shrink-0" />
-                <a
-                  href={`https://${selectedCoordinator.linkedin}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:underline break-all"
-                >
-                  {selectedCoordinator.linkedin}
-                </a>
-              </div>
+              {renderLinkedIn()}
             </div>
           </motion.div>
         </motion.div>
