@@ -1141,7 +1141,7 @@ const EventDetailPage: React.FC = () => {
                     transition={{ duration: 0.5, delay: 0.9 }}
                     className="space-y-4"
                   >
-                    <a
+                    {/* <a
                       href="tel:7904826830"
                       className="flex flex-col items-center justify-center gap-2 w-full bg-gradient-to-r from-cyan-600/30 to-blue-600/30 hover:from-cyan-600/50 hover:to-blue-600/50 text-white py-4 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-cyan-500/30 hover:scale-105 border border-cyan-400/20 group/phone"
                     >
@@ -1152,7 +1152,7 @@ const EventDetailPage: React.FC = () => {
                         <span className="text-lg font-semibold">7904826830</span>
                       </div>
                       <span className="text-sm text-cyan-200/80 font-medium">Dharshan Kumar J</span>
-                    </a>
+                    </a> */}
 
                     <a
                       href="tel:9345639487"

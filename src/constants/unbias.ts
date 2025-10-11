@@ -44,14 +44,6 @@ export const unbiasClub = {
       linkedin: "linkedin.com/in/ronnie-a-jeffrey",
     },
     {
-      name: "Pooja",
-      role: "Educator",
-      image: Pooja,
-      isMain: false,
-      bio: "",
-      linkedin: "linkedin.com/in/pooja-s-1190862b8",
-    },
-    {
       name: "Aparna",
       role: "Educator",
       image: Aparna,
