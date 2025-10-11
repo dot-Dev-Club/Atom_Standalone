@@ -102,18 +102,18 @@ export const events: Event[] = [
     category: "Ceremony",
     eventType: "free",
   },
-  {
-    id: 9,
-    title: "Digital Disruption and Employability Seminar",
-    date: "2025-08-14",
-    location: "DSCS Gallery Hall",
-    description:
-      "Seminar exploring how digital disruption impacts employability, led by Dr. Radhakrishnan Subramaniam.",
-    image: "/EVENTS/Digital Disruption and Employability Seminar.jpg",
-    status: "past",
-    category: "Seminar",
-    eventType: "free",
-  },
+  // {
+  //   id: 9,
+  //   title: "Digital Disruption and Employability Seminar",
+  //   date: "2025-08-14",
+  //   location: "DSCS Gallery Hall",
+  //   description:
+  //     "Seminar exploring how digital disruption impacts employability, led by Dr. Radhakrishnan Subramaniam.",
+  //   image: "/EVENTS/Digital Disruption and Employability Seminar.jpg",
+  //   status: "past",
+  //   category: "Seminar",
+  //   eventType: "free",
+  // },
   {
     id: 10,
     title: "Full Stack Development Bootcamp",
