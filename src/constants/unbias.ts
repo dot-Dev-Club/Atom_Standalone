@@ -76,7 +76,7 @@ export const unbiasClub = {
       linkedin: "linkedin.com/in/vasuki-g-0b31a9288",
     },
     {
-      name: "Lebiraja",
+      name: "Lebi Raja",
       role: "Educator",
       image: Lebi,
       isMain: false,
