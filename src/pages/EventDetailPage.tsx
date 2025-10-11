@@ -291,7 +291,7 @@ const EventDetailPage: React.FC = () => {
           initial={{ opacity: 0, y: 50, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 1, ease: "easeOut" }}
-          className="relative w-full h-80 lg:h-96 overflow-hidden rounded-3xl mb-12 shadow-2xl group"
+          className="relative w-full h-96 sm:h-[28rem] lg:h-[32rem] overflow-hidden rounded-3xl mb-12 shadow-2xl group"
         >
           {/* Multi-layered background gradients */}
           <div className="absolute inset-0 bg-gradient-to-br from-blue-900/80 via-slate-900/60 to-cyan-900/80 z-10"></div>
@@ -421,10 +421,10 @@ const EventDetailPage: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+        {/* Content Grid - Full width for past events, 2-column for upcoming */}
+        <div className={`grid grid-cols-1 gap-6 lg:gap-8 ${event.status === 'upcoming' && !isExpired ? 'lg:grid-cols-3' : ''}`}>
           {/* Main Content Column */}
-          <div className="lg:col-span-2 space-y-6 lg:space-y-8">
+          <div className={`space-y-6 lg:space-y-8 ${event.status === 'upcoming' && !isExpired ? 'lg:col-span-2' : 'max-w-6xl mx-auto w-full'}`}>
             {/* Key Information Cards */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -834,6 +834,80 @@ const EventDetailPage: React.FC = () => {
                 </motion.div>
               </div>
             </motion.div>
+
+            {/* Event Gallery - Show if gallery images exist */}
+            {event.gallery && event.gallery.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.5 }}
+                whileHover={{
+                  scale: 1.01,
+                  y: -10,
+                  rotateY: -2,
+                  rotateX: 2
+                }}
+                className="glass-card p-8 rounded-2xl relative overflow-hidden group cursor-pointer"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 58, 138, 0.4) 100%)',
+                  backdropFilter: 'blur(25px)',
+                  border: '1px solid rgba(59, 130, 246, 0.15)',
+                  boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(59, 130, 246, 0.1), 0 0 20px rgba(59, 130, 246, 0.1)',
+                  transition: 'box-shadow 0.4s ease-out'
+                }}
+              >
+                {/* Enhanced background patterns */}
+                <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 rounded-full blur-3xl animate-pulse"></div>
+                <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-full blur-2xl animate-pulse delay-1000"></div>
+
+                <div className="relative z-10">
+                  <motion.div
+                    initial={{ x: -20, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ duration: 0.6, delay: 0.6 }}
+                    className="flex items-center mb-6"
+                  >
+                    <div>
+                      <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-blue-100 flex items-center gap-3">
+                        <svg className="w-7 h-7 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        Event Gallery
+                      </h2>
+                    </div>
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.8, delay: 0.7 }}
+                    className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
+                  >
+                    {event.gallery.map((imageUrl, index) => (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
+                        whileHover={{ scale: 1.05, y: -5 }}
+                        className="relative overflow-hidden rounded-xl group/img"
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 z-10"></div>
+                        <img
+                          src={imageUrl}
+                          alt={`${event.title} - Image ${index + 1}`}
+                          className="w-full h-56 sm:h-64 object-cover rounded-xl transition-transform duration-300 group-hover/img:scale-110"
+                          loading="lazy"
+                        />
+                        <div className="absolute bottom-0 left-0 right-0 p-3 text-white text-sm font-medium opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 z-20">
+                          Photo {index + 1}
+                        </div>
+                      </motion.div>
+                    ))}
+                  </motion.div>
+                </div>
+              </motion.div>
+            )}
           </div>
 
           {/* Sidebar Column */}
@@ -1109,51 +1183,11 @@ const EventDetailPage: React.FC = () => {
               </motion.div>
             )}
 
-            {/* Past Event Status */}
-            {(event.status !== 'upcoming' || isExpired) && (
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.7 }}
-                whileHover={{
-                  scale: 1.02,
-                  y: -8,
-                  rotateY: -2,
-                  rotateX: -1
-                }}
-                className="glass-card p-8 rounded-2xl text-center relative overflow-hidden group"
-                style={{
-                  background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 58, 138, 0.4) 100%)',
-                  backdropFilter: 'blur(25px)',
-                  border: '1px solid rgba(75, 85, 99, 0.15)',
-                  boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(75, 85, 99, 0.1), 0 0 20px rgba(75, 85, 99, 0.1)',
-                  transition: 'box-shadow 0.4s ease-out'
-                }}
-              >
-                {/* Enhanced background patterns */}
-                <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-gray-500/10 to-gray-600/10 rounded-full blur-3xl animate-pulse"></div>
-                <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-br from-gray-600/10 to-gray-500/10 rounded-full blur-2xl animate-pulse delay-1000"></div>
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-conic from-gray-500/5 via-transparent to-gray-600/5 rounded-full blur-2xl animate-spin" style={{ animationDuration: '20s' }}></div>
-
-                {/* Subtle grid overlay */}
-                <div className="absolute inset-0 opacity-10">
-                  <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(75,85,99,0.05)_25%,rgba(75,85,99,0.05)_50%,transparent_50%,transparent_75%,rgba(75,85,99,0.05)_75%)] bg-[length:20px_20px]"></div>
-                </div>
-
-                <div className="relative z-10">
-                  <h3 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-gray-300 mb-4 drop-shadow-lg">
-                    Event Completed
-                  </h3>
-                  <p className="text-gray-300/80 text-lg font-medium">
-                    This event has ended. Thank you for your interest!
-                  </p>
-                </div>
-              </motion.div>
-            )}
           </div>
         </div>
 
-        {/* Rules & Guidelines */}
+        {/* Rules & Guidelines - Only for upcoming events */}
+        {event.status === 'upcoming' && !isExpired && (
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -1306,6 +1340,7 @@ const EventDetailPage: React.FC = () => {
             </div>
           </motion.div>
         </motion.div>
+        )}
       </div>
     </div>
   );
