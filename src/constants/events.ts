@@ -14,6 +14,7 @@ export interface Event {
   rating?: number;
   registrationLink?: string;
   eventType: 'free' | 'paid';
+  gallery?: string[];
 }
 
 export const events: Event[] = [
@@ -116,14 +117,24 @@ export const events: Event[] = [
   {
     id: 10,
     title: "Full Stack Development Bootcamp",
-    date: "2025-08-04",
+    date: "2025-08-04,2025-08-08",
     location: "DSCS Gallery Hall",
     description:
-      "Build scalable, modern web applications from frontend to backend with industry best practices.",
+      "A comprehensive 5-day bootcamp organized by DotDev Club, held from August 4th to August 8th, 2025. This intensive program covered everything from frontend to backend development.\n\nWhat We Covered:\n\nFrontend Development:\n- Introduction to Full Stack Development\n- React with TypeScript for modern UI development\n- Version Control with Git and GitHub\n- Responsive design principles and best practices\n\nBackend Development:\n- Understanding Backend architecture - APIs, core logic, and databases\n- Working with virtual environments and their importance\n- Database deployment on Render cloud platform\n- Deploying Adminer (DB management tool) using Docker\n- Introduction to Docker and containerization\n- Hands-on API hosting and testing\n\nThis bootcamp provided students with practical, industry-relevant skills to build scalable, modern web applications from scratch. Participants gained hands-on experience with the complete development workflow, from frontend design to backend deployment.",
     image: "/EVENTS/FULL STACK  Development BOOTCAMP.jpg",
     status: "past",
     category: "Bootcamp",
     eventType: "free",
+    gallery: [
+      "https://media.licdn.com/dms/image/v2/D5622AQGohdYBIUmqLw/feedshare-shrink_1280/B56ZlJMWfGIAAs-/0/1757869600899?e=1762992000&v=beta&t=GnzFq_vkE6syo_Zux9swdswaKMypurkRqAjzBpIZ2l0",
+      "https://media.licdn.com/dms/image/v2/D5622AQF1Jknx_nSSPw/feedshare-shrink_2048_1536/B56ZlJMWeHKAAw-/0/1757869600371?e=1762992000&v=beta&t=bkWP5fRBgbAIUGlgJZl2zXFnlvRt3Y-GKvXa7qplugg",
+      "https://media.licdn.com/dms/image/v2/D5622AQFE7QuukdhUJw/feedshare-shrink_1280/B56ZlJMWdrJoAs-/0/1757869600069?e=1762992000&v=beta&t=fZ_kkSjhEwwgGBCHULTBgKhI2JU2k_jZyraN2F75drQ",
+      "https://media.licdn.com/dms/image/v2/D5622AQEVedO0mlUQZQ/feedshare-shrink_2048_1536/B56ZlJeJJSJoAw-/0/1757874276268?e=1762992000&v=beta&t=bCldE38oT7xZDOTVPCERuJVZ528u-jcjrk5gRyDgarA",
+      "https://media.licdn.com/dms/image/v2/D5622AQFAm7VDtvyAjA/feedshare-shrink_1280/B56ZlJeJKrHUAs-/0/1757874284296?e=1762992000&v=beta&t=zdT0-DHX_Mw-VqKI4_itlWPcCHZL1gvUiM7tDTRr-sw",
+      "https://media.licdn.com/dms/image/v2/D4D22AQF4Q1TwPFIycA/feedshare-shrink_1280/B4DZlJUy1nH0As-/0/1757871824199?e=1762992000&v=beta&t=gTyhmHp4HEs4BkmZExH7lM7_U6-BKjRTFnPLxs9bW_0",
+      "https://media.licdn.com/dms/image/v2/D4D22AQGHnnbAZS8mdA/feedshare-shrink_2048_1536/B4DZlJUy1uJMAw-/0/1757871832406?e=1762992000&v=beta&t=RhldbGEBHHWf3XS1-D87mwBe6rTM55H_b_zqANyENbE",
+      "https://media.licdn.com/dms/image/v2/D5622AQH69yUM4siZXw/feedshare-shrink_2048_1536/B56ZlJMWeaHQAw-/0/1757869601352?e=1762992000&v=beta&t=xlGNAxeWF-b52c6D-yX__Bj21U_mJYbcrf7yIeliYNQ"
+    ]
   },
   {
     id: 11,
