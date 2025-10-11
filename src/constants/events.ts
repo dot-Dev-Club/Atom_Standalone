@@ -28,7 +28,7 @@ export const events: Event[] = [
   time: "09:00 AM",
   location: "Karunya Institute of Technology and Sciences, Coimbatore",
   description:
-    "",
+    "Battle of Binaries 1.0 - CTF Competition",
   image: "/EVENTS/Battle of Binaries 1.0.jpg",
   status: "upcoming",
   category: "Competition",
@@ -83,11 +83,16 @@ export const events: Event[] = [
     date: "2025-08-28",
     location: "DSCS Gallery Hall",
     description:
-      "A deep dive into Tamil Nadu's startup and innovation ecosystem, presented by Mr. Premkumar Samuel.",
+      "An insightful webinar on the topic 'The Entrepreneurial Ecosystem in Tamil Nadu' was conducted by Mr. Samuel Premkumar. The students found the session highly informative and felt motivated by the opportunities shared to explore entrepreneurship.",
     image: "/EVENTS/The Entrepreneurial Ecosystem in Tamil Nadu.jpg",
     status: "past",
     category: "Seminar",
     eventType: "free",
+    gallery: [
+      "/EVENTS/The_Entrepreneurial_Ecosystem_1.jpg",
+      "/EVENTS/The_Entrepreneurial_Ecosystem_2.jpg",
+      "/EVENTS/The_Entrepreneurial_Ecosystem_3.jpg"
+    ]
   },
   {
     id: 8,
