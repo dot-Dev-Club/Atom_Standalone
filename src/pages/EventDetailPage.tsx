@@ -425,11 +425,104 @@ const EventDetailPage: React.FC = () => {
         <div className={`grid grid-cols-1 gap-6 lg:gap-8 ${event.status === 'upcoming' && !isExpired ? 'lg:grid-cols-3' : ''}`}>
           {/* Main Content Column */}
           <div className={`space-y-6 lg:space-y-8 ${event.status === 'upcoming' && !isExpired ? 'lg:col-span-2' : 'max-w-6xl mx-auto w-full'}`}>
+            
+            {/* CompTIA Partner Section - Only for Battle of Binaries (Shown FIRST for Maximum Impact) */}
+            {event.id === 1 && (
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+                whileHover={{
+                  scale: 1.02,
+                  y: -10,
+                  rotateY: 2,
+                  rotateX: -2
+                }}
+                className="glass-card p-6 sm:p-8 rounded-2xl relative overflow-hidden group cursor-pointer"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(220, 38, 38, 0.2) 100%)',
+                  backdropFilter: 'blur(25px)',
+                  border: '1px solid rgba(220, 38, 38, 0.2)',
+                  boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(220, 38, 38, 0.1), 0 0 20px rgba(220, 38, 38, 0.15)',
+                  transition: 'box-shadow 0.4s ease-out'
+                }}
+              >
+                {/* Enhanced background effects */}
+                <div className="absolute inset-0 bg-gradient-to-br from-red-500/10 via-orange-500/10 to-red-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-red-500/15 to-orange-500/15 rounded-full blur-3xl animate-pulse"></div>
+                <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-br from-orange-500/10 to-red-500/10 rounded-full blur-2xl animate-pulse delay-1000"></div>
+
+                <div className="relative z-10">
+                  <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
+                    {/* Text Content */}
+                    <div className="flex-1 text-center sm:text-left">
+                      <motion.div
+                        initial={{ x: -20, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ duration: 0.6, delay: 0.35 }}
+                      >
+                        <h3 className="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-red-100 to-orange-100 mb-2">
+                          Official Partner
+                        </h3>
+                        <p className="text-gray-300 text-sm sm:text-base">
+                          This event is organized in association with CompTIA, a leading provider of vendor-neutral IT certifications
+                        </p>
+                      </motion.div>
+                    </div>
+
+                    {/* CompTIA Logo */}
+                    <motion.div
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ duration: 0.5, delay: 0.4, type: "spring", stiffness: 200 }}
+                      className="flex-shrink-0"
+                    >
+                      <div className="relative group/logo">
+                        <div className="absolute inset-0 bg-gradient-to-r from-red-500/20 to-orange-500/20 rounded-2xl blur-xl group-hover/logo:blur-2xl transition-all duration-300"></div>
+                        <div className="relative bg-white/95 backdrop-blur-sm p-4 sm:p-6 rounded-2xl border border-white/20 hover:border-red-400/40 transition-all duration-300 hover:scale-105">
+                          <img 
+                            src="https://comptiacdn.azureedge.net/webcontent/images/default-source/newsiteupdates/comptia-logo.png?sfvrsn=216cff61_2"
+                            alt="CompTIA Logo" 
+                            className="w-32 sm:w-40 md:w-48 h-auto object-contain"
+                            loading="lazy"
+                          />
+                        </div>
+                      </div>
+                    </motion.div>
+                  </div>
+
+                  {/* Additional Info */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.45 }}
+                    className="mt-6 pt-6 border-t border-white/10"
+                  >
+                    <div className="flex flex-wrap gap-3 justify-center sm:justify-start">
+                      <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-500/20 to-orange-500/20 rounded-lg border border-red-400/30">
+                        <svg className="w-4 h-4 text-red-300" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                        <span className="text-sm font-medium text-white">Industry Recognized</span>
+                      </div>
+                      <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-orange-500/20 to-red-500/20 rounded-lg border border-orange-400/30">
+                        <svg className="w-4 h-4 text-orange-300" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                          <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd" />
+                        </svg>
+                        <span className="text-sm font-medium text-white">Certified Event</span>
+                      </div>
+                    </div>
+                  </motion.div>
+                </div>
+              </motion.div>
+            )}
+
             {/* Key Information Cards */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
+              transition={{ duration: 0.8, delay: 0.35 }}
               className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6"
             >
               <motion.div
@@ -545,7 +638,7 @@ const EventDetailPage: React.FC = () => {
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.35 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
                 whileHover={{
                   scale: 1.02,
                   y: -10,
@@ -570,7 +663,7 @@ const EventDetailPage: React.FC = () => {
                   <motion.div
                     initial={{ x: -20, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
-                    transition={{ duration: 0.6, delay: 0.4 }}
+                    transition={{ duration: 0.6, delay: 0.45 }}
                     className="mb-6"
                   >
                     <h3 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-purple-100 to-violet-100 flex items-center gap-3">
@@ -617,223 +710,87 @@ const EventDetailPage: React.FC = () => {
               </motion.div>
             )}
 
-            {/* CompTIA Partner Section - Only for Battle of Binaries */}
+            {/* About This Event - Only for Battle of Binaries */}
             {event.id === 1 && (
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
+                transition={{ duration: 0.8, delay: 0.45 }}
                 whileHover={{
                   scale: 1.02,
                   y: -10,
                   rotateY: 2,
-                  rotateX: -2
+                  rotateX: 2
                 }}
-                className="glass-card p-6 sm:p-8 rounded-2xl relative overflow-hidden group cursor-pointer"
+                className="glass-card p-8 rounded-2xl relative overflow-hidden group cursor-pointer"
                 style={{
-                  background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(220, 38, 38, 0.2) 100%)',
+                  background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 58, 138, 0.4) 100%)',
                   backdropFilter: 'blur(25px)',
-                  border: '1px solid rgba(220, 38, 38, 0.2)',
-                  boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(220, 38, 38, 0.1), 0 0 20px rgba(220, 38, 38, 0.15)',
+                  border: '1px solid rgba(59, 130, 246, 0.15)',
+                  boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(59, 130, 246, 0.1), 0 0 20px rgba(59, 130, 246, 0.1)',
                   transition: 'box-shadow 0.4s ease-out'
                 }}
               >
-                {/* Enhanced background effects */}
-                <div className="absolute inset-0 bg-gradient-to-br from-red-500/10 via-orange-500/10 to-red-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-red-500/15 to-orange-500/15 rounded-full blur-3xl animate-pulse"></div>
-                <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-br from-orange-500/10 to-red-500/10 rounded-full blur-2xl animate-pulse delay-1000"></div>
+                {/* Enhanced background patterns */}
+                <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 rounded-full blur-3xl animate-pulse"></div>
+                <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-full blur-2xl animate-pulse delay-1000"></div>
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-conic from-blue-500/5 via-transparent to-cyan-500/5 rounded-full blur-2xl animate-spin" style={{ animationDuration: '20s' }}></div>
+
+                {/* Subtle grid overlay */}
+                <div className="absolute inset-0 opacity-10">
+                  <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(59,130,246,0.05)_25%,rgba(59,130,246,0.05)_50%,transparent_50%,transparent_75%,rgba(59,130,246,0.05)_75%)] bg-[length:20px_20px]"></div>
+                </div>
 
                 <div className="relative z-10">
-                  <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
-                    {/* Text Content */}
-                    <div className="flex-1 text-center sm:text-left">
-                      <motion.div
-                        initial={{ x: -20, opacity: 0 }}
-                        animate={{ x: 0, opacity: 1 }}
-                        transition={{ duration: 0.6, delay: 0.45 }}
-                      >
-                        <h3 className="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-red-100 to-orange-100 mb-2">
-                          Official Partner
-                        </h3>
-                        <p className="text-gray-300 text-sm sm:text-base">
-                          This event is organized in association with CompTIA, a leading provider of vendor-neutral IT certifications
-                        </p>
-                      </motion.div>
-                    </div>
-
-                    {/* CompTIA Logo */}
-                    <motion.div
-                      initial={{ scale: 0, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      transition={{ duration: 0.5, delay: 0.5, type: "spring", stiffness: 200 }}
-                      className="flex-shrink-0"
-                    >
-                      <div className="relative group/logo">
-                        <div className="absolute inset-0 bg-gradient-to-r from-red-500/20 to-orange-500/20 rounded-2xl blur-xl group-hover/logo:blur-2xl transition-all duration-300"></div>
-                        <div className="relative bg-white/95 backdrop-blur-sm p-4 sm:p-6 rounded-2xl border border-white/20 hover:border-red-400/40 transition-all duration-300 hover:scale-105">
-                          <img 
-                            src="https://comptiacdn.azureedge.net/webcontent/images/default-source/newsiteupdates/comptia-logo.png?sfvrsn=216cff61_2"
-                            alt="CompTIA Logo" 
-                            className="w-32 sm:w-40 md:w-48 h-auto object-contain"
-                            loading="lazy"
-                          />
-                        </div>
-                      </div>
-                    </motion.div>
-                  </div>
-
-                  {/* Additional Info */}
                   <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.6 }}
-                    className="mt-6 pt-6 border-t border-white/10"
+                    initial={{ x: -20, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ duration: 0.6, delay: 0.5 }}
+                    className="mb-6"
                   >
-                    <div className="flex flex-wrap gap-3 justify-center sm:justify-start">
-                      <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-500/20 to-orange-500/20 rounded-lg border border-red-400/30">
-                        <svg className="w-4 h-4 text-red-300" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                        </svg>
-                        <span className="text-sm font-medium text-white">Industry Recognized</span>
-                      </div>
-                      <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-orange-500/20 to-red-500/20 rounded-lg border border-orange-400/30">
-                        <svg className="w-4 h-4 text-orange-300" fill="currentColor" viewBox="0 0 20 20">
-                          <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
-                          <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd" />
-                        </svg>
-                        <span className="text-sm font-medium text-white">Certified Event</span>
-                      </div>
+                    <h3 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-100 to-cyan-100 flex items-center gap-3">
+                      <svg className="w-7 h-7 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      About This Event
+                    </h3>
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.8, delay: 0.55 }}
+                    className="prose prose-invert max-w-none"
+                  >
+                    <div className="text-gray-300 leading-relaxed space-y-4">
+                      <p className="text-gray-300 mb-4 leading-relaxed text-base">
+                        Get ready for the ultimate Capture The Flag (CTF) competition! Battle of Binaries 1.0 is a premier cybersecurity competition organized in association with CompTIA, designed to test your skills in ethical hacking, cryptography, reverse engineering, web exploitation, and more.
+                      </p>
+                      
+                      <p className="text-gray-300 mb-4 leading-relaxed text-base">
+                        Compete in real-time challenges with progressive difficulty levels and win amazing prizes including vouchers worth ₹75,000!
+                      </p>
+                      
+                      <p className="text-gray-300 mb-4 leading-relaxed text-base font-semibold">
+                        Important Information:
+                      </p>
+                      
+                      <p className="mb-4">
+                        <strong className="text-white font-bold text-lg">Registration Deadline: October 15, 2025</strong>
+                      </p>
+                      
+                      <p className="text-gray-300 mb-4 leading-relaxed text-base">
+                        Limited seats available - First-come, First-served basis. Register now to secure your spot!
+                      </p>
+                      
+                      <p className="mb-4">
+                        <strong className="text-white font-bold text-lg">Format: Individual challenges with real-time scoreboard</strong>
+                      </p>
                     </div>
                   </motion.div>
                 </div>
               </motion.div>
             )}
-
-            {/* Enhanced About This Event */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              whileHover={{
-                scale: 1.02,
-                y: -10,
-                rotateY: 2,
-                rotateX: 2
-              }}
-              className="glass-card p-8 rounded-2xl relative overflow-hidden group cursor-pointer"
-              style={{
-                background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 58, 138, 0.4) 100%)',
-                backdropFilter: 'blur(25px)',
-                border: '1px solid rgba(59, 130, 246, 0.15)',
-                boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(59, 130, 246, 0.1), 0 0 20px rgba(59, 130, 246, 0.1)',
-                transition: 'box-shadow 0.4s ease-out'
-              }}
-            >
-              {/* Enhanced background patterns */}
-              <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 rounded-full blur-3xl animate-pulse"></div>
-              <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-full blur-2xl animate-pulse delay-1000"></div>
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-conic from-blue-500/5 via-transparent to-cyan-500/5 rounded-full blur-2xl animate-spin" style={{ animationDuration: '20s' }}></div>
-
-              {/* Subtle grid overlay */}
-              <div className="absolute inset-0 opacity-10">
-                <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(59,130,246,0.05)_25%,rgba(59,130,246,0.05)_50%,transparent_50%,transparent_75%,rgba(59,130,246,0.05)_75%)] bg-[length:20px_20px]"></div>
-              </div>
-
-              <div className="relative z-10">
-                <motion.div
-                  initial={{ x: -20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ duration: 0.6, delay: 0.5 }}
-                  className="flex items-center mb-6"
-                >
-                  <div>
-                    <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-blue-100">About This Event</h2>
-                  </div>
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.8, delay: 0.6 }}
-                  className="prose prose-invert max-w-none"
-                >
-                  <div className="text-gray-300 leading-relaxed text-lg space-y-4">
-                    <ReactMarkdown
-                      components={{
-                        h1: ({ children }) => (
-                          <h1 className="text-4xl font-bold text-white mb-6 mt-8 first:mt-0">
-                            {children}
-                          </h1>
-                        ),
-                        h2: ({ children }) => (
-                          <h2 className="text-3xl font-bold text-white mb-4 mt-6">
-                            {children}
-                          </h2>
-                        ),
-                        h3: ({ children }) => (
-                          <h3 className="text-2xl font-bold text-white mb-3 mt-5">
-                            {children}
-                          </h3>
-                        ),
-                        p: ({ children }) => (
-                          <p className="text-gray-300 mb-4 leading-relaxed">
-                            {children}
-                          </p>
-                        ),
-                        ul: ({ children }) => (
-                          <ul className="text-gray-300 mb-4 ml-6 space-y-2">
-                            {children}
-                          </ul>
-                        ),
-                        ol: ({ children }) => (
-                          <ol className="text-gray-300 mb-4 ml-6 space-y-2">
-                            {children}
-                          </ol>
-                        ),
-                        li: ({ children }) => (
-                          <li className="flex items-start">
-                            <span className="text-gray-400 mr-3 mt-1.5 text-xs">•</span>
-                            <span className="leading-relaxed">{children}</span>
-                          </li>
-                        ),
-                        strong: ({ children }) => (
-                          <strong className="text-white font-semibold">
-                            {children}
-                          </strong>
-                        ),
-                        em: ({ children }) => (
-                          <em className="text-gray-200 italic">
-                            {children}
-                          </em>
-                        ),
-                        code: ({ children }) => (
-                          <code className="bg-gray-800 text-gray-200 px-2 py-1 rounded text-sm font-mono">
-                            {children}
-                          </code>
-                        ),
-                        blockquote: ({ children }) => (
-                          <blockquote className="border-l-4 border-gray-600 pl-6 pr-4 py-4 my-6 italic text-gray-300">
-                            {children}
-                          </blockquote>
-                        ),
-                        a: ({ children, href }) => (
-                          <a
-                            href={href}
-                            className="text-blue-400 hover:text-blue-300 underline"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            {children}
-                          </a>
-                        ),
-                      }}
-                    >
-                      {event.description}
-                    </ReactMarkdown>
-                  </div>
-                </motion.div>
-              </div>
-            </motion.div>
 
             {/* Event Gallery - Show if gallery images exist */}
             {event.gallery && event.gallery.length > 0 && (
