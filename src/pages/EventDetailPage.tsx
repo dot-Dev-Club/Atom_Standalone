@@ -710,8 +710,8 @@ const EventDetailPage: React.FC = () => {
               </motion.div>
             )}
 
-            {/* About This Event - Only for Battle of Binaries */}
-            {event.id === 1 && (
+            {/* About This Event - Show for all events with descriptions */}
+            {event.description && event.description.trim() !== '' && (
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -762,31 +762,89 @@ const EventDetailPage: React.FC = () => {
                     transition={{ duration: 0.8, delay: 0.55 }}
                     className="prose prose-invert max-w-none"
                   >
-                    <div className="text-gray-300 leading-relaxed space-y-4">
-                      <p className="text-gray-300 mb-4 leading-relaxed text-base">
-                        Get ready for the ultimate Capture The Flag (CTF) competition! Battle of Binaries 1.0 is a premier cybersecurity competition organized in association with CompTIA, designed to test your skills in ethical hacking, cryptography, reverse engineering, web exploitation, and more.
-                      </p>
-                      
-                      <p className="text-gray-300 mb-4 leading-relaxed text-base">
-                        Compete in real-time challenges with progressive difficulty levels and win amazing prizes including vouchers worth ₹75,000!
-                      </p>
-                      
-                      <p className="text-gray-300 mb-4 leading-relaxed text-base font-semibold">
-                        Important Information:
-                      </p>
-                      
-                      <p className="mb-4">
-                        <strong className="text-white font-bold text-lg">Registration Deadline: October 15, 2025</strong>
-                      </p>
-                      
-                      <p className="text-gray-300 mb-4 leading-relaxed text-base">
-                        Limited seats available - First-come, First-served basis. Register now to secure your spot!
-                      </p>
-                      
-                      <p className="mb-4">
-                        <strong className="text-white font-bold text-lg">Format: Individual challenges with real-time scoreboard</strong>
-                      </p>
-                    </div>
+                    {event.id === 1 ? (
+                      // Custom content for Battle of Binaries
+                      <div className="text-gray-300 leading-relaxed space-y-4">
+                        <p className="text-gray-300 mb-4 leading-relaxed text-base">
+                          Get ready for the ultimate Capture The Flag (CTF) competition! Battle of Binaries 1.0 is a premier cybersecurity competition organized in association with CompTIA, designed to test your skills in ethical hacking, cryptography, reverse engineering, web exploitation, and more.
+                        </p>
+                        
+                        <p className="text-gray-300 mb-4 leading-relaxed text-base">
+                          Compete in real-time challenges with progressive difficulty levels and win amazing prizes including vouchers worth ₹75,000!
+                        </p>
+                        
+                        <p className="text-gray-300 mb-4 leading-relaxed text-base font-semibold">
+                          Important Information:
+                        </p>
+                        
+                        <p className="mb-4">
+                          <strong className="text-white font-bold text-lg">Registration Deadline: October 15, 2025</strong>
+                        </p>
+                        
+                        <p className="text-gray-300 mb-4 leading-relaxed text-base">
+                          Limited seats available - First-come, First-served basis. Register now to secure your spot!
+                        </p>
+                        
+                        <p className="mb-4">
+                          <strong className="text-white font-bold text-lg">Format: Individual challenges with real-time scoreboard</strong>
+                        </p>
+                      </div>
+                    ) : (
+                      // Dynamic content for all other events
+                      <div className="text-gray-300 leading-relaxed space-y-4">
+                        <ReactMarkdown
+                          components={{
+                            h1: ({ children }) => (
+                              <h1 className="text-3xl font-bold text-white mb-4 mt-6 first:mt-0">
+                                {children}
+                              </h1>
+                            ),
+                            h2: ({ children }) => (
+                              <h2 className="text-2xl font-bold text-white mb-3 mt-5">
+                                {children}
+                              </h2>
+                            ),
+                            h3: ({ children }) => (
+                              <h3 className="text-xl font-bold text-white mb-2 mt-4">
+                                {children}
+                              </h3>
+                            ),
+                            p: ({ children }) => (
+                              <p className="text-gray-300 mb-4 leading-relaxed text-base">
+                                {children}
+                              </p>
+                            ),
+                            ul: ({ children }) => (
+                              <ul className="text-gray-300 mb-4 ml-6 space-y-2 list-disc">
+                                {children}
+                              </ul>
+                            ),
+                            ol: ({ children }) => (
+                              <ol className="text-gray-300 mb-4 ml-6 space-y-2 list-decimal">
+                                {children}
+                              </ol>
+                            ),
+                            li: ({ children }) => (
+                              <li className="leading-relaxed text-base">
+                                {children}
+                              </li>
+                            ),
+                            strong: ({ children }) => (
+                              <strong className="text-white font-bold">
+                                {children}
+                              </strong>
+                            ),
+                            em: ({ children }) => (
+                              <em className="text-gray-200 italic">
+                                {children}
+                              </em>
+                            ),
+                          }}
+                        >
+                          {event.description}
+                        </ReactMarkdown>
+                      </div>
+                    )}
                   </motion.div>
                 </div>
               </motion.div>
