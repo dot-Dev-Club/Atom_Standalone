@@ -1,0 +1,215 @@
+/* Hover Card Style */
+.hover-card {
+  position: relative;
+  width: 100%;
+  min-height: 400px;
+  height: auto;
+  background: linear-gradient(-45deg, rgb(0, 153, 255) 0%, cyan 100%);
+  overflow: hidden;
+  border: 1px solid black;
+  box-shadow: rgba(141, 177, 205, 0.618) 0px 40px 30px -25px;
+  transition: all 0.5s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  border-radius: 1rem;
+}
+
+.hover-card:hover {
+  transform: scale(1.08);
+  box-shadow: rgba(141, 177, 205, 0.618) 0px 30px 30px -25px;
+}
+
+.hover-card .icons-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  z-index: 999;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+/* Hide icons when any box is hovered */
+.hover-card:has(.box:hover) .icons-container {
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+}
+
+.hover-card .icons-container .svg {
+  stroke: white;
+  width: 20px;
+  transition: transform 0.5s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+}
+
+.hover-card .icons-container .svg:hover {
+  transform: scale(1.5);
+  stroke: black;
+}
+
+.hover-card .icons-container .twitter {
+  fill: white;
+}
+
+.hover-card .icons-container .twitter:hover {
+  fill: black;
+  stroke: none;
+}
+
+.hover-card .logo {
+  width: 50px;
+  padding: 1rem;
+}
+
+.hover-card .logo .svg {
+  fill: white;
+}
+
+.hover-card .logo img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.hover-card .main-title {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: White;
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-align: center;
+  z-index: 10;
+  max-width: 80%;
+  padding: 2rem;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+/* Hide main title when hovering over the card */
+.hover-card:has(.box:hover) .main-title {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.8);
+  pointer-events: none;
+}
+
+.hover-card .box {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  box-shadow: rgba(66, 66, 66, 0.349) 5px 0px 10px 0px inset;
+  transition: all 0.5s ease-in-out;
+  display: grid;
+  place-content: center;
+  padding: 2rem 2rem 3rem 2rem;
+  border: 1px solid black;
+}
+
+.hover-card .box .content {
+  position: relative;
+  transform: translateY(-100%);
+  opacity: 0;
+  transition: all 0.5s ease-in-out 0.3s;
+}
+
+.hover-card .box .content .box-title {
+  display: block;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.hover-card .box .content .box-text {
+  color: rgba(255, 255, 255, 0.738);
+  font-size: 0.8rem;
+}
+
+.hover-card .box:hover {
+  right: 0;
+  top: 0;
+  border-radius: 0;
+  border: 1px solid transparent;
+  box-shadow: rgba(66, 66, 66, 0) 5px 0px 10px 0px inset;
+}
+
+.hover-card .box:hover .content {
+  transform: translate(0, 0);
+  opacity: 1;
+}
+
+.hover-card .box1 {
+  top: -85%;
+  right: -40%;
+  background: rgb(255, 112, 60);
+  border-radius: 200px;
+}
+
+.hover-card .box2 {
+  top: -70%;
+  right: -45%;
+  background: rgb(255, 174, 0);
+  border-radius: 200px;
+}
+
+.hover-card .box3 {
+  top: -62%;
+  right: -30%;
+  background: rgb(255, 194, 52);
+  border-radius: 200px;
+}
+
+/* Additional styling for content */
+.hover-card .box .content h3 {
+  color: white;
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0.75rem;
+}
+
+.hover-card .box .content p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.hover-card .box .content ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.hover-card .box .content li {
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 0.5rem;
+}
+
+/* Icon styling */
+.hover-card .icons-container .icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  color: white;
+}
+
+.hover-card .icons-container .icon:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+.hover-card .icons-container .icon svg {
+  color: white;
+}
+
+/* Image styling */
+.hover-card .box .content img {
+  border-radius: 0.5rem;
+  margin-bottom: 0.75rem;
+}

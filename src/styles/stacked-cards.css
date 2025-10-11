@@ -1,0 +1,303 @@
+/* Stacked Cards Hover Style */
+.stacked-cards-container {
+  display: flex;
+  padding: 20px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  max-width: fit-content;
+}
+
+/* Mobile scroll wrapper */
+@media (max-width: 768px) {
+  .w-full.overflow-x-auto {
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(139, 92, 246, 0.3) transparent;
+  }
+
+  .w-full.overflow-x-auto::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .w-full.overflow-x-auto::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .w-full.overflow-x-auto::-webkit-scrollbar-thumb {
+    background: rgba(139, 92, 246, 0.3);
+    border-radius: 3px;
+  }
+
+  .w-full.overflow-x-auto::-webkit-scrollbar-thumb:hover {
+    background: rgba(139, 92, 246, 0.5);
+  }
+}
+
+
+.stacked-card {
+  display: flex;
+  flex-direction: column;
+  height: 280px;
+  width: 200px;
+  background-color: #2b223f;
+  border-radius: 10px;
+  box-shadow: -1rem 0 3rem #00000044;
+  margin-left: -80px;
+  transition: 0.4s ease-out;
+  position: relative;
+  left: 0px;
+  padding: 20px;
+}
+
+.stacked-card:not(:first-child) {
+  margin-left: -50px;
+}
+
+.stacked-card:hover {
+  transform: translateY(-20px);
+  transition: 0.4s ease-out;
+  text-shadow: 2px 2px 8px #6e5b94;
+}
+
+.stacked-card:hover ~ .stacked-card {
+  position: relative;
+  left: 50px;
+  transform: rotateX(-15deg) rotateY(10deg);
+  transition: 0.4s ease-out;
+}
+
+.stacked-card .card-title {
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 800;
+  position: absolute;
+  left: 20px;
+  top: 15px;
+}
+
+.stacked-card .card-content {
+  position: absolute;
+  padding: 20px;
+  top: 60px;
+  color: #eae0fd;
+  font-size: 0.7rem;
+  line-height: 1.4;
+}
+
+.stacked-card .card-btn {
+  position: absolute;
+  top: 195px;
+  margin: 0 20px;
+  left: 0;
+  width: 120px;
+  height: 32px;
+  border-radius: 8px;
+  border: none;
+  background-color: #4a2f7c;
+  color: #fff;
+  transition: 0.4s ease-out;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.stacked-card .card-btn:hover {
+  transition: 0.4s ease-out;
+  background-color: #8a4ff8;
+  color: #ffffff;
+  box-shadow: 0px 0px 20px rgba(157, 71, 255, 0.5),
+    0px 5px 5px -1px rgba(163, 58, 233, 0.25),
+    inset 4px 4px 8px rgba(219, 175, 255, 0.5),
+    inset -4px -4px 8px rgba(137, 19, 216, 0.35);
+}
+
+.stacked-card .card-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 5px;
+  width: 100%;
+}
+
+.stacked-card .emptybar {
+  background-color: #201c29;
+  width: 100%;
+  height: 100%;
+}
+
+.stacked-card .filledbar {
+  position: absolute;
+  top: 0px;
+  z-index: 3;
+  width: 0px;
+  height: 100%;
+  background: #d059ff;
+  background: linear-gradient(90deg, #6831cfab, #a777ff 100%);
+  transition: 0.6s ease-out;
+}
+
+.stacked-card:hover .filledbar {
+  width: 100%;
+  transition: 0.4s ease-out;
+}
+
+.stacked-card .stroke {
+  stroke: white;
+  stroke-dasharray: 360;
+  stroke-dashoffset: 360;
+  transition: 0.6s ease-out;
+}
+
+.stacked-card:hover .stroke {
+  stroke-dashoffset: 100;
+  transition: 0.6s ease-out;
+}
+
+/* Single card without stacking */
+.stacked-card.single-card {
+  margin-left: 0;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .stacked-cards-container {
+    padding: 15px 20px 15px 10px;
+    overflow-x: visible;
+    overflow-y: visible;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    min-width: min-content;
+  }
+
+  .stacked-card {
+    flex-shrink: 0;
+    width: 180px;
+    height: 260px;
+  }
+
+  .stacked-card:first-child {
+    margin-left: 0;
+  }
+
+  .stacked-card:not(:first-child) {
+    margin-left: -40px;
+  }
+
+  .stacked-card:hover {
+    transform: translateY(-20px);
+    z-index: 10;
+  }
+
+  .stacked-card:hover ~ .stacked-card {
+    position: relative;
+    left: 40px;
+    transform: rotateX(-15deg) rotateY(10deg);
+  }
+
+  .stacked-card .card-title {
+    font-size: 18px;
+    top: 12px;
+    left: 20px;
+  }
+
+  .stacked-card .card-content {
+    font-size: 0.65rem;
+    top: 50px;
+    padding: 20px;
+  }
+
+  .stacked-card .card-btn {
+    top: 175px;
+    width: 110px;
+    height: 30px;
+    font-size: 13px;
+    margin: 0 20px;
+    left: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .stacked-cards-container {
+    padding: 12px 15px 12px 8px;
+  }
+
+  .stacked-card {
+    width: 170px;
+    height: 250px;
+  }
+
+  .stacked-card:first-child {
+    margin-left: 0;
+  }
+
+  .stacked-card:not(:first-child) {
+    margin-left: -35px;
+  }
+
+  .stacked-card:hover ~ .stacked-card {
+    left: 35px;
+  }
+
+  .stacked-card .card-title {
+    font-size: 17px;
+    left: 15px;
+    top: 10px;
+  }
+
+  .stacked-card .card-content {
+    font-size: 0.6rem;
+    top: 45px;
+    padding: 15px;
+  }
+
+  .stacked-card .card-btn {
+    top: 165px;
+    width: 105px;
+    margin: 0 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stacked-cards-container {
+    padding: 10px 12px 10px 5px;
+  }
+
+  .stacked-card {
+    width: 160px;
+    height: 240px;
+  }
+
+  .stacked-card:first-child {
+    margin-left: 0;
+  }
+
+  .stacked-card:not(:first-child) {
+    margin-left: -30px;
+  }
+
+  .stacked-card:hover ~ .stacked-card {
+    left: 30px;
+  }
+
+  .stacked-card .card-title {
+    font-size: 16px;
+    left: 12px;
+  }
+
+  .stacked-card .card-content {
+    font-size: 0.58rem;
+    top: 42px;
+    padding: 12px;
+  }
+
+  .stacked-card .card-btn {
+    top: 160px;
+    width: 100px;
+    margin: 0 12px;
+  }
+}
+
+
+

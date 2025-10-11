@@ -1,0 +1,728 @@
+/* Flip Clock Countdown Styles - Original Design */
+
+.flip-clock-wrapper {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  flex-wrap: wrap;
+  transition: transform 0.3s ease;
+}
+
+.flip-clock-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.flip-clock-unit:hover {
+  transform: translateY(-10px) scale(1.05);
+  filter: brightness(1.2);
+}
+
+.flip-clock-container {
+  height: 120px;
+  position: relative;
+  text-align: center;
+  display: flex;
+  gap: 15px;
+}
+
+.flip-clock-label {
+  color: #94a3b8;
+  font-size: 18px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  text-shadow: 0 0 10px rgba(148, 163, 184, 0.5);
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.flip-clock-unit:hover .flip-clock-label {
+  color: #cbd5e1;
+  text-shadow: 0 0 20px rgba(148, 163, 184, 0.8), 0 0 30px rgba(59, 130, 246, 0.6);
+}
+
+/* Original Design - Base Styles */
+.nums {
+  box-shadow: 
+    0 3px 10px rgba(0, 0, 0, 0.8),
+    0 10px 30px rgba(0, 0, 0, 0.4);
+  border-top: 1px solid #393939;
+  display: inline-block;
+  height: 120px;
+  perspective: 1000px;
+  position: relative;
+  width: 80px;
+  border-radius: 8px;
+  overflow: visible;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.flip-clock-unit:hover .nums {
+  box-shadow: 
+    0 5px 15px rgba(59, 130, 246, 0.4),
+    0 15px 40px rgba(59, 130, 246, 0.3),
+    0 0 20px rgba(59, 130, 246, 0.2);
+  transform: scale(1.02);
+}
+
+.nums:before {
+  border-bottom: 2px solid rgba(0, 0, 0, 0.9);
+  content: "";
+  height: 2px;
+  left: 0;
+  position: absolute;
+  transform: translate3d(0, -1px, 0);
+  top: 50%;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.nums:after {
+  backface-visibility: hidden;
+  background: #2a2a2a;
+  border-bottom: 1px solid #444444;
+  border-top: 1px solid black;
+  border-radius: 0 0 5px 5px;
+  bottom: 0;
+  box-shadow: inset 0 15px 50px #202020;
+  color: #eeeeee;
+  content: attr(data-current);
+  display: block;
+  font-size: 85px;
+  height: calc(50% - 1px);
+  left: 0;
+  line-height: 0;
+  font-weight: 900 !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+  position: absolute;
+  text-align: center;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  z-index: 0;
+}
+
+/* Flip card structure */
+.flip-card {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+/* Back card parts (always visible - shows current number) */
+.flip-card-back-top,
+.flip-card-back-bottom {
+  position: absolute;
+  width: 100%;
+  height: 50%;
+  left: 0;
+  backface-visibility: hidden;
+  color: #eeeeee;
+  font-size: 85px;
+  font-weight: 900 !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+.flip-card-back-top {
+  top: 0;
+  background: linear-gradient(180deg, #222 0%, #181818 100%);
+  border-radius: 8px 8px 0 0;
+  box-shadow: inset 0 15px 50px rgba(0, 0, 0, 0.8);
+  line-height: 120px;
+  padding-top: 0;
+  clip-path: inset(0 0 0 0);
+}
+
+.flip-card-back-bottom {
+  bottom: 0;
+  background: linear-gradient(180deg, #2a2a2a 0%, #1f1f1f 100%);
+  border-radius: 0 0 8px 8px;
+  border-top: 1px solid #333;
+  box-shadow: inset 0 -15px 50px rgba(0, 0, 0, 0.6);
+  line-height: 0;
+  padding-bottom: 0;
+  clip-path: inset(0 0 0 0);
+}
+
+/* Front card parts (visible during flip - shows old/new numbers) */
+.flip-card-active {
+  z-index: 100;
+}
+
+.flip-card-front-top,
+.flip-card-front-bottom {
+  position: absolute;
+  width: 100%;
+  height: 50%;
+  left: 0;
+  backface-visibility: hidden;
+  color: #eeeeee;
+  font-size: 85px;
+  font-weight: 900 !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  transform-style: preserve-3d;
+}
+
+/* Top half that flips down (shows old number) */
+.flip-card-front-top {
+  top: 0;
+  background: linear-gradient(180deg, #222 0%, #181818 100%);
+  border-radius: 8px 8px 0 0;
+  box-shadow: inset 0 15px 50px rgba(0, 0, 0, 0.8);
+  line-height: 120px;
+  transform-origin: bottom;
+  animation: flipTop 0.6s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+}
+
+/* Bottom half that appears (shows new number) */
+.flip-card-front-bottom {
+  bottom: 0;
+  background: linear-gradient(180deg, #2a2a2a 0%, #1f1f1f 100%);
+  border-radius: 0 0 8px 8px;
+  border-top: 1px solid #333;
+  box-shadow: inset 0 -15px 50px rgba(0, 0, 0, 0.6);
+  line-height: 0;
+  transform-origin: top;
+  transform: rotateX(90deg);
+  animation: flipBottom 0.6s cubic-bezier(0.4, 0.0, 0.2, 1) 0.3s forwards;
+}
+
+/* Flip animations */
+@keyframes flipTop {
+  0% {
+    transform: rotateX(0deg);
+  }
+  100% {
+    transform: rotateX(-90deg);
+  }
+}
+
+@keyframes flipBottom {
+  0% {
+    transform: rotateX(90deg);
+  }
+  100% {
+    transform: rotateX(0deg);
+  }
+}
+
+/* Mobile Flip Animation - Classic Style */
+@keyframes mobileFlipCard {
+  0% {
+    transform: rotateX(0deg);
+    z-index: 50;
+  }
+  50% {
+    transform: rotateX(-90deg);
+    z-index: 50;
+  }
+  100% {
+    transform: rotateX(-180deg);
+    z-index: 50;
+  }
+}
+
+/* Size variations - Small */
+.flip-clock-sm .nums,
+.flip-clock-sm.nums {
+  height: 80px;
+  width: 55px;
+}
+
+.flip-clock-sm .nums:after,
+.flip-clock-sm .num {
+  font-size: 55px;
+}
+
+.flip-clock-sm .num:before {
+  line-height: 1.38;
+}
+
+.flip-clock-sm .flip-clock-container {
+  height: 80px;
+}
+
+/* Size variations - Medium (default) */
+.flip-clock-md .nums,
+.flip-clock-md.nums {
+  height: 120px;
+  width: 80px;
+}
+
+.flip-clock-md .nums:after,
+.flip-clock-md .num {
+  font-size: 85px;
+}
+
+.flip-clock-md .num:before {
+  line-height: 1.38;
+}
+
+.flip-clock-md .flip-clock-container {
+  height: 120px;
+}
+
+/* Size variations - Large */
+.flip-clock-lg .nums,
+.flip-clock-lg.nums {
+  height: 160px;
+  width: 110px;
+}
+
+.flip-clock-lg .nums:after,
+.flip-clock-lg .num {
+  font-size: 115px;
+}
+
+.flip-clock-lg .num:before {
+  line-height: 1.38;
+}
+
+.flip-clock-lg .flip-clock-container {
+  height: 160px;
+}
+
+/* Mobile Responsive Design - Proper Scaling */
+
+/* Tablet */
+@media (max-width: 768px) {
+  .flip-clock-wrapper {
+    gap: 20px;
+    padding: 15px 10px;
+    overflow: visible;
+  }
+
+  .flip-clock-unit {
+    gap: 12px;
+    overflow: visible;
+  }
+
+  .flip-clock-container {
+    gap: 10px;
+    height: 100px;
+    overflow: visible;
+    perspective: 1000px;
+  }
+
+  .nums {
+    height: 100px !important;
+    width: 70px !important;
+    perspective: 1000px !important;
+    overflow: visible !important;
+    border-radius: 8px !important;
+    transform-style: preserve-3d !important;
+  }
+
+  .nums:before {
+    z-index: 1000 !important;
+  }
+
+  .nums:after {
+    font-size: 70px !important;
+    line-height: 0 !important;
+    border-radius: 0 0 8px 8px !important;
+  }
+
+  .flip-card {
+    transform-style: preserve-3d !important;
+    position: absolute !important;
+    width: 100% !important;
+    height: 100% !important;
+    top: 0 !important;
+    left: 0 !important;
+    transform: rotateX(0deg);
+    transition: transform 0.6s ease-in;
+  }
+
+  .flip-card-active {
+    z-index: 100 !important;
+    animation: mobileFlipCard 0.6s ease-in forwards !important;
+  }
+
+  .flip-card-back-top,
+  .flip-card-back-bottom,
+  .flip-card-front-top,
+  .flip-card-front-bottom {
+    backface-visibility: hidden !important;
+    -webkit-backface-visibility: hidden !important;
+  }
+
+  .flip-card-back-top {
+    font-size: 70px !important;
+    line-height: 100px !important;
+    top: 0 !important;
+    border-radius: 8px 8px 0 0 !important;
+    height: 50% !important;
+    overflow: hidden !important;
+  }
+
+  .flip-card-back-bottom {
+    font-size: 70px !important;
+    line-height: 0 !important;
+    bottom: 0 !important;
+    border-radius: 0 0 8px 8px !important;
+    height: 50% !important;
+    overflow: hidden !important;
+  }
+
+  .flip-card-front-top {
+    font-size: 70px !important;
+    line-height: 100px !important;
+    top: 0 !important;
+    border-radius: 8px 8px 0 0 !important;
+    height: 50% !important;
+    overflow: hidden !important;
+  }
+
+  .flip-card-front-bottom {
+    font-size: 70px !important;
+    line-height: 0 !important;
+    bottom: 0 !important;
+    border-radius: 0 0 8px 8px !important;
+    height: 50% !important;
+    overflow: hidden !important;
+    transform: rotateX(180deg) !important;
+  }
+
+  .flip-clock-label {
+    font-size: 14px;
+    letter-spacing: 2px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .flip-clock-wrapper {
+    gap: 15px;
+    padding: 12px 8px;
+    overflow: visible;
+  }
+
+  .flip-clock-unit {
+    gap: 10px;
+    overflow: visible;
+  }
+
+  .flip-clock-container {
+    gap: 8px;
+    height: 80px;
+    overflow: visible;
+    perspective: 1000px;
+  }
+
+  .nums {
+    height: 80px !important;
+    width: 56px !important;
+    perspective: 1000px !important;
+    overflow: visible !important;
+    border-radius: 8px !important;
+    transform-style: preserve-3d !important;
+  }
+
+  .nums:before {
+    z-index: 1000 !important;
+  }
+
+  .nums:after {
+    font-size: 56px !important;
+    line-height: 0 !important;
+    border-radius: 0 0 8px 8px !important;
+  }
+
+  .flip-card {
+    transform-style: preserve-3d !important;
+    position: absolute !important;
+    width: 100% !important;
+    height: 100% !important;
+    top: 0 !important;
+    left: 0 !important;
+    transform: rotateX(0deg);
+    transition: transform 0.6s ease-in;
+  }
+
+  .flip-card-active {
+    z-index: 100 !important;
+    animation: mobileFlipCard 0.6s ease-in forwards !important;
+  }
+
+  .flip-card-back-top,
+  .flip-card-back-bottom,
+  .flip-card-front-top,
+  .flip-card-front-bottom {
+    backface-visibility: hidden !important;
+    -webkit-backface-visibility: hidden !important;
+  }
+
+  .flip-card-back-top {
+    font-size: 56px !important;
+    line-height: 80px !important;
+    top: 0 !important;
+    border-radius: 8px 8px 0 0 !important;
+    height: 50% !important;
+    overflow: hidden !important;
+  }
+
+  .flip-card-back-bottom {
+    font-size: 56px !important;
+    line-height: 0 !important;
+    bottom: 0 !important;
+    border-radius: 0 0 8px 8px !important;
+    height: 50% !important;
+    overflow: hidden !important;
+  }
+
+  .flip-card-front-top {
+    font-size: 56px !important;
+    line-height: 80px !important;
+    top: 0 !important;
+    border-radius: 8px 8px 0 0 !important;
+    height: 50% !important;
+    overflow: hidden !important;
+  }
+
+  .flip-card-front-bottom {
+    font-size: 56px !important;
+    line-height: 0 !important;
+    bottom: 0 !important;
+    border-radius: 0 0 8px 8px !important;
+    height: 50% !important;
+    overflow: hidden !important;
+    transform: rotateX(180deg) !important;
+  }
+
+  .flip-clock-label {
+    font-size: 12px;
+    letter-spacing: 1.8px;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .flip-clock-wrapper {
+    gap: 12px;
+    padding: 10px 5px;
+    overflow: visible;
+  }
+
+  .flip-clock-unit {
+    gap: 8px;
+    overflow: visible;
+  }
+
+  .flip-clock-container {
+    gap: 6px;
+    height: 70px;
+    overflow: visible;
+    perspective: 1000px;
+  }
+
+  .nums {
+    height: 70px !important;
+    width: 49px !important;
+    perspective: 1000px !important;
+    overflow: visible !important;
+    border-radius: 8px !important;
+    transform-style: preserve-3d !important;
+  }
+
+  .nums:before {
+    z-index: 1000 !important;
+  }
+
+  .nums:after {
+    font-size: 49px !important;
+    line-height: 0 !important;
+    border-radius: 0 0 8px 8px !important;
+  }
+
+  .flip-card {
+    transform-style: preserve-3d !important;
+    position: absolute !important;
+    width: 100% !important;
+    height: 100% !important;
+    top: 0 !important;
+    left: 0 !important;
+    transform: rotateX(0deg);
+    transition: transform 0.6s ease-in;
+  }
+
+  .flip-card-active {
+    z-index: 100 !important;
+    animation: mobileFlipCard 0.6s ease-in forwards !important;
+  }
+
+  .flip-card-back-top,
+  .flip-card-back-bottom,
+  .flip-card-front-top,
+  .flip-card-front-bottom {
+    backface-visibility: hidden !important;
+    -webkit-backface-visibility: hidden !important;
+  }
+
+  .flip-card-back-top {
+    font-size: 49px !important;
+    line-height: 70px !important;
+    top: 0 !important;
+    border-radius: 8px 8px 0 0 !important;
+    height: 50% !important;
+    overflow: hidden !important;
+  }
+
+  .flip-card-back-bottom {
+    font-size: 49px !important;
+    line-height: 0 !important;
+    bottom: 0 !important;
+    border-radius: 0 0 8px 8px !important;
+    height: 50% !important;
+    overflow: hidden !important;
+  }
+
+  .flip-card-front-top {
+    font-size: 49px !important;
+    line-height: 70px !important;
+    top: 0 !important;
+    border-radius: 8px 8px 0 0 !important;
+    height: 50% !important;
+    overflow: hidden !important;
+  }
+
+  .flip-card-front-bottom {
+    font-size: 49px !important;
+    line-height: 0 !important;
+    bottom: 0 !important;
+    border-radius: 0 0 8px 8px !important;
+    height: 50% !important;
+    overflow: hidden !important;
+    transform: rotateX(180deg) !important;
+  }
+
+  .flip-clock-label {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+  }
+}
+
+/* Extra Small Mobile */
+@media (max-width: 380px) {
+  .flip-clock-wrapper {
+    gap: 10px;
+    padding: 8px 4px;
+    overflow: visible;
+  }
+
+  .flip-clock-unit {
+    gap: 6px;
+    overflow: visible;
+  }
+
+  .flip-clock-container {
+    gap: 5px;
+    height: 60px;
+    overflow: visible;
+    perspective: 1000px;
+  }
+
+  .nums {
+    height: 60px !important;
+    width: 42px !important;
+    perspective: 1000px !important;
+    overflow: visible !important;
+    border-radius: 8px !important;
+    transform-style: preserve-3d !important;
+  }
+
+  .nums:before {
+    z-index: 1000 !important;
+  }
+
+  .nums:after {
+    font-size: 42px !important;
+    line-height: 0 !important;
+    border-radius: 0 0 8px 8px !important;
+  }
+
+  .flip-card {
+    transform-style: preserve-3d !important;
+    position: absolute !important;
+    width: 100% !important;
+    height: 100% !important;
+    top: 0 !important;
+    left: 0 !important;
+    transform: rotateX(0deg);
+    transition: transform 0.6s ease-in;
+  }
+
+  .flip-card-active {
+    z-index: 100 !important;
+    animation: mobileFlipCard 0.6s ease-in forwards !important;
+  }
+
+  .flip-card-back-top,
+  .flip-card-back-bottom,
+  .flip-card-front-top,
+  .flip-card-front-bottom {
+    backface-visibility: hidden !important;
+    -webkit-backface-visibility: hidden !important;
+  }
+
+  .flip-card-back-top {
+    font-size: 42px !important;
+    line-height: 60px !important;
+    top: 0 !important;
+    border-radius: 8px 8px 0 0 !important;
+    height: 50% !important;
+    overflow: hidden !important;
+  }
+
+  .flip-card-back-bottom {
+    font-size: 42px !important;
+    line-height: 0 !important;
+    bottom: 0 !important;
+    border-radius: 0 0 8px 8px !important;
+    height: 50% !important;
+    overflow: hidden !important;
+  }
+
+  .flip-card-front-top {
+    font-size: 42px !important;
+    line-height: 60px !important;
+    top: 0 !important;
+    border-radius: 8px 8px 0 0 !important;
+    height: 50% !important;
+    overflow: hidden !important;
+  }
+
+  .flip-card-front-bottom {
+    font-size: 42px !important;
+    line-height: 0 !important;
+    bottom: 0 !important;
+    border-radius: 0 0 8px 8px !important;
+    height: 50% !important;
+    overflow: hidden !important;
+    transform: rotateX(180deg) !important;
+  }
+
+  .flip-clock-label {
+    font-size: 9px;
+    letter-spacing: 1px;
+  }
+}
+
+
+

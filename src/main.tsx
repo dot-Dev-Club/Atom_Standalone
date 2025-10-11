@@ -1,7 +1,11 @@
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
+import "./styles/events.css";
+import "./styles/event-enhancements.css";
+import "./styles/event-card-enhancements.css";
 import "./styles/image-protection.css";
+import "./components/ui/flip-clock-countdown.css";
 import { performanceUtils } from "./utils/performanceOptimization.tsx";
 
 // Log bundle information and performance metrics

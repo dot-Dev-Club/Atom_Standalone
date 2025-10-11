@@ -4,11 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Import style files */
-@import './styles/events.css';
-@import './styles/event-enhancements.css';
-@import './styles/event-card-enhancements.css';
-
 /* ATOM Club Design System - Blue & Metallic Theme */
 
 @layer base {
