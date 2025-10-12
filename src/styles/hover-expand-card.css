@@ -1,32 +1,47 @@
 /* Hover Expand Card Style */
 .hover-expand-card {
   width: 260px;
-  height: 140px;
+  height: 100px;
   padding: 0.75rem;
-  background: rgba(198, 198, 198, 0.34);
+  background: linear-gradient(135deg, rgba(30, 58, 138, 0.8) 0%, rgba(37, 99, 235, 0.8) 50%, rgba(59, 130, 246, 0.8) 100%);
   border-radius: 8px;
-  backdrop-filter: blur(5px);
-  border-bottom: 3px solid rgba(255, 255, 255, 0.440);
-  border-left: 2px rgba(255, 255, 255, 0.545) outset;
+  backdrop-filter: blur(10px);
+  border-bottom: 3px solid rgba(96, 165, 250, 0.5);
+  border-left: 2px solid rgba(147, 197, 253, 0.5);
   box-shadow: -40px 50px 30px rgba(0, 0, 0, 0.280);
   transform: skewX(10deg);
   transition: .4s;
   overflow: hidden;
   color: white;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .hover-expand-card:hover {
-  height: 340px;
+  height: 200px;
   transform: skew(0deg);
+  background: linear-gradient(135deg, rgba(30, 64, 175, 0.9) 0%, rgba(37, 99, 235, 0.9) 50%, rgba(59, 130, 246, 0.9) 100%);
+  box-shadow: 0 20px 60px rgba(59, 130, 246, 0.4);
 }
 
 .hover-expand-card .align {
-  padding: 1rem;
+  padding: 0.5rem 1rem;
   display: flex;
   flex-direction: row;
   gap: 5px;
   align-self: flex-start;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.hover-expand-card:hover .align {
+  opacity: 1;
 }
 
 .hover-expand-card .red {
@@ -55,11 +70,17 @@
 
 .hover-expand-card h1 {
   text-align: center;
-  margin: 1.3rem;
+  margin: 0;
   color: rgb(218, 244, 237);
   text-shadow: -10px 5px 10px rgba(0, 0, 0, 0.573);
   font-size: 1.5rem;
   font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.hover-expand-card:hover h1 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
 }
 
 .hover-expand-card p {
@@ -68,6 +89,15 @@
   color: rgba(255, 255, 255, 0.9);
   font-size: 0.9rem;
   line-height: 1.5;
+  opacity: 0;
+  max-height: 0;
+  transition: opacity 0.3s ease, max-height 0.3s ease;
+  overflow: hidden;
+}
+
+.hover-expand-card:hover p {
+  opacity: 1;
+  max-height: 200px;
 }
 
 /* Mobile Responsive Styles */
@@ -76,22 +106,31 @@
     width: 100%;
     max-width: 300px;
     margin: 0 auto;
+    height: 90px;
+  }
+  
+  .hover-expand-card:hover {
+    height: 180px;
   }
 }
 
 @media (max-width: 640px) {
   .hover-expand-card {
     max-width: 280px;
-    height: 130px;
+    height: 80px;
   }
 
   .hover-expand-card:hover {
-    height: 320px;
+    height: 170px;
   }
 
   .hover-expand-card h1 {
     font-size: 1.3rem;
-    margin: 1rem;
+  }
+  
+  .hover-expand-card:hover h1 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.8rem;
   }
 
   .hover-expand-card p {

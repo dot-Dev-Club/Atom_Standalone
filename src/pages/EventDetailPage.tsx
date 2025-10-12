@@ -726,24 +726,67 @@ const EventDetailPage: React.FC = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
-                className="flex justify-center lg:justify-end mt-48 mr-0"
+                className="flex flex-col justify-center lg:justify-end items-center lg:items-end mt-48 mr-0 gap-6"
+                onMouseEnter={() => setShowRegistrationOptions(true)}
+                onMouseLeave={() => setShowRegistrationOptions(false)}
               >
-                <div className="hover-expand-card" onClick={() => setShowRegistrationOptions(!showRegistrationOptions)}>
+                {/* Hover Card - Always visible at the top */}
+                <div className="hover-expand-card">
                   <div className="align">
                     <span className="red"></span>
                     <span className="yellow"></span>
                     <span className="green"></span>
                   </div>
 
-                  <h1>Join the Experience</h1>
+                  <h1>Register Now!</h1>
                   <p>
-                    Get ready for an amazing cybersecurity competition. Register now to secure your spot and compete with the best!
+                    Get ready for an amazing cybersecurity competition. Hover to choose your registration type!
                   </p>
                 </div>
+
+                {/* Registration Buttons - Show below on hover */}
+                {showRegistrationOptions && (
+                  <div className="space-y-4 flex flex-col items-center lg:items-end w-full">
+                    <motion.div
+                      initial={{ y: -20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.3, delay: 0.1 }}
+                      style={{ width: '260px' }}
+                    >
+                      <Button
+                        onClick={() => navigate('/registration/internal')}
+                        className="w-full bg-gradient-to-r from-blue-600/90 to-blue-500/90 hover:from-blue-600 hover:to-blue-500 text-white py-6 font-bold rounded-2xl transition-all duration-300 flex flex-col items-center gap-2 shadow-xl hover:shadow-blue-500/40 hover:scale-105 group border border-blue-400/30 relative overflow-hidden"
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+                        <div className="text-center relative z-10">
+                          <span className="text-xl font-bold block">Internal Registration</span>
+                        </div>
+                      </Button>
+                    </motion.div>
+
+                    <motion.div
+                      initial={{ y: -20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.3, delay: 0.2 }}
+                      style={{ width: '260px' }}
+                    >
+                      <Button
+                        onClick={() => navigate('/registration/external')}
+                        className="w-full bg-gradient-to-r from-cyan-600/90 to-blue-600/90 hover:from-cyan-500 hover:to-blue-500 text-white py-6 font-bold rounded-2xl transition-all duration-300 flex flex-col items-center gap-2 shadow-xl hover:shadow-cyan-500/40 hover:scale-105 group border border-cyan-400/30 relative overflow-hidden"
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+                        <div className="text-center relative z-10">
+                          <span className="text-xl font-bold block">External Registration</span>
+                        </div>
+                      </Button>
+                    </motion.div>
+                  </div>
+                )}
               </motion.div>
             )}
 
-            {showRegistrationOptions && event.status === 'upcoming' && !isExpired && (
+            {/* Remove the duplicate registration options section below */}
+            {false && showRegistrationOptions && event.status === 'upcoming' && !isExpired && (
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
