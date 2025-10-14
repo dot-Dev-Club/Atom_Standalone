@@ -59,7 +59,7 @@ export const dotdevClub = {
       image: Manisha,
       isMain: false,
       bio: "",
-      linkedin: "",
+      linkedin: "linkedin.com/in/manisha-c",
     },
     {
       name: "Varsha S",

@@ -65,6 +65,28 @@ export const Clubs = () => {
     );
   };
 
+  // Helper to render a centered LinkedIn anchor for a coordinator
+  const renderCoordinatorLinkedIn = (coordinator?: typeof clubs[0]["coordinators"][0] | null) => {
+    if (!coordinator || !coordinator.linkedin) return null;
+    const raw = coordinator.linkedin as string;
+    const url = raw.startsWith('http') ? raw : `https://${raw}`;
+
+    return (
+      <div className="w-full flex justify-center">
+        <a
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 text-sm text-blue-600 hover:text-blue-700 max-w-[520px] w-full justify-center px-2"
+          aria-label={`Open ${coordinator.name}'s LinkedIn`}
+        >
+          <Linkedin className="w-4 h-4 text-blue-600 flex-shrink-0" />
+          <span className="truncate block max-w-[420px] text-center">{raw}</span>
+        </a>
+      </div>
+    );
+  };
+
   if (clubPage) {
     const Icon = clubPage.icon;
     return (
@@ -272,19 +294,7 @@ export const Clubs = () => {
                 </div>
               )}
 
-              {selectedCoordinator.linkedin && (
-                <div className="flex justify-center items-center gap-2 flex-wrap">
-                  <Linkedin className="w-4 h-4 text-blue-600 flex-shrink-0" />
-                  <a
-                    href={`https://${selectedCoordinator.linkedin}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-600 hover:text-blue-700 text-xs sm:text-sm break-all transition-colors duration-200"
-                  >
-                    {selectedCoordinator.linkedin}
-                  </a>
-                </div>
-              )}
+                {renderCoordinatorLinkedIn(selectedCoordinator)}
             </motion.div>
           </div>
         )}
@@ -517,19 +527,7 @@ export const Clubs = () => {
               </div>
             )}
 
-            {selectedCoordinator.linkedin && (
-              <div className="flex justify-center items-center gap-2">
-                <Linkedin className="w-4 h-4 text-blue-600" />
-                <a
-                  href={selectedCoordinator.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-600 hover:text-blue-700 text-sm break-all transition-colors duration-200"
-                >
-                  {selectedCoordinator.linkedin}
-                </a>
-              </div>
-            )}
+              {renderCoordinatorLinkedIn(selectedCoordinator)}
           </motion.div>
         </motion.div>
       )}
