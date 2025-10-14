@@ -5,15 +5,20 @@ import Darshan from '@/assets/Dharshan_KumarJ.jpg';
 import Manisha from '@/assets/Manisha.jpg';
 import Monish from "@/assets/Monish.jpeg";
 import Varsha from '@/assets/Varsha.jpg';
-import Dot1 from "@/assets/Dot1.jpg"; 
-import Dot2 from "@/assets/Dot2.jpg"; 
-import Dot3 from "@/assets/Dot3.jpg"; 
-import Dot4 from "@/assets/Dot4.jpg"; 
-import Dot5 from "@/assets/Dot5.jpg"; 
-import Dot6 from "@/assets/Dot6.jpg"; 
-import Dot7 from "@/assets/Dot7.jpg"; 
-import Dot8 from "@/assets/Dot8.jpg"; 
-import Dot9 from "@/assets/Dot9.jpg"; 
+import Dot1 from "@/assets/DOTDEV/Dot1.jpg"; 
+import Dot2 from "@/assets/DOTDEV/Dot2.jpg"; 
+import Dot3 from "@/assets/DOTDEV/Dot3.jpg"; 
+import Dot4 from "@/assets/DOTDEV/Dot4.jpg"; 
+import Dot5 from "@/assets/DOTDEV/Dot5.jpg"; 
+import Dot6 from "@/assets/DOTDEV/Dot6.jpg"; 
+import Dot7 from "@/assets/DOTDEV/Dot7.jpg"; 
+import Dot8 from "@/assets/DOTDEV/Dot8.jpg"; 
+import Dot9 from "@/assets/DOTDEV/Dot9.jpg";
+import Dot10 from "@/assets/DOTDEV/Dot10.jpg";
+import Dot11 from "@/assets/DOTDEV/Dot11.jpg";
+import Dot12 from "@/assets/DOTDEV/Dot12.jpg";
+import Dot13 from "@/assets/DOTDEV/Dot13.jpg";
+import Dot14 from "@/assets/DOTDEV/Dot14.jpg";
 import DotIcon from "@/assets/Dot.ico";
 
 export { DotIcon };
@@ -105,5 +110,10 @@ export const dotdevClub = {
     Dot7,
     Dot8,
     Dot9,
+    Dot10,
+    Dot11,
+    Dot12,
+    Dot13,
+    Dot14,
   ]
 };

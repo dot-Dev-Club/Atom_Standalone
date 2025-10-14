@@ -6,12 +6,15 @@ import Lebi from '@/assets/UNBIAS/Lebi.jpg';
 import Thirupathy from '@/assets/Thirupathi S.jpg';
 import Pooja from '@/assets/UNBIAS/Pooja.jpg';
 import Vasuki from '@/assets/UNBIAS/Vasuki.jpg';
-import Bias1 from "@/assets/UNBIAS/Unbias1.jpg";
+// Note: Unbias1.jpg, Unbias3.jpg, and Unbias7.jpg don't exist
+import Bias1 from "@/assets/UNBIAS/IMG-20250913-WA0012.jpg";
 import Bias2 from "@/assets/UNBIAS/Unbias2.jpg";
-import Bias3 from "@/assets/UNBIAS/Unbias3.jpg";
 import Bias4 from "@/assets/UNBIAS/Unbias4.jpg";
 import Bias6 from "@/assets/UNBIAS/Unbias6.jpg";
-import Bias7 from "@/assets/UNBIAS/Unbias7.jpg";
+import BiasPhoto1 from "@/assets/UNBIAS/PXL_20251014_110651221.jpg";
+import BiasPhoto2 from "@/assets/UNBIAS/PXL_20251014_110656735.jpg";
+import BiasPhoto3 from "@/assets/UNBIAS/PXL_20251014_110701675.jpg";
+import BiasPhoto4 from "@/assets/UNBIAS/PXL_20251014_110723049.jpg";
 import BiasIcon from "@/assets/UNBIAS/Bias.ico";
 
 export { BiasIcon };
@@ -96,9 +99,11 @@ export const unbiasClub = {
   gallery: [
     Bias1,
     Bias2,
-    Bias3,
     Bias4,
     Bias6,
-    Bias7,
+    BiasPhoto1,
+    BiasPhoto2,
+    BiasPhoto3,
+    BiasPhoto4,
   ]
 };
