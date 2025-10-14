@@ -379,8 +379,12 @@ const ImageModal: React.FC<ImageModalProps> = ({
 };
 
 const images = Object.values(
-  import.meta.glob("../assets/PHOTOS/*.{jpg,jpeg,png,gif}", { eager: true, query: "?url", import: "default" })
+  import.meta.glob("../assets/PHOTOS/*.{jpg,jpeg,png,gif,JPG,JPEG,PNG,GIF}", { eager: true, query: "?url", import: "default" })
 );
+
+// Debug: Log loaded images
+console.log('FullPhotoGallery: Loaded images count:', images.length);
+console.log('FullPhotoGallery: First 3 image URLs:', images.slice(0, 3));
 
 const FullPhotoGallery = () => {
   const navigate = useNavigate();

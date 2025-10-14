@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 // List of image URLs from public/PHOTOS
 // Dynamically import all images from src/assets/PHOTOS for a clean, consistent gallery
 const allImages = Object.values(
-  import.meta.glob("../assets/PHOTOS/*.{jpg,jpeg,png,gif}", { eager: true, query: "?url", import: "default" })
+  import.meta.glob("../assets/PHOTOS/*.{jpg,jpeg,png,gif,JPG,JPEG,PNG,GIF}", { eager: true, query: "?url", import: "default" })
 );
 
 const previewCount = 6; // 3×2 grid layout
