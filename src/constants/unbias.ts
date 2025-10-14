@@ -18,7 +18,7 @@ export { BiasIcon };
 
 export const unbiasClub = {
   id: 3,
-  name: "Un Bias Club",
+  name: "UnBiased Club",
   icon: BiasIcon,
   description:
     "The Unbiased AI Club is a student-driven community exploring AI, ML, DL, NLP, Generative AI, and Agents. We encourage hands-on learning, collaboration, and innovation to build impactful projects for our department and beyond.",
@@ -42,6 +42,14 @@ export const unbiasClub = {
       isMain: false,
       bio: "As Junior Coordinator of Unbias, Ronnie A Jeffrey is a winner in NEXUS 2024 and was awarded a special mention at Cyberthon '25. He is passionate about AI and Full Stack development.",
       linkedin: "linkedin.com/in/ronnie-a-jeffrey",
+    },
+    {
+      name: "Pooja",
+      role: "Educator",
+      image: Pooja,
+      isMain: false,
+      bio: "",
+      linkedin: "linkedin.com/in/pooja-s-1190862b8/",
     },
     {
       name: "Aparna",
