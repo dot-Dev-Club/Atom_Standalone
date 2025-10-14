@@ -77,6 +77,13 @@ export const unbiasClub = {
       isMain: false,
       bio: "",
       linkedin: "linkedin.com/in/lebiraja",
+    },{
+      name: "Pooja",
+      role: "Educator",
+      image: Pooja,
+      isMain: false,
+      bio: "",
+      linkedin: "linkedin.com/in/pooja-s-1190862b8",
     }
   ],
   projects: [
