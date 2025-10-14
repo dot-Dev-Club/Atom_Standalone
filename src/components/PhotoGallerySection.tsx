@@ -61,20 +61,44 @@ const PhotoGallerySection = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
           {previewPhotos.map((photo, index) => (
             <motion.div
-              key={index}
+              key={`photo-${photo.src}-${index}`}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.4, delay: index * 0.1 }}
-              className="aspect-[4/3] rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer group"
-              whileHover={{ scale: 1.03, y: -5 }}
+              className="aspect-[4/3] rounded-xl overflow-hidden shadow-lg cursor-pointer relative group"
+              whileHover={{ 
+                scale: 1.03, 
+                y: -5,
+                transition: { duration: 0.3, ease: "easeOut" }
+              }}
+              whileTap={{ scale: 0.98 }}
               onClick={handleNavigateToGallery}
+              style={{ 
+                boxShadow: "0 10px 25px rgba(0, 0, 0, 0.1)",
+              }}
             >
               <img
                 src={photo.src}
                 alt={`Gallery ${index + 1}`}
-                className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110 group-hover:brightness-110"
+                className="w-full h-full object-cover"
+                style={{
+                  transition: "transform 0.5s ease, filter 0.3s ease"
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "scale(1.1)";
+                  e.currentTarget.style.filter = "brightness(1.1)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "scale(1)";
+                  e.currentTarget.style.filter = "brightness(1)";
+                }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300" />
+              <motion.div 
+                className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"
+                initial={{ opacity: 0 }}
+                whileHover={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
+              />
             </motion.div>
           ))}
         </div>
