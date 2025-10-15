@@ -51,20 +51,20 @@ export const dotdevClub = {
       linkedin: "linkedin.com/in/danish-prabhu-0a1691293",
     },
     {
-      name: "Jola Kaseena C",
-      role: "Educator",
-      image: Jola,
-      isMain: false,
-      bio: "",
-      linkedin: "linkedin.com/in/jola-keseena-b0895a2a9",
-    },
-    {
       name: "Manisha S",
       role: "Educator",
       image: Manisha,
       isMain: false,
       bio: "",
       linkedin: "linkedin.com/in/manisha-c",
+    },
+    {
+      name: "Jola Kaseena C",
+      role: "Educator",
+      image: Jola,
+      isMain: false,
+      bio: "",
+      linkedin: "linkedin.com/in/jola-keseena-b0895a2a9",
     },
     {
       name: "Varsha S",
