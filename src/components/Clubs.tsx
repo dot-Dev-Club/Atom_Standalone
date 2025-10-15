@@ -114,10 +114,10 @@ export const Clubs = () => {
             className="text-center mb-8 sm:mb-10 lg:mb-12"
           >
             <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 mx-auto bg-gradient-primary rounded-xl flex items-center justify-center mb-4 sm:mb-6">
-              {clubPage.name === "Dot Dev Club" ? (
-                <img src={DotIcon} alt="Dot Dev Logo" className="w-14 h-14 object-contain mx-auto" style={{ display: 'block' }} />
-              ) : clubPage.name === "Un Bias Club" ? (
-                <img src={BiasIcon} alt="Un Bias Logo" className="w-14 h-14 object-contain mx-auto" style={{ display: 'block' }} />
+              {clubPage.name === "DotDev Club" ? (
+                <img src={DotIcon} alt="DotDev Logo" className="w-14 h-14 object-contain mx-auto" style={{ display: 'block' }} />
+              ) : clubPage.name === "Unbiased Club" ? (
+                <img src={BiasIcon} alt="Unbiased Logo" className="w-14 h-14 object-contain mx-auto" style={{ display: 'block' }} />
               ) : clubPage.name === "Hack Hive Club" ? (
                 <img src={HackIcon} alt="Hack Hive Logo" className="w-14 h-14 object-contain mx-auto" style={{ display: 'block' }} />
               ) : typeof clubPage.icon === "string" ? (
@@ -330,10 +330,10 @@ export const Clubs = () => {
                 <div>
                   <div className="relative mb-4 sm:mb-6">
                     <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 mx-auto bg-gradient-primary rounded-xl flex items-center justify-center mb-3 sm:mb-4 group-hover:shadow-electric transition-all duration-300">
-                      {club.name === "Dot Dev Club" ? (
-                        <img src={DotIcon} alt="Dot Dev Logo" className="w-14 h-14 object-contain mx-auto" />
-                      ) : club.name === "Un Bias Club" ? (
-                        <img src={BiasIcon} alt="Un Bias Logo" className="w-14 h-14 object-contain mx-auto" />
+                      {club.name === "DotDev Club" ? (
+                        <img src={DotIcon} alt="DotDev Logo" className="w-14 h-14 object-contain mx-auto" />
+                      ) : club.name === "Unbiased Club" ? (
+                        <img src={BiasIcon} alt="Unbiased Logo" className="w-14 h-14 object-contain mx-auto" />
                       ) : club.name === "Hack Hive Club" ? (
                         <img src={HackIcon} alt="Hack Hive Logo" className="w-14 h-14 object-contain mx-auto" />
                       ) : typeof club.icon === "string" ? (
@@ -400,10 +400,10 @@ export const Clubs = () => {
 
             <div className="text-center mb-8">
               <div className="w-20 h-20 mx-auto bg-gradient-primary rounded-xl flex items-center justify-center mb-4">
-                {selectedClub.name === "Dot Dev Club" ? (
-                  <img src={DotIcon} alt="Dot Dev Logo" className="w-14 h-14 object-contain mx-auto" style={{ display: 'block' }} />
-                ) : selectedClub.name === "Un Bias Club" ? (
-                  <img src={BiasIcon} alt="Un Bias Logo" className="w-14 h-14 object-contain mx-auto" style={{ display: 'block' }} />
+                {selectedClub.name === "DotDev Club" ? (
+                  <img src={DotIcon} alt="DotDev Logo" className="w-14 h-14 object-contain mx-auto" style={{ display: 'block' }} />
+                ) : selectedClub.name === "Unbiased Club" ? (
+                  <img src={BiasIcon} alt="Unbiased Logo" className="w-14 h-14 object-contain mx-auto" style={{ display: 'block' }} />
                 ) : selectedClub.name === "Hack Hive Club" ? (
                   <img src={HackIcon} alt="Hack Hive Logo" className="w-14 h-14 object-contain mx-auto" style={{ display: 'block' }} />
                 ) : typeof selectedClub.icon === "string" ? (

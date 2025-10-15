@@ -25,21 +25,21 @@ export { DotIcon };
 
 export const dotdevClub = {
   id: 2,
-  name: "Dot Dev Club",
+  name: "DotDev Club",
   icon: DotIcon,
   description:
     "Dotdev is a student community for aspiring software engineers focused on full-stack development.",
   objectives:
     "Develop members' problem-solving, logical, and communication skills. Master full-stack development through hands-on workshops and collaborative projects. Build a strong, supportive community of student developers.",
   extraInfo:
-    "Dot Dev Club organizes hackathons, code sprints, mentorship sessions, and collaborative projects for members. The club has built over 50+ web applications and mobile apps, with members securing internships at top tech companies.",
+    "DotDev Club organizes hackathons, code sprints, mentorship sessions, and collaborative projects for members. The club has built over 50+ web applications and mobile apps, with members securing internships at top tech companies.",
   coordinators: [
     {
       name: "Dharshan Kumar J",
       role: "Coordinator",
       image: Darshan,
       isMain: true,
-      bio: "As Coordinator of Dot Dev, Dharshan Kumar J is a Finalist of the NEXUS hackathon and a Software Developer skilled in developing Web and Mobile Applications. He is also a co-founder of VelsyMedia and TurpleSpace and has led a Midkraft24 website team.",
+      bio: "As Coordinator of DotDev, Dharshan Kumar J is a Finalist of the NEXUS hackathon and a Software Developer skilled in developing Web and Mobile Applications. He is also a co-founder of VelsyMedia and TurpleSpace and has led a Midkraft24 website team.",
       linkedin: "linkedin.com/in/j-dharshan-kumar",
     },
     {
@@ -47,7 +47,7 @@ export const dotdevClub = {
       role: "Junior Coordinator",
       image: Danish,
       isMain: false,
-      bio: " As Junior Coordinator of Dot Dev, Danish Prabhu K V is a Finalist of the NEXUS Hackathon and is passionate about AI, and software engineering. He works as a freelancer and is currently an intern at GMS (US Based company) earning a stipend of 10k/month.",
+      bio: " As Junior Coordinator of DotDev, Danish Prabhu K V is a Finalist of the NEXUS Hackathon and is passionate about AI, and software engineering. He works as a freelancer and is currently an intern at GMS (US Based company) earning a stipend of 10k/month.",
       linkedin: "linkedin.com/in/danish-prabhu-0a1691293",
     },
     {

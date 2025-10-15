@@ -21,14 +21,14 @@ export { BiasIcon };
 
 export const unbiasClub = {
   id: 3,
-  name: "Un Bias Club",
+  name: "Unbiased Club",
   icon: BiasIcon,
   description:
     "The Unbiased AI Club is a student-driven community exploring AI, ML, DL, NLP, Generative AI, and Agents. We encourage hands-on learning, collaboration, and innovation to build impactful projects for our department and beyond.",
   objectives:
     "Build a strong foundation in AI through regular sessions. Promote hands-on projects and innovation. Foster collaboration and knowledge sharing. Prepare students for research, industry, and competitions. Develop a department-focused AI product.",
   extraInfo:
-    "Un Bias Club conducts weekly AI workshops, research paper discussions, and hands-on ML projects. Members have published 10+ research papers and won multiple AI competitions including national-level hackathons.",
+    "Unbiased Club conducts weekly AI workshops, research paper discussions, and hands-on ML projects. Members have published 10+ research papers and won multiple AI competitions including national-level hackathons.",
   coordinators: [
     {
       name: "Aravindan",
