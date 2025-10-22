@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import EventCard from '@/components/events/EventCard';
-import FeaturedEventCard from '@/components/events/FeaturedEventCard';
 import PastEventTimeline from '@/components/events/PastEventTimeline';
 import { type Event } from '@/constants/events';
-import { getUpcomingEvents, getPastEvents } from '@/utils/dataService';
+import { getEvents } from '@/utils/dataService';
 import { generateSlug } from '@/utils/slug';
 import atomLogo from '@/assets/atom-logo.png';
 import '@/styles/events.css';
@@ -14,14 +12,24 @@ import '@/styles/event-card-enhancements.css';
 
 const Event: React.FC = () => {
   const navigate = useNavigate();
-  const upcomingEvents = getUpcomingEvents();
-  const pastEvents = getPastEvents();
+  const [events, setEvents] = React.useState<Event[]>([]);
 
-  // Debug logging
+  // Load events on mount and clear cache to get fresh data
   useEffect(() => {
-    console.log('Upcoming Events:', upcomingEvents);
-    console.log('Past Events:', pastEvents);
-    upcomingEvents.forEach(event => {
+    // Scroll to top when component mounts
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    
+    // Force clear cached events to get updated data from constants
+    localStorage.removeItem('cms_events');
+    console.log('Cleared cached events data');
+    
+    // Load all events (both upcoming and past)
+    const allEvents = getEvents();
+    
+    setEvents(allEvents);
+    
+    console.log('All Events:', allEvents);
+    allEvents.forEach(event => {
       console.log(`Event: ${event.title}, Image: ${event.image}`);
     });
   }, []);
@@ -94,11 +102,11 @@ const Event: React.FC = () => {
             Experience cutting-edge workshops, hackathons, and tech talks.
           </p>
           <p className="text-xs sm:text-sm text-gray-500 max-w-2xl mx-auto px-3 sm:px-0">
-            Discover all our events in one place - from upcoming exciting events to our past achievements
+            Explore our journey through events, workshops, and achievements
           </p>
         </motion.div>
 
-        {/* Upcoming Events Section */}
+        {/* Events Section - Timeline of all events */}
         <motion.section
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -107,59 +115,15 @@ const Event: React.FC = () => {
         >
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 via-cyan-500 to-blue-400 bg-clip-text text-transparent mb-4">
-              Upcoming Events
+              Events
             </h2>
             <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-              Join us in our upcoming events and be part of the innovation journey
+              Explore our timeline of events, from the latest to our earliest achievements
             </p>
           </div>
 
-          {upcomingEvents.length > 0 ? (
-            <div className="space-y-8">
-              {/* Featured Event - First upcoming event */}
-              {upcomingEvents.slice(0, 1).map((event, index) => (
-                <motion.article
-                  key={event.id}
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  aria-label={`Featured Event: ${event.title}`}
-                  className="w-full"
-                >
-                  <FeaturedEventCard event={event} onClick={() => handleEventClick(event)} />
-                </motion.article>
-              ))}
-
-              {/* Additional Upcoming Events - if more than one */}
-              {upcomingEvents.length > 1 && (
-                <div className="mt-16">
-                  <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.2 }}
-                    className="text-center mb-8"
-                  >
-                    <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
-                      More Upcoming Events
-                    </h3>
-                  </motion.div>
-                  <div className="grid grid-cols-1 xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-3 xs:gap-4 sm:gap-5 md:gap-6 lg:gap-6 xl:gap-8 2xl:gap-8 max-w-6xl xl:max-w-7xl 2xl:max-w-[1920px] mx-auto px-2 xs:px-3 sm:px-0 lg:px-4 xl:px-6 2xl:px-8">
-                    {upcomingEvents.slice(1).map((event, index) => (
-                      <motion.article
-                        key={event.id}
-                        initial={{ opacity: 0, y: 50 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: (index + 1) * 0.1 }}
-                        aria-label={`Event: ${event.title}`}
-                        className="w-full"
-                      >
-                        <EventCard event={event} onClick={() => handleEventClick(event)} />
-                      </motion.article>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
+          {events.length > 0 ? (
+            <PastEventTimeline events={events} onEventClick={handleEventClick} />
           ) : (
             <motion.div
               initial={{ opacity: 0 }}
@@ -168,45 +132,10 @@ const Event: React.FC = () => {
               role="status"
               aria-live="polite"
             >
-              <div className="text-6xl mb-6"></div>
-              <h3 className="text-2xl font-bold text-white mb-4">No Upcoming Events</h3>
+              <div className="text-6xl mb-6">📅</div>
+              <h3 className="text-2xl font-bold text-white mb-4">No Events Yet</h3>
               <p className="text-gray-400 max-w-md mx-auto">
-                Stay tuned! We're planning exciting events. Follow our social media for updates.
-              </p>
-            </motion.div>
-          )}
-        </motion.section>
-
-        {/* Past Events Section */}
-        <motion.section
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="mb-20"
-        >
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-400 via-pink-500 to-purple-400 bg-clip-text text-transparent mb-4">
-              Past Events
-            </h2>
-            <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-              Explore our successful events and achievements from the past
-            </p>
-          </div>
-
-          {pastEvents.length > 0 ? (
-            <PastEventTimeline events={pastEvents} onEventClick={handleEventClick} />
-          ) : (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="text-center py-20"
-              role="status"
-              aria-live="polite"
-            >
-              <div className="text-6xl mb-6"></div>
-              <h3 className="text-2xl font-bold text-white mb-4">No Past Events</h3>
-              <p className="text-gray-400 max-w-md mx-auto">
-                Our event history will appear here after we host our first events.
+                Our events will appear here. Stay tuned for exciting updates!
               </p>
             </motion.div>
           )}

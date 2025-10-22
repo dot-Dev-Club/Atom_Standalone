@@ -21,19 +21,7 @@ export const events: Event[] = [
   // -----------------------------
   // Upcoming Events
   // -----------------------------
-  {
-    id: 100,
-    title: "Exciting Events Coming Soon!",
-    date: "2025-11-15",
-    time: "TBA",
-    location: "To Be Announced",
-    description:
-      "We're preparing amazing events for the upcoming session! Stay tuned for announcements about workshops, competitions, seminars, and more exciting activities. Follow our social media channels and check back soon for updates.",
-    image: "/EVENTS/ATOM INAUGURATION.jpg",
-    status: "upcoming",
-    category: "Announcement",
-    eventType: "free",
-  },
+  // No upcoming events currently - check back soon!
 
 
   // -----------------------------
@@ -56,8 +44,9 @@ export const events: Event[] = [
   },
   {
     id: 4,
-    title: "Software Automation Testing in Java",
+    title: "Software Automation Testing",
     date: "2025-09-30",
+    time: "11:00 AM",
     location: "DSCS Gallery Hall",
     description:
       "Seminar on software automation testing methodologies using Java, conducted by Ms. Chris Zionna.",
