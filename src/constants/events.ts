@@ -22,24 +22,38 @@ export const events: Event[] = [
   // Upcoming Events
   // -----------------------------
   {
-  id: 1,
-  title: "Battle of Binaries 1.0",
-  date: "2025-10-17",
-  time: "09:00 AM",
-  location: "Karunya Institute of Technology and Sciences, Coimbatore",
-  description:
-    "Battle of Binaries 1.0 - CTF Competition",
-  image: "/EVENTS/Battle of Binaries 1.0.jpg",
-  status: "upcoming",
-  category: "Competition",
-  registrationLink: "https://forms.google.com/battle-of-binaries",
-  eventType: "paid",
-},
+    id: 100,
+    title: "Exciting Events Coming Soon!",
+    date: "2025-11-15",
+    time: "TBA",
+    location: "To Be Announced",
+    description:
+      "We're preparing amazing events for the upcoming session! Stay tuned for announcements about workshops, competitions, seminars, and more exciting activities. Follow our social media channels and check back soon for updates.",
+    image: "/EVENTS/ATOM INAUGURATION.jpg",
+    status: "upcoming",
+    category: "Announcement",
+    eventType: "free",
+  },
 
 
   // -----------------------------
   // Past Events (Newest → Oldest)
   // -----------------------------
+  {
+    id: 1,
+    title: "Battle of Binaries 1.0",
+    date: "2025-10-17",
+    time: "09:00 AM",
+    location: "Karunya Institute of Technology and Sciences, Coimbatore",
+    description:
+      "Battle of Binaries 1.0 - CTF (Capture The Flag) Competition. An exciting cybersecurity competition where participants solved challenges related to cryptography, web exploitation, reverse engineering, and more. Teams competed to capture flags and demonstrate their hacking skills in a safe, controlled environment.",
+    image: "/EVENTS/Battle of Binaries 1.0.jpg",
+    status: "past",
+    category: "Competition",
+    eventType: "paid",
+    participants: 150,
+    rating: 4.8,
+  },
   {
     id: 4,
     title: "Software Automation Testing in Java",
