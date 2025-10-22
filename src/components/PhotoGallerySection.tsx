@@ -5,8 +5,12 @@ import { useNavigate } from "react-router-dom";
 // List of image URLs from public/PHOTOS
 // Dynamically import all images from src/assets/PHOTOS for a clean, consistent gallery
 const allImages = Object.values(
-  import.meta.glob("../assets/PHOTOS/*.{jpg,jpeg,png,gif}", { eager: true, query: "?url", import: "default" })
+  import.meta.glob("../assets/PHOTOS/*.{jpg,jpeg,png,gif,JPG,JPEG,PNG,GIF}", { eager: true, query: "?url", import: "default" })
 );
+
+// Debug logging
+console.log('PhotoGallerySection: Total images found:', allImages.length);
+console.log('PhotoGallerySection: First 3 images:', allImages.slice(0, 3));
 
 const previewCount = 6; // 3×2 grid layout
 
@@ -21,24 +25,34 @@ const PhotoGallerySection = () => {
 
   React.useEffect(() => {
     let isMounted = true;
+    console.log('PhotoGallerySection: Starting to load images...');
     Promise.all(
       allImages.map(
-        (src) =>
+        (src, idx) =>
           new Promise((resolve) => {
             const img = new window.Image();
             img.src = String(src);
-            img.onload = () => resolve({ 
-              src, 
-              aspectRatio: img.naturalWidth / img.naturalHeight,
-              width: img.naturalWidth,
-              height: img.naturalHeight
-            });
-            img.onerror = () => resolve(null);
+            console.log(`PhotoGallerySection: Loading image ${idx + 1}/${allImages.length}:`, src);
+            img.onload = () => {
+              console.log(`PhotoGallerySection: ✓ Image ${idx + 1} loaded successfully`);
+              resolve({ 
+                src, 
+                aspectRatio: img.naturalWidth / img.naturalHeight,
+                width: img.naturalWidth,
+                height: img.naturalHeight
+              });
+            };
+            img.onerror = (err) => {
+              console.error(`PhotoGallerySection: ✗ Image ${idx + 1} failed to load:`, src, err);
+              resolve(null);
+            };
           })
       )
     ).then((results) => {
       if (isMounted) {
         const validPhotos = results.filter(Boolean).slice(0, previewCount);
+        console.log('PhotoGallerySection: Valid photos loaded:', validPhotos.length);
+        console.log('PhotoGallerySection: Photos data:', validPhotos);
         setPreviewPhotos(validPhotos);
       }
     });

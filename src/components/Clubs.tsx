@@ -65,6 +65,28 @@ export const Clubs = () => {
     );
   };
 
+  // Helper to render a centered LinkedIn anchor for a coordinator
+  const renderCoordinatorLinkedIn = (coordinator?: typeof clubs[0]["coordinators"][0] | null) => {
+    if (!coordinator || !coordinator.linkedin) return null;
+    const raw = coordinator.linkedin as string;
+    const url = raw.startsWith('http') ? raw : `https://${raw}`;
+
+    return (
+      <div className="w-full flex justify-center">
+        <a
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 text-sm text-blue-600 hover:text-blue-700 max-w-[520px] w-full justify-center px-2"
+          aria-label={`Open ${coordinator.name}'s LinkedIn`}
+        >
+          <Linkedin className="w-4 h-4 text-blue-600 flex-shrink-0" />
+          <span className="truncate block max-w-[420px] text-center">{raw}</span>
+        </a>
+      </div>
+    );
+  };
+
   if (clubPage) {
     const Icon = clubPage.icon;
     return (
@@ -92,10 +114,10 @@ export const Clubs = () => {
             className="text-center mb-8 sm:mb-10 lg:mb-12"
           >
             <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 mx-auto bg-gradient-primary rounded-xl flex items-center justify-center mb-4 sm:mb-6">
-              {clubPage.name === "Dot Dev Club" ? (
-                <img src={DotIcon} alt="Dot Dev Logo" className="w-14 h-14 object-contain mx-auto" style={{ display: 'block' }} />
-              ) : clubPage.name === "Un Bias Club" ? (
-                <img src={BiasIcon} alt="Un Bias Logo" className="w-14 h-14 object-contain mx-auto" style={{ display: 'block' }} />
+              {clubPage.name === "DotDev Club" ? (
+                <img src={DotIcon} alt="DotDev Logo" className="w-14 h-14 object-contain mx-auto" style={{ display: 'block' }} />
+              ) : clubPage.name === "Unbiased Club" ? (
+                <img src={BiasIcon} alt="Unbiased Logo" className="w-14 h-14 object-contain mx-auto" style={{ display: 'block' }} />
               ) : clubPage.name === "Hack Hive Club" ? (
                 <img src={HackIcon} alt="Hack Hive Logo" className="w-14 h-14 object-contain mx-auto" style={{ display: 'block' }} />
               ) : typeof clubPage.icon === "string" ? (
@@ -272,19 +294,7 @@ export const Clubs = () => {
                 </div>
               )}
 
-              {selectedCoordinator.linkedin && (
-                <div className="flex justify-center items-center gap-2 flex-wrap">
-                  <Linkedin className="w-4 h-4 text-blue-600 flex-shrink-0" />
-                  <a
-                    href={`https://${selectedCoordinator.linkedin}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-600 hover:text-blue-700 text-xs sm:text-sm break-all transition-colors duration-200"
-                  >
-                    {selectedCoordinator.linkedin}
-                  </a>
-                </div>
-              )}
+                {renderCoordinatorLinkedIn(selectedCoordinator)}
             </motion.div>
           </div>
         )}
@@ -320,10 +330,10 @@ export const Clubs = () => {
                 <div>
                   <div className="relative mb-4 sm:mb-6">
                     <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 mx-auto bg-gradient-primary rounded-xl flex items-center justify-center mb-3 sm:mb-4 group-hover:shadow-electric transition-all duration-300">
-                      {club.name === "Dot Dev Club" ? (
-                        <img src={DotIcon} alt="Dot Dev Logo" className="w-14 h-14 object-contain mx-auto" />
-                      ) : club.name === "Un Bias Club" ? (
-                        <img src={BiasIcon} alt="Un Bias Logo" className="w-14 h-14 object-contain mx-auto" />
+                      {club.name === "DotDev Club" ? (
+                        <img src={DotIcon} alt="DotDev Logo" className="w-14 h-14 object-contain mx-auto" />
+                      ) : club.name === "Unbiased Club" ? (
+                        <img src={BiasIcon} alt="Unbiased Logo" className="w-14 h-14 object-contain mx-auto" />
                       ) : club.name === "Hack Hive Club" ? (
                         <img src={HackIcon} alt="Hack Hive Logo" className="w-14 h-14 object-contain mx-auto" />
                       ) : typeof club.icon === "string" ? (
@@ -390,10 +400,10 @@ export const Clubs = () => {
 
             <div className="text-center mb-8">
               <div className="w-20 h-20 mx-auto bg-gradient-primary rounded-xl flex items-center justify-center mb-4">
-                {selectedClub.name === "Dot Dev Club" ? (
-                  <img src={DotIcon} alt="Dot Dev Logo" className="w-14 h-14 object-contain mx-auto" style={{ display: 'block' }} />
-                ) : selectedClub.name === "Un Bias Club" ? (
-                  <img src={BiasIcon} alt="Un Bias Logo" className="w-14 h-14 object-contain mx-auto" style={{ display: 'block' }} />
+                {selectedClub.name === "DotDev Club" ? (
+                  <img src={DotIcon} alt="DotDev Logo" className="w-14 h-14 object-contain mx-auto" style={{ display: 'block' }} />
+                ) : selectedClub.name === "Unbiased Club" ? (
+                  <img src={BiasIcon} alt="Unbiased Logo" className="w-14 h-14 object-contain mx-auto" style={{ display: 'block' }} />
                 ) : selectedClub.name === "Hack Hive Club" ? (
                   <img src={HackIcon} alt="Hack Hive Logo" className="w-14 h-14 object-contain mx-auto" style={{ display: 'block' }} />
                 ) : typeof selectedClub.icon === "string" ? (
@@ -517,19 +527,7 @@ export const Clubs = () => {
               </div>
             )}
 
-            {selectedCoordinator.linkedin && (
-              <div className="flex justify-center items-center gap-2">
-                <Linkedin className="w-4 h-4 text-blue-600" />
-                <a
-                  href={selectedCoordinator.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-600 hover:text-blue-700 text-sm break-all transition-colors duration-200"
-                >
-                  {selectedCoordinator.linkedin}
-                </a>
-              </div>
-            )}
+              {renderCoordinatorLinkedIn(selectedCoordinator)}
           </motion.div>
         </motion.div>
       )}

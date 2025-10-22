@@ -6,26 +6,29 @@ import Lebi from '@/assets/UNBIAS/Lebi.jpg';
 import Thirupathy from '@/assets/Thirupathi S.jpg';
 import Pooja from '@/assets/UNBIAS/Pooja.jpg';
 import Vasuki from '@/assets/UNBIAS/Vasuki.jpg';
-import Bias1 from "@/assets/UNBIAS/Unbias1.jpg";
+// Note: Unbias1.jpg, Unbias3.jpg, and Unbias7.jpg don't exist
+import Bias1 from "@/assets/UNBIAS/IMG-20250913-WA0012.jpg";
 import Bias2 from "@/assets/UNBIAS/Unbias2.jpg";
-import Bias3 from "@/assets/UNBIAS/Unbias3.jpg";
 import Bias4 from "@/assets/UNBIAS/Unbias4.jpg";
 import Bias6 from "@/assets/UNBIAS/Unbias6.jpg";
-import Bias7 from "@/assets/UNBIAS/Unbias7.jpg";
+import BiasPhoto1 from "@/assets/UNBIAS/PXL_20251014_110651221.jpg";
+import BiasPhoto2 from "@/assets/UNBIAS/PXL_20251014_110656735.jpg";
+import BiasPhoto3 from "@/assets/UNBIAS/PXL_20251014_110701675.jpg";
+import BiasPhoto4 from "@/assets/UNBIAS/PXL_20251014_110723049.jpg";
 import BiasIcon from "@/assets/UNBIAS/Bias.ico";
 
 export { BiasIcon };
 
 export const unbiasClub = {
   id: 3,
-  name: "UnBiased Club",
+  name: "Unbiased Club",
   icon: BiasIcon,
   description:
     "The Unbiased AI Club is a student-driven community exploring AI, ML, DL, NLP, Generative AI, and Agents. We encourage hands-on learning, collaboration, and innovation to build impactful projects for our department and beyond.",
   objectives:
     "Build a strong foundation in AI through regular sessions. Promote hands-on projects and innovation. Foster collaboration and knowledge sharing. Prepare students for research, industry, and competitions. Develop a department-focused AI product.",
   extraInfo:
-    "Un Bias Club conducts weekly AI workshops, research paper discussions, and hands-on ML projects. Members have published 10+ research papers and won multiple AI competitions including national-level hackathons.",
+    "Unbiased Club conducts weekly AI workshops, research paper discussions, and hands-on ML projects. Members have published 10+ research papers and won multiple AI competitions including national-level hackathons.",
   coordinators: [
     {
       name: "Aravindan",
@@ -82,6 +85,13 @@ export const unbiasClub = {
       isMain: false,
       bio: "",
       linkedin: "linkedin.com/in/lebiraja",
+    },{
+      name: "Pooja",
+      role: "Educator",
+      image: Pooja,
+      isMain: false,
+      bio: "",
+      linkedin: "linkedin.com/in/pooja-s-1190862b8",
     }
   ],
   projects: [
@@ -104,9 +114,11 @@ export const unbiasClub = {
   gallery: [
     Bias1,
     Bias2,
-    Bias3,
     Bias4,
     Bias6,
-    Bias7,
+    BiasPhoto1,
+    BiasPhoto2,
+    BiasPhoto3,
+    BiasPhoto4,
   ]
 };

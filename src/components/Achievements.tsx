@@ -63,15 +63,9 @@ export const Achievements = () => {
                 type: "spring",
                 stiffness: 100
               }}
-              className="glass-card p-4 sm:p-6 lg:p-8 text-center group hover-scale transform-gpu"
+              className="glass-card p-4 sm:p-6 lg:p-8 text-center group transform-gpu"
               style={{
                 transformStyle: 'preserve-3d',
-              }}
-              whileHover={{
-                rotateX: 5,
-                rotateY: 5,
-                scale: 1.05,
-                transition: { duration: 0.3 }
               }}
             >
               <div className="relative mb-4 sm:mb-6 flex justify-center">

@@ -103,7 +103,6 @@ export const ProtectedImage: React.FC<ProtectedImageProps> = ({
         alt={alt}
         style={{ display: 'none' }}
         draggable={false}
-        crossOrigin="anonymous"
       />
       
       {/* Canvas that displays the image */}
