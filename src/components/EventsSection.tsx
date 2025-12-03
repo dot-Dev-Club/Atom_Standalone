@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ThreeDIconPresets } from './ThreeDIcons';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { getEvents, getUpcomingEvents } from '@/utils/dataService';
+import { getEvents } from '@/utils/dataService';
 
 const EventsSection = () => {
   const ref = useRef(null);
@@ -14,9 +14,9 @@ const EventsSection = () => {
   const isMobile = useIsMobile();
   const navigate = useNavigate();
   
-  // Get the first 3 upcoming events for preview, or first 3 events if no upcoming ones
-  const upcomingEvents = getUpcomingEvents().slice(0, 3);
-  const previewEvents = upcomingEvents.length > 0 ? upcomingEvents : getEvents().slice(0, 3);
+  // Get the first 3 events for preview (all events, not just upcoming)
+  const allEvents = getEvents();
+  const previewEvents = allEvents.slice(0, 3);
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -30,6 +30,8 @@ const EventsSection = () => {
   const handleShowMore = () => {
     console.log('EventsSection: handleShowMore called - navigating to /events');
     navigate('/events');
+    // Scroll to top after navigation
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleEventClick = (eventId: number) => {
@@ -51,41 +53,29 @@ const EventsSection = () => {
         className="text-center mb-8 sm:mb-12 lg:mb-16 flex flex-col items-center"
       >
         <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 gradient-text text-center w-full">
-          {upcomingEvents.length > 0 ? 'Upcoming Events' : 'Our Events'}
+          Events
         </h2>
         <p className="text-base sm:text-lg text-foreground-secondary max-w-2xl text-center">
-          {upcomingEvents.length > 0
-            ? 'Join us for exciting events, workshops, and competitions that shape the future of technology'
-            : 'Discover our past and upcoming events, workshops, and competitions that shape the future of technology'
-          }
+          Discover our events, workshops, and competitions that shape the future of technology
         </p>
       </motion.div>
 
       {previewEvents.length > 0 ? (
         <>
-          {/* Events Grid */}
-          <div className="flex justify-center items-center min-h-[60vh] w-full">
-            {previewEvents.slice(0, 1).map((event, index) => (
+          {/* Events Grid - Show 2-3 events */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto mb-8">
+            {previewEvents.map((event, index) => (
                 <motion.div
                   key={event.id}
                   initial={{ opacity: 0, y: 30, scale: 0.9 }}
                   animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
                   transition={{
                     duration: 0.6,
-                    delay: index * 0.2,
+                    delay: index * 0.15,
                     type: "spring",
                     stiffness: 100
                   }}
-                  className="glass-card p-4 sm:p-6 group hover-scale cursor-pointer transform-gpu flex flex-col items-center text-center mx-auto max-w-md"
-                  style={{
-                    transformStyle: 'preserve-3d',
-                  }}
-                  whileHover={{
-                    rotateX: 5,
-                    rotateY: 5,
-                    scale: 1.05,
-                    transition: { duration: 0.3 }
-                  }}
+                  className="bg-[#0d1117] rounded-2xl shadow-md overflow-hidden flex flex-col h-full cursor-pointer hover:-translate-y-1 hover:shadow-lg transition-all duration-300"
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
@@ -94,55 +84,46 @@ const EventsSection = () => {
                   }}
                 >
                   {/* Event Image */}
-                  <div className="relative mb-4 overflow-hidden rounded-xl">
+                  <div className="relative overflow-hidden">
                     <img
                       src={event.image}
                       alt={event.title}
-                      className="w-full h-32 sm:h-40 object-cover transition-transform duration-300 group-hover:scale-110"
+                      className="w-full h-48 object-cover"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-
-                    {/* Status Badge */}
-                    <Badge
-                      className={`absolute top-3 right-3 border-none ${
-                        event.status === 'upcoming'
-                          ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white'
-                          : 'bg-gradient-to-r from-gray-600 to-gray-700 text-white'
-                      }`}
-                    >
-                      <Calendar className="w-3 h-3 mr-1" />
-                      {event.status === 'upcoming' ? 'Upcoming' : 'Past Event'}
-                    </Badge>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
                   </div>
 
                   {/* Event Content */}
-                  <div className="space-y-3">
-                    {/* Event Title */}
-                    <h3 className="text-lg sm:text-xl font-bold text-foreground line-clamp-2 group-hover:text-atom-primary transition-colors">
-                      {event.title}
-                    </h3>
+                  <div className="flex flex-col justify-between flex-1 p-4">
+                    {/* Title and Details */}
+                    <div>
+                      <h3 className="text-lg sm:text-xl font-bold text-foreground mb-3 line-clamp-2">
+                        {event.title}
+                      </h3>
 
-                    {/* Event Details */}
-                    <div className="space-y-2 text-sm text-foreground-secondary w-full">
-                      <div className="flex items-center justify-center gap-2">
-                        <Calendar className="w-4 h-4 text-atom-primary flex-shrink-0" />
-                        <span>{formatDate(event.date)}</span>
+                      {/* Event Details */}
+                      <div className="space-y-2 text-sm text-foreground-secondary text-left">
+                        <div className="flex items-start gap-1.5">
+                          <Calendar className="w-4 h-4 text-atom-primary flex-shrink-0 mt-0.5" />
+                          <span>{formatDate(event.date)}</span>
+                        </div>
+
                         {event.time && (
-                          <>
-                            <Clock className="w-4 h-4 text-atom-accent ml-2 flex-shrink-0" />
+                          <div className="flex items-start gap-1.5">
+                            <Clock className="w-4 h-4 text-atom-accent flex-shrink-0 mt-0.5" />
                             <span>{event.time}</span>
-                          </>
+                          </div>
                         )}
-                      </div>
 
-                      <div className="flex items-center justify-center gap-2">
-                        <MapPin className="w-4 h-4 text-green-500 flex-shrink-0" />
-                        <span className="line-clamp-1">{event.location}</span>
+                        <div className="flex items-start gap-1.5">
+                          <MapPin className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                          <span className="line-clamp-1">{event.location}</span>
+                        </div>
                       </div>
                     </div>
 
                     {/* Event Category */}
-                    <div className="flex flex-col items-center gap-2 mt-4">
+                    <div className="flex items-center justify-between pt-3 border-t border-white/10">
                       <Badge
                         variant="outline"
                         className="text-xs bg-atom-primary/10 text-atom-primary border-atom-primary/30"
@@ -151,8 +132,8 @@ const EventsSection = () => {
                       </Badge>
 
                       <div className="flex items-center gap-1 text-xs text-foreground-secondary">
-                        <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
                         <span>Learn More</span>
+                        <ArrowRight className="w-3 h-3" />
                       </div>
                     </div>
                   </div>
@@ -186,33 +167,78 @@ const EventsSection = () => {
           </motion.div>
         </>
       ) : (
-        /* No Events State */
+        /* Coming Soon State */
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={isInView ? { opacity: 1, scale: 1 } : {}}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="text-center py-12"
+          className="flex justify-center items-center min-h-[60vh] w-full"
         >
-          <div className="mb-6">
-            <ThreeDIconPresets.Target size={isMobile ? 48 : 64} />
+          <div className="glass-card p-8 sm:p-12 lg:p-16 max-w-2xl mx-auto text-center">
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ 
+                duration: 0.8, 
+                delay: 0.5,
+                type: "spring",
+                stiffness: 200
+              }}
+              className="mb-8"
+            >
+              <div className="text-8xl sm:text-9xl mb-6">🚀</div>
+            </motion.div>
+            
+            <motion.h3
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.7 }}
+              className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 gradient-text"
+            >
+              Exciting Events Coming Soon!
+            </motion.h3>
+            
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.9 }}
+              className="text-base sm:text-lg lg:text-xl text-foreground-secondary mb-3"
+            >
+              We're currently planning amazing events for the upcoming session.
+            </motion.p>
+            
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 1.1 }}
+              className="text-sm sm:text-base text-foreground-secondary/80 mb-8"
+            >
+              Stay tuned for announcements! 🎉
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 1.3 }}
+            >
+              <Button
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  console.log('View All Events button clicked');
+                  handleShowMore();
+                }}
+                className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-8 py-3 rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-105 shadow-lg"
+                type="button"
+              >
+                <div className="flex items-center gap-3">
+                  <Users className="w-5 h-5" />
+                  View All Events
+                  <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                </div>
+              </Button>
+            </motion.div>
           </div>
-          <h3 className="text-xl font-semibold text-foreground mb-2">No Upcoming Events</h3>
-          <p className="text-foreground-secondary mb-6">
-            Stay tuned for exciting events coming soon!
-          </p>
-          <Button
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              console.log('Explore Past Events button clicked');
-              handleShowMore();
-            }}
-            variant="outline"
-            className="border-atom-primary text-atom-primary hover:bg-atom-primary hover:text-white"
-            type="button"
-          >
-            Explore Past Events
-          </Button>
         </motion.div>
       )}
     </section>

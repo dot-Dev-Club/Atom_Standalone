@@ -24,7 +24,8 @@ A comprehensive, modern web platform for ATOM Club featuring a stunning public w
 - [🚀 Features](#-features)
 - [🛠 Technology Stack](#-technology-stack)
 - [📦 Quick Start](#-quick-start)
-- [🔐 CMS Access](#-cms-access)
+- [� Documentation](#-documentation)
+- [�🔐 CMS Access](#-cms-access)
 - [🏗 Project Structure](#-project-structure)
 - [🎨 Customization](#-customization)
 - [🚀 Deployment](#-deployment)
@@ -173,7 +174,34 @@ npm run preview  # Preview production build
 npm run lint     # Run ESLint
 ```
 
-## 🔐 CMS Access
+## � Documentation
+
+### Complete Master Documentation
+
+We've created **one comprehensive master documentation** that covers everything you need:
+
+**[📚 MASTER_DOCUMENTATION.md](MASTER_DOCUMENTATION.md)** - Complete guide for everyone
+
+This single document includes:
+
+✅ **Quick Start** - Get up and running in 5 minutes  
+✅ **User Guide** - For content managers and non-technical users  
+✅ **Developer Guide** - Complete technical documentation  
+✅ **Architecture** - System design and architecture  
+✅ **Maintenance** - Operations and maintenance procedures  
+✅ **Best Practices** - Tips, tricks, and recommendations  
+✅ **FAQ** - Answers to common questions  
+✅ **Reference** - Quick command and configuration reference  
+
+### Who Should Read It?
+
+- **New Users**: Start with "Getting Started" section
+- **Content Managers**: Focus on "For Content Managers & Users" section
+- **Developers**: Check "For Developers" section
+- **Technical Leads**: Review "For Technical Leads" section
+- **Maintainers**: Read "Operations & Maintenance" section
+
+## �🔐 CMS Access
 
 ### Admin Login Credentials
 

@@ -87,14 +87,19 @@ export const Coordinators = () => {
                 <Card key={c.id} coordinator={c} />
               ))}
             </div>
-            <div className="flex justify-center mt-8 sm:mt-10 w-full">
-              <button
+            <div className="flex justify-center items-center mt-8 sm:mt-12 px-4">
+              <motion.button
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.5 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => setViewAll(false)}
-                className="btn-metallic mx-auto block items-center gap-2 text-sm sm:text-base px-4 sm:px-6 py-2 sm:py-3"
+                className="px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 rounded-full text-white font-semibold transition-all duration-300 shadow-lg text-sm sm:text-base lg:text-lg hover:shadow-xl flex items-center gap-2"
               >
-                <ArrowLeft className="w-4 h-4 inline-block" />
-                <span className="inline-block">Back to Carousel</span>
-              </button>
+                <ArrowLeft className="w-4 h-4" />
+                Back to Carousel
+              </motion.button>
             </div>
           </>
         ) : (
@@ -112,14 +117,19 @@ export const Coordinators = () => {
                 ))}
               </motion.div>
             </div>
-            <div className="flex justify-center mt-8 sm:mt-10 w-full">
-              <button
+            <div className="flex justify-center items-center mt-8 sm:mt-12 px-4">
+              <motion.button
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.5 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => setViewAll(true)}
-                className="btn-metallic mx-auto block items-center gap-2 text-sm sm:text-base px-4 sm:px-6 py-2 sm:py-3"
+                className="px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 rounded-full text-white font-semibold transition-all duration-300 shadow-lg text-sm sm:text-base lg:text-lg hover:shadow-xl flex items-center gap-2"
               >
-                <Grid className="w-4 h-4 inline-block" />
-                <span className="inline-block">View All</span>
-              </button>
+                <Grid className="w-4 h-4" />
+                View All
+              </motion.button>
             </div>
           </>
         )}

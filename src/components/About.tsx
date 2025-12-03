@@ -47,7 +47,7 @@ export const About = () => {
             containerClassName=""
             textClassName="text-base sm:text-lg lg:text-xl leading-relaxed text-white/60"
           >
-           Association of Technology Oriented Minds (ATOM) is a student-driven community that fosters innovation, learning, and collaboration. We aim to empower students with technical skills, hands-on experience, and a platform to turn ideas into impactful solutions.
+           Association of Technology Oriented Minds (ATOM) is a student-driven community that              fosters innovation, learning, and collaboration. We aim to empower students with hands-on experience, technical skills, and a platform to turn ideas into impactful solutions.
           </ScrollFloat>
         </div>
       </div>

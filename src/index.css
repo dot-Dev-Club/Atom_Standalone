@@ -1,13 +1,12 @@
+@import './styles/events.css';
+@import './styles/event-enhancements.css';
+@import './styles/event-card-enhancements.css';
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Import style files */
-@import './styles/events.css';
-@import './styles/event-enhancements.css';
-@import './styles/event-card-enhancements.css';
 
 /* ATOM Club Design System - Blue & Metallic Theme */
 

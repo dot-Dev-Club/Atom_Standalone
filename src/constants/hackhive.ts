@@ -12,6 +12,7 @@ import Hack5 from "@/assets/HACKHIVE/Hack5.jpg";
 import Hack6 from "@/assets/HACKHIVE/Hack6.jpg";
 import Hack7 from "@/assets/HACKHIVE/Hack7.jpg";
 import HackIcon from "@/assets/HACKHIVE/Hack.ico";
+import Pooja from "@/assets/HACKHIVE/Pooja.jpg";
 
 export { HackIcon };
 
